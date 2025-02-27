@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link href="./input.css" rel="stylesheet">
+    <title>Creare cont</title>
+</head>
+
+<body class="flex justify-center items-center h-screen bg-accent p-4">
+    <section
+        class="w-200 h-200 flex justify-center items-center bg-white rounded-3xl border-accent flex-col  p-4 shadow-implicit">
+        <h1 class="text-3xl font-bold mb-8">Înregistrare</h1>
+        <form class="flex flex-col w-11/12 max-w-80 gap-3" action="">
+            <input placeholder="Nume, Prenume" type="text" name="nume" id="" class="accent-container  rounded-lg p-2">
+            <input placeholder="Email" type="email" name="email" id="" class="accent-container  rounded-lg p-2">
+            <input placeholder="Parolă" type="password" name="parola" id="" class="accent-container  rounded-lg p-2">
+            <input placeholder="Confirmare parolă" type="password" name="confirmareParola" id=""
+                class="accent-container  rounded-lg p-2">
+            <div id="show-password" class="flex gap-2 p-2"><input type="checkbox" name="show-password" id="" class="w-4">
+                <p class="leading-none">Arată parola</p>
+            </div>
+            <input type="submit" value="Trimite" class="">
+        </form>
+    </section>
+</body>
+
+</html>
