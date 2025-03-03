@@ -6,41 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Creare cont</title>
+    <title>Creare cont parteneri</title>
 </head>
 
 <body>
-    <a href="#"><img src="../media/logo-yellow-black.svg" alt="" id="logo" class="absolute top-8 left-8 h-17"></a>
-   <section class="flex justify-center items-center h-screen w-screen bg-accent p-4">
-       <div class="w-200 flex justify-center items-center bg-white rounded-3xl border-accent flex-col p-4 py-10 shadow-implicit">
-        <h1 class="text-4xl font-bold mb-8 text-center">Creare cont</h1>
-        <form class="flex flex-col w-11/12 max-w-96 gap-3 justify-center items-center" action="#" method="POST"
-            id="form">
+ <a href="#"><img src="../media/logo-black.svg" alt="" id="logo" class="absolute top-8 left-8 h-17"></a>
+<section class="flex justify-center items-center h-screen w-screen bg-accent p-4">
+    <div class="w-200 flex justify-center items-center bg-white rounded-3xl border-accent flex-col p-4 py-10 mt-16 shadow-implicit">
+        <h1 class="text-4xl font-bold text-center mb-8">Creare cont parteneri</h1>
+        <form class="flex flex-col w-11/12 max-w-96 gap-3 justify-center items-center" action="#" method="POST" id="form">
 
-            <div id="name-input" class="accent-container rounded-2xl w-full flex">
+            <div id="idno-input" class="accent-container rounded-2xl w-full flex">
                 <img src="./media/name.svg" alt="" class="w-7 mx-3.5">
-                <input placeholder="Nume, Prenume" type="text" name="nume" id="" required
-                    class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+                <input placeholder="IDNO" type="text" name="idno" id="idno"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="email-input" class="accent-container rounded-2xl w-full flex">
                 <img src="./media/email.svg" alt="" class="w-7 mx-3.5">
-                <input placeholder="Email" type="email" name="email" id="" required
-                    class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+                <input placeholder="Email" type="email" name="email" id="email"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+            </div>
+
+            <div id="confirmation-input" class="accent-container rounded-2xl w-full flex">
+                <img src="./media/password.svg" alt="" class="w-6 mx-3.5">
+                <input placeholder="Codul de confirmare" type="text" name="confirmation" id="confirmation"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="pass-input" class="accent-container rounded-2xl w-full flex">
                 <img src="./media/password.svg" alt="" class="w-7-5 mx-3.5">
-                <input placeholder="Parolă" type="password" name="parola" oninput="checkPasswordStrength()" id="pass"
-                    required
-                    class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+                <input placeholder="Parolă" type="password" name="password" oninput="checkPasswordStrength()" id="pass" class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
                 <img src="./media/hide.svg" alt="" class="w-12 mx-3.5" id="show-password">
             </div>
 
             <div id="confirm-input" class="accent-container rounded-2xl w-full flex">
                 <img src="./media/password.svg" alt="" class="w-6 mx-3.5">
-                <input placeholder="Confirmare parolă" type="password" name="confirm-pass" id="confirm-pass" required
-                    class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+                <input placeholder="Confirmare parolă" type="password" name="confirm-pass" id="confirm-pass" class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="strength-bar" class="w-full rounded-full justify-center h-10">
@@ -52,21 +51,18 @@
                 <p id="strength-text" class="text-lg font-medium text-center leading-10"></p>
             </div>
 
-            <input type="submit" value="CREEAZĂ CONT" id="submit"
-                class="bg-coral text-white font-medium w-36 py-4 rounded-2xl shadow-2xl mt-4 transition-all duration-300 transform active:scale-95">
+            <input type="submit" value="CREEAZĂ CONT" id="submit" class="bg-black text-white font-medium w-36 py-4 rounded-2xl shadow-2xl mt-4 transition-all duration-300 transform active:scale-95">
         </form>
-        <p class="text-md mt-4 text-gray-700">Ai un cont? <a href="./conectare.html"
-                class="underline">Conectează-te!</a></p>
-        </div>
-        </section>
-
-
+        <p class="text-md mt-4 text-gray-700">Ai un cont? <a href="./conectare.html" class="underline">Conectează-te!</a></p>
+    </div>
+</section>
     <script>
         const showPassword = document.getElementById("show-password");
         showPassword.onclick = togglePassword;
 
         const pass = document.getElementById("pass");
         const confirmPass = document.getElementById("confirm-pass");
+
         function togglePassword() {
             if (pass.type === "password") {
                 pass.setAttribute("type", "text");
@@ -78,7 +74,6 @@
                 showPassword.src = "./media/hide.svg";
             }
         }
-
 
         function checkPasswordStrength() {
             const passwordString = document.getElementById("pass").value;
@@ -133,41 +128,47 @@
             }
         }
 
-
         const form = document.getElementById("form");
         form.addEventListener("submit", (e) => {
             const passwordString = document.getElementById("pass").value;
             const confirmPasswordString = document.getElementById("confirm-pass").value;
-            const nameString = document.getElementById("nume").value;
+            const idnoString = document.getElementById("idno").value;
             const emailString = document.getElementById("email").value;
+            const confirmationString= document.getElementById("confirmation").value;
 
-
-            if (nameString.length === "") {
+            if (idnoString === "") {
                 e.preventDefault();
-                document.getElementById("nume").setCustomValidity("Acest câmp este obligatoriu!");
+                document.getElementById("idno").setCustomValidity("Acest câmp este obligatoriu!");
                 return false;
-            }
-            else if (emailString === "") {
+            } else if (emailString === "") {
                 e.preventDefault();
-                document.getElementById("nume").setCustomValidity("Acest câmp este obligatoriu!");
+                document.getElementById("email").setCustomValidity("Acest câmp este obligatoriu!");
                 return false;
-            }
-            else if (passwordString !== confirmPasswordString) {
+            } else if (confirmationString === "") {
+                e.preventDefault();
+                document.getElementById("confirmation").setCustomValidity("Acest câmp este obligatoriu!");
+                return false;
+            } else if (passwordString === "") {
+                e.preventDefault();
+                document.getElementById("pass").setCustomValidity("Acest câmp este obligatoriu!");
+                return false;
+            } else if (confirmPasswordString === "") {
+                e.preventDefault();
+                document.getElementById("confirm-pass").setCustomValidity("Acest câmp este obligatoriu!");
+                return false;
+            } else if (passwordString.length < 8) {
+                e.preventDefault();
+                document.getElementById("pass").setCustomValidity("Parola trebuie sa aiba cel putin 8 caractere!");
+                return false;
+            } else if (passwordString !== confirmPasswordString) {
                 e.preventDefault();
                 document.getElementById("confirm-pass").setCustomValidity("Parolele nu trebuie să fie identice!");
                 return false;
             }
-            else if (passwordString.length < 8) {
-                e.preventDefault();
-                document.getElementById("pass").setCustomValidity("Parola trebuie sa aiba cel putin 8 caractere!");
-                return false;
-            }
 
             return true;
-
         });
-
     </script>
 </body>
 
-</html>     
+</html>
