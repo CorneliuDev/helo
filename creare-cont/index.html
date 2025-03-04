@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <link rel="stylesheet" href="../style.css">
     <title>Creare cont</title>
 </head>
@@ -18,27 +19,27 @@
             id="form">
 
             <div id="name-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/name.svg" alt="" class="w-7 mx-3.5">
+                <img src="../media/icons/name.svg" alt="" class="w-7 mx-3.5">
                 <input placeholder="Nume, Prenume" type="text" name="nume" id="" required
                     class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="email-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/email.svg" alt="" class="w-7 mx-3.5">
+                <img src="../media/icons/email.svg" alt="" class="w-7 mx-3.5">
                 <input placeholder="Email" type="email" name="email" id="" required
                     class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="pass-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/password.svg" alt="" class="w-7-5 mx-3.5">
+                <img src="../media/icons/password.svg" alt="" class="w-7-5 mx-3.5">
                 <input placeholder="Parolă" type="password" name="parola" oninput="checkPasswordStrength()" id="pass"
                     required
                     class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
-                <img src="./media/hide.svg" alt="" class="w-12 mx-3.5" id="show-password">
+                <img src="../media/icons/hide.svg" alt="" class="w-12 mx-3.5" id="show-password">
             </div>
 
             <div id="confirm-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/password.svg" alt="" class="w-6 mx-3.5">
+                <img src="../media/icons/password.svg" alt="" class="w-6 mx-3.5">
                 <input placeholder="Confirmare parolă" type="password" name="confirm-pass" id="confirm-pass" required
                     class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
@@ -55,7 +56,7 @@
             <input type="submit" value="CREEAZĂ CONT" id="submit"
                 class="bg-coral text-white font-medium w-36 py-4 rounded-2xl shadow-2xl mt-4 transition-all duration-300 transform active:scale-95">
         </form>
-        <p class="text-md mt-4 text-gray-700">Ai un cont? <a href="./conectare.html"
+        <p class="text-md mt-4 text-gray-700">Ai un cont? <a href="../conectare.html"
                 class="underline">Conectează-te!</a></p>
         </div>
         </section>
@@ -71,11 +72,11 @@
             if (pass.type === "password") {
                 pass.setAttribute("type", "text");
                 confirmPass.setAttribute("type", "text");
-                showPassword.src = "./media/show.svg";
+                showPassword.src = "../media/icons/show.svg";
             } else {
                 pass.setAttribute("type", "password");
                 confirmPass.setAttribute("type", "password");
-                showPassword.src = "./media/hide.svg";
+                showPassword.src = "../media/icons/hide.svg";
             }
         }
 

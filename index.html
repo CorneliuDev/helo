@@ -6,36 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
 </head>
 
 <body class="flex flex-col lg:px-56 md:px-24 px-12">
-    <nav class="flex flex-row justify-between">
+    <nav class="flex flex-row justify-between pt-8">
 
-        <img src="./media/logo-yellow-black.svg" alt="" id="logo">
+        <img src="./media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15">
 
-        <form action="#" id="search-bar" class="flex flex-row gap-4 justify-between h-12 w-md accent-container rounded-full">
-            <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search" class="w-full focus:outline-none" required>
-            <input type="submit" value="Caută" id="submit">
+        <form action="#" id="search-bar" class="flex flex-row gap-4 justify-between h-12 w-md accent-container rounded-full p-0.5 mt-2">
+            <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search" class="w-full focus:outline-none pl-3" >
+            <input type="submit" value="Caută" id="submit" class="bg-coral text-white w-28 rounded-full active:scale-95 ">
         </form>
 
-        <div id="nav-controls" class="flex flex-row gap-4">
+        <div id="nav-controls" class="flex flex-row gap-4 ">
 
-            <a href="" id="account" class="flex flex-col justify-center items-center">
+            <a href="" id="account" class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                 <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
                     <img src="./media/user-icon.svg" alt="" id="account-icon" class="w-6">
                 </div>
                 <p>Cont</p>
             </a>
 
-            <a href="" id="orders" class="flex flex-col justify-center items-center">
+            <a href="" id="orders" class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                 <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                    <img src="./media/orders-icon.svg" alt="" id="orders-icon" class="w-6">
+                    <img src="./media/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
                 </div>
                 <p>Comenzi</p>
             </a>
 
-            <a href="" id="cart" class="flex flex-col justify-center items-center">
+            <a href="" id="cart" class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                 <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
                     <img src="./media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
                 </div>
@@ -43,8 +44,16 @@
             </a>
         </div>
 
-        <a href=""><button class="bg-black text-white w-36 py-4 rounded-2xl shadow-2xl mt-4 transition-all duration-300 transform active:scale-95">Devino partener</button></a>
+        <a href=""><button class="bg-black text-white w-34 py-3 rounded-2xl shadow-2xl transition-all duration-300 transform active:scale-95 mt-2">Devino partener</button></a>
     </nav>
+
+    <section id="banner-slide-show">
+        <div id="slide-show">
+            <div id="slide-show-wrapper">
+                <div id="slide1"></div>
+            </div>
+        </div>
+    </section>
 </body>
 
 </html>

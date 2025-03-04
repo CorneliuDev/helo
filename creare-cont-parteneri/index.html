@@ -17,28 +17,28 @@
         <form class="flex flex-col w-11/12 max-w-96 gap-3 justify-center items-center" action="#" method="POST" id="form">
 
             <div id="idno-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/name.svg" alt="" class="w-7 mx-3.5">
+                <img src="../media/icons/name.svg" alt="" class="w-7 mx-3.5">
                 <input placeholder="IDNO" type="text" name="idno" id="idno"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="email-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/email.svg" alt="" class="w-7 mx-3.5">
+                <img src="../media/icons/email.svg" alt="" class="w-7 mx-3.5">
                 <input placeholder="Email" type="email" name="email" id="email"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="confirmation-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/password.svg" alt="" class="w-6 mx-3.5">
+                <img src="../media/icons/password.svg" alt="" class="w-6 mx-3.5">
                 <input placeholder="Codul de confirmare" type="text" name="confirmation" id="confirmation"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="pass-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/password.svg" alt="" class="w-7-5 mx-3.5">
+                <img src="../media/icons/password.svg" alt="" class="w-7-5 mx-3.5">
                 <input placeholder="Parolă" type="password" name="password" oninput="checkPasswordStrength()" id="pass" class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
-                <img src="./media/hide.svg" alt="" class="w-12 mx-3.5" id="show-password">
+                <img src="../media/icons/hide.svg" alt="" class="w-12 mx-3.5" id="show-password">
             </div>
 
             <div id="confirm-input" class="accent-container rounded-2xl w-full flex">
-                <img src="./media/password.svg" alt="" class="w-6 mx-3.5">
+                <img src="../media/icons/password.svg" alt="" class="w-6 mx-3.5">
                 <input placeholder="Confirmare parolă" type="password" name="confirm-pass" id="confirm-pass" class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
@@ -67,11 +67,11 @@
             if (pass.type === "password") {
                 pass.setAttribute("type", "text");
                 confirmPass.setAttribute("type", "text");
-                showPassword.src = "./media/show.svg";
+                showPassword.src = "../media/icons/show.svg";
             } else {
                 pass.setAttribute("type", "password");
                 confirmPass.setAttribute("type", "password");
-                showPassword.src = "./media/hide.svg";
+                showPassword.src = "../media/icons/hide.svg";
             }
         }
 
