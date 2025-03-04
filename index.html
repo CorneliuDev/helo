@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,43 @@
     <link rel="stylesheet" href="style.css">
     <title>Helo - Orice produs la un click distanță</title>
 </head>
+
 <body class="flex flex-col lg:px-56 md:px-24 px-12">
     <nav class="flex flex-row justify-between">
+
         <img src="./media/logo-yellow-black.svg" alt="" id="logo">
-        <form action="#" id="search-bar">
-            <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search">
+
+        <form action="#" id="search-bar" class="flex flex-row gap-4 justify-between h-12 w-md accent-container rounded-full">
+            <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search" class="w-full focus:outline-none" required>
             <input type="submit" value="Caută" id="submit">
         </form>
+
+        <div id="nav-controls" class="flex flex-row gap-4">
+
+            <a href="" id="account" class="flex flex-col justify-center items-center">
+                <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+                    <img src="./media/user-icon.svg" alt="" id="account-icon" class="w-6">
+                </div>
+                <p>Cont</p>
+            </a>
+
+            <a href="" id="orders" class="flex flex-col justify-center items-center">
+                <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+                    <img src="./media/orders-icon.svg" alt="" id="orders-icon" class="w-6">
+                </div>
+                <p>Comenzi</p>
+            </a>
+
+            <a href="" id="cart" class="flex flex-col justify-center items-center">
+                <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+                    <img src="./media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
+                </div>
+                <p>Coș</p>
+            </a>
+        </div>
+
+        <a href=""><button class="bg-black text-white w-36 py-4 rounded-2xl shadow-2xl mt-4 transition-all duration-300 transform active:scale-95">Devino partener</button></a>
     </nav>
 </body>
+
 </html>
