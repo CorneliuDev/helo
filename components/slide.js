@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css } from 'https://esm.sh/lit';
 
 class Slide extends LitElement {
   static properties = {
@@ -91,4 +91,4 @@ class Slide extends LitElement {
   }
 }
 
-customElements.define("slide", Slide);
+customElements.define("slide-component", Slide);
