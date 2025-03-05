@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="media/favicons/logo-yellow-short.ico" type="image/x-icon">
+    <script type="module" src="script.js"></script>
     <title>Helo - Orice produs la un click distanță</title>
 </head>
 
@@ -15,45 +16,91 @@
 
         <img src="./media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15">
 
-        <form action="#" id="search-bar" class="flex flex-row gap-4 justify-between h-12 w-md accent-container rounded-full p-0.5 mt-2">
-            <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search" class="w-full focus:outline-none pl-3" >
-            <input type="submit" value="Caută" id="submit" class="bg-coral text-white w-28 rounded-full active:scale-95 ">
+        <form action="#" id="search-bar"
+            class="flex flex-row gap-4 justify-between h-12 w-md accent-container rounded-full p-0.5 mt-2">
+            <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
+                class="w-full focus:outline-none pl-3">
+            <input type="submit" value="Caută" id="submit"
+                class="bg-coral text-white w-28 rounded-full active:scale-95 ">
         </form>
 
         <div id="nav-controls" class="flex flex-row gap-4 ">
 
-            <a href="" id="account" class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
-                <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+            <a href="" id="account"
+                class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
+                <div
+                    class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
                     <img src="./media/user-icon.svg" alt="" id="account-icon" class="w-6">
                 </div>
                 <p>Cont</p>
             </a>
 
-            <a href="" id="orders" class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
-                <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+            <a href="" id="orders"
+                class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
+                <div
+                    class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
                     <img src="./media/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
                 </div>
                 <p>Comenzi</p>
             </a>
 
-            <a href="" id="cart" class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
-                <div class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+            <a href="" id="cart"
+                class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
+                <div
+                    class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
                     <img src="./media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
                 </div>
                 <p>Coș</p>
             </a>
         </div>
 
-        <a href=""><button class="bg-black text-white w-34 py-3 rounded-2xl shadow-2xl transition-all duration-300 transform active:scale-95 mt-2">Devino partener</button></a>
+        <a href=""><button
+                class="bg-black text-white w-34 py-3 rounded-2xl shadow-2xl transition-all duration-300 transform active:scale-95 mt-2">Devino
+                partener</button></a>
     </nav>
 
-    <section id="banner-slide-show">
-        <div id="slide-show">
-            <div id="slide-show-wrapper">
-                <div id="slide1"></div>
+    <section class="my-12 flex justify-center relative h-96">
+        <div class="relative max-w-5xl w-full overflow-hidden">
+            <div class="flex w-[400%] h-[450px] transition-transform duration-500 ease-in-out" id="slides-wrapper">
+                <slide 
+                backgroundColor="#ff4363"
+                link="#"
+                title="gadgeturile!"
+                subtitle="Găsește gadgetul de care ai nevoie!"
+                image="/media/images/shide-heaphones.png"
+                ></slide>
+
+                <slide 
+                backgroundColor="#ff4363"
+                link="#"
+                title="gadgeturile!"
+                subtitle="Găsește gadgetul de care ai nevoie!"
+                image="/media/images/shide-heaphones.png"
+                ></slide>
+
+                <slide 
+                backgroundColor="#ff4363"
+                link="#"
+                title="gadgeturile!"
+                subtitle="Găsește gadgetul de care ai nevoie!"
+                image="/media/images/shide-heaphones.png"
+                ></slide>
             </div>
+
+            <!-- Navigation Buttons -->
+            <button
+                class="absolute top-1/2 -translate-y-1/2 left-6 w-12 h-12 bg-black/20 rounded-full bg-center bg-no-repeat bg-contain"
+                style="background-image: url('/media/icons/prev.svg');" onclick="changeSlides(-1)">
+            </button>
+            <button
+                class="absolute top-1/2 -translate-y-1/2 right-6 w-12 h-12 bg-black/20 rounded-full bg-center bg-no-repeat bg-contain"
+                style="background-image: url('/media/icons/next.svg');" onclick="changeSlides(1)">
+            </button>
         </div>
     </section>
+
+
+
 </body>
 
 </html>
