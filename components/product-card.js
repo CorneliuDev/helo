@@ -52,7 +52,7 @@ class ProductCard extends LitElement {
     .current-price {
       font-weight: 500;
       font-size: 1.5rem;
-      color: var(--coral, #ff5733);
+      color: #FF4363;
       line-height: 0;
     }
     .old-price {
@@ -86,12 +86,22 @@ class ProductCard extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 3px;
       background: #f9f9f9;
-      width: 85px;
+      padding-inline: 8px;
       height: 30px;
       border-radius: 8px;
     }
+
+    .product-rating p {
+      margin: 0;
+      line-height: 0;
+      }
+
+      .product-rating img {
+      height:16px;
+      }
+
     button {
     font-size: 1.1rem;
       height: 35px;
@@ -118,6 +128,7 @@ class ProductCard extends LitElement {
     this.rating = '';
   }
 
+
   render() {
     return html`
       <a href="${this.link}" class="product-card">
@@ -134,7 +145,8 @@ class ProductCard extends LitElement {
         
         <div class="product-rating-add-cart">
           <div class="product-rating">
-            <p>${this.rating}/5</p>
+          ${this.rating == 5 ? html`<p style="color: #FF4363 !important; font-weight: 500">${this.rating}</p>` : html`
+            <p>${this.rating}</p>`}
             <img src="media/icons/star.svg" alt="Star" />
           </div>
           <button>În coș</button>
