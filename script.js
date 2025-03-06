@@ -1,31 +1,33 @@
-import '/components/slide.js';
-
-
-
-//_____________________________________________________________________________
+//_____________________________________________________________________________________________________________________________________________________________
 //Slide controls function
-//_____________________________________________________________________________
-//_____________________________________________________________________________
+//_____________________________________________________________________________________________________________________________________________________________
+//_____________________________________________________________________________________________________________________________________________________________
 let slideIndex = 1;
-showSlides(slideIndex);
+        showSlides(slideIndex);
 
-function changeSlides(n) {
-    showSlides(slideIndex += n);
-}
+        function changeSlides(n) {
+            showSlides(slideIndex += n);
+        }
 
-function currentSlide(n) {
-    showSlides(slideIndex = n);
-}
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
 
-function showSlides(n) {
-    let slides = document.querySelectorAll(".slides");
-    let wrapper = document.querySelector("#slides-wrapper");
+        function showSlides(n) {
+            let slides = document.querySelectorAll(".slides");
+            let wrapper = document.querySelector("#slides-wrapper");
 
-    if (n > slides.length) { slideIndex = 1; }
-    if (n < 1) { slideIndex = slides.length; }
+            if (n > slides.length) {
+                slideIndex = 1;   
+            }
+            if (n < 1) { 
+                slideIndex = slides.length;   
+            }
 
-    wrapper.style.transform = `translateX(-${(slideIndex - 1) * 25}%)`;
-}
-
+            let translateValue = -(slideIndex - 1)*(100/slides.length);
+            wrapper.style.transform = `translateX(${translateValue}%)`;
+        }
+//_____________________________________________________________________________________________________________________________________________________________
+//_____________________________________________________________________________________________________________________________________________________________
 
 
