@@ -73,9 +73,17 @@ class ProductCard extends LitElement {
     }
     .product-title {
       font-size: 1rem;
-      line-height: 0;
+      line-height: 1.2rem;
       margin: 0;
+      width: 100%;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
     }
+
+    .truncate-text {
+            
+        }
     .product-rating-add-cart {
       display: flex;
       justify-content: space-between;
@@ -141,7 +149,7 @@ class ProductCard extends LitElement {
               <div class="old-price">${this.oldPrice}</div>`
               : html`<p class="current-price" style="color:black">${this.currentPrice} MDL</p>`}
           </div>
-          <p class="product-title">${this.title}</p>
+          <p class="product-title truncate-text">${this.title}</p>
         
         <div class="product-rating-add-cart">
           <div class="product-rating">
