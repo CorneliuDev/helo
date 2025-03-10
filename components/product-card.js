@@ -80,7 +80,7 @@ class ProductCard extends LitElement {
     }
 
     .product-title {
-      font-size: clamp(0.9em, 4vw, 1.2em);
+      font-size: clamp(0.9em, vw, 1.2em);
       line-height: 1.2;
       margin: 0;
       white-space: nowrap;
