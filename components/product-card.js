@@ -58,7 +58,7 @@ class ProductCard extends LitElement {
 
     .current-price {
       font-weight: 600;
-      font-size: clamp(1em, 5vw, 1.6em);
+      font-size: clamp(1em, 4vw, 1.6em);
       color: #ff4363;
     }
 
