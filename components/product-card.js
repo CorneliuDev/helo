@@ -58,7 +58,7 @@ class ProductCard extends LitElement {
 
     .current-price {
       font-weight: 600;
-      font-size: clamp(1rem, 1.5vw, 1.6rem);
+      font-size: clamp(1em, 4vw, 1.6em);
       color: #ff4363;
     }
 
@@ -80,7 +80,7 @@ class ProductCard extends LitElement {
     }
 
     .product-title {
-      font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+      font-size: clamp(0.9em, 4vw, 1.2em);
       line-height: 1.2;
       margin: 0;
       white-space: nowrap;
@@ -92,20 +92,24 @@ class ProductCard extends LitElement {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
+      margin-top: 10px;
     }
 
     .product-rating {
       display: flex;
       align-items: center;
       gap: 3px;
+      justify-content: center;
       background: #f9f9f9;
       padding: 6px;
       border-radius: 8px;
+      width: clamp(30px, 10vw, 60px);
     }
 
     .product-rating p {
       margin: 0;
       font-size: clamp(0.8rem, 1vw, 1rem);
+      line-height: 1;
     }
 
     .product-rating img {
@@ -113,9 +117,9 @@ class ProductCard extends LitElement {
     }
 
     button {
-      font-size: clamp(0.9rem, 1.1vw, 1.2rem);
-      height: clamp(30px, 3vw, 40px);
-      width: clamp(80px, 8vw, 120px);
+      font-size: clamp(0.8em, 3vw, 1.2em);
+      aspect-ratio: 3 / 1.2;
+      width: 42%;
       background: var(--coral, #ff5733);
       color: white;
       border-radius: 8px;
