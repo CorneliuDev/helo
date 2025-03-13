@@ -91,7 +91,6 @@
     "side-channel-map": "^1.0.1",
     "side-channel-weakmap": "^1.0.2",
     "sqlstring": "^2.3.1",
-    "statuses": "^2.0.1",
     "string_decoder": "^1.1.1",
     "toidentifier": "^1.0.1",
     "type-is": "^1.6.18",

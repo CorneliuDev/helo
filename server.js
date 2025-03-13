@@ -3,7 +3,6 @@ const express = require('express');
 const { createHash } = require('crypto');
 const mysql = require('mysql');
 const path = require('path');
-const { message } = require('statuses');
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
