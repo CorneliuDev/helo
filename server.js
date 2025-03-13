@@ -45,4 +45,20 @@ app.post('/creare-cont', function(req, res) {
     });
 });
 
+app.post('/conectare', function(req, res) {
+    const email = req.body.email;
+    const pass = req.body.password;
+    const hash = createHash('sha256').update(pass).digest('base64');
+
+    con.query(`SELECT id_user FROM users WHERE email='${email}' and password='${hash}'`, function(err, result) {
+        if(err) throw err;
+        if(Object.keys(result).length === 0) {
+            res.redirect(`/conectare?failed`);
+        }
+        else {
+            res.redirect(`/index.html?connected`);
+        }
+    });
+});
+
 app.listen(8080);
