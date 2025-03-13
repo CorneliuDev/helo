@@ -3,6 +3,7 @@ const express = require('express');
 const { createHash } = require('crypto');
 const mysql = require('mysql');
 const path = require('path');
+const { message } = require('statuses');
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
@@ -54,6 +55,16 @@ app.post('/conectare', function(req, res) {
         if(err) throw err;
         if(Object.keys(result).length === 0) res.redirect(`/conectare?failed`);
         else res.redirect(`/index.html?connected`);
+    });
+});
+
+app.post('/fetch-data', function(req, res) {
+    con.query(`SELECT * FROM products`, function(err, result) {
+        if(err) {
+            console.log(err);
+            res.json({ message: "error"});
+        }
+        res.json({ message: result});
     });
 });
 
