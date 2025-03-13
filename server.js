@@ -58,7 +58,8 @@ app.post('/conectare', function(req, res) {
 });
 
 app.post('/fetch-data', function(req, res) {
-    con.query(`SELECT * FROM products`, function(err, result) {
+    const {offset} = req.body;
+    con.query(`SELECT * FROM products LIMIT 12 OFFSET ${offset}`, function(err, result) {
         if(err) {
             console.log(err);
             res.json({ message: "error"});

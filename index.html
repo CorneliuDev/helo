@@ -347,7 +347,7 @@
             <h1 class="font-medium text-4xl w-full">Produse populare</h1>
             <div id="products" class="grid grid-cols-[repeat(auto-fit,250px)] gap-3 mt-5 w-full justify-center">
                 <script>
-                    let actual_data;
+                    let count = 0;
                     const div = document.getElementById("products");
 
                     function fillData(item)
@@ -362,28 +362,21 @@
                         div.appendChild(product);
                     }
 
-                    fetch('/fetch-data', {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" }
-                    }).then(response => response.json())
-                    .then(data => data['message'].forEach(fillData))
-                    .catch(error => console.log(`Error:${error}`));
-                    // const div = document.getElementById("products");
-                    // for(let i = 0; i < 6; i++)
-                    // {
-                    //     const product = document.createElement('product-card');
-                    //     product.setAttribute('title', 'Samsung S20');
-                    //     product.setAttribute('link', 'https://amazon.com');
-                    //     product.setAttribute('image', 'media/images/3.jpeg');
-                    //     product.setAttribute('rating', '4.5');
-                    //     product.setAttribute('currentPrice', '120.92');
-                    //     product.setAttribute('oldPrice', '150.92');
-                    //     div.appendChild(product);
-                    // }
+                    function getProducts()
+                    {
+                        fetch('/fetch-data', {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({offset: 12*count++})
+                        }).then(response => response.json())
+                        .then(data => data['message'].forEach(fillData))
+                        .catch(error => console.log(`Error:${error}`));
+                    }
+                    getProducts();
                 </script>
             </div>
 
-            <button
+            <button onclick="getProducts()"
                 class="h-15 w-40 rounded-2xl bg-black text-xl text-white mt-7 duration-300 hover:scale-105 active:scale-95">Mai
                 multe</button>
         </section>
