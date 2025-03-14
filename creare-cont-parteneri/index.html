@@ -82,7 +82,7 @@
             if (passwordString.length >= 8) strength++;
             if (/[A-Z]/.test(passwordString) && passwordString.length >= 8) strength++;
             if (/[0-9]/.test(passwordString) && passwordString.length >= 8) strength++;
-            if (/[!@#$%^&*]/.test(passwordString) && passwordString.length >= 8) strength++;
+            if (/[!@#$%^&*?]/.test(passwordString) && passwordString.length >= 8) strength++;
 
             switch (strength) {
                 case 0:
