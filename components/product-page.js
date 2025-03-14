@@ -225,7 +225,7 @@ class ProductPage extends LitElement {
             <p class="delivery">Livrare gratuită în 2-3 zile</p>
             <div class="description">
                 <h2 class="description-title">Descriere</h2>
-                <p class="description-text">${this.description}</p>
+                ${this.description ? html`<p class="description-text">${this.description}</p>`}
             </div>
         </div>
     </section>
