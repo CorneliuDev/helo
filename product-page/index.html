@@ -7,159 +7,11 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="../style.css">
     <script type="module" src="../components/product-card.js"></script>
+    <script type="module" src="../components/product-page.js"></script>
     <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
 
-    <style>
-        .product-section {
-            display: grid;
-            grid-template-columns: 2fr 2.4fr;
-            gap: 6rem;
-            margin: 50px 0;
-            padding-inline: 1.5rem;
-        }
-        
-    
-        @media (max-width: 1024px) {
-            .product-section {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-        }
-        
-        .main-image {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            border-radius: 4%;
-            box-shadow: 0 0 20px rgba(31, 47, 84, 0.08);
-            border: 1px solid #F2F2F2;
-        }
-        
-        .small-images {
-            display: flex;
-            gap: 0.5rem;
-            padding: 0.5rem 0;
-            overflow-x: auto;
-        }
-        
-    
-        .small-images::-webkit-scrollbar {
-            height: 8px;
-        }
-        
-        .small-images::-webkit-scrollbar-thumb {
-            background: #c0c0c0;
-            border-radius: 10px;
-        }
-        
-        .the-small-image {
-            aspect-ratio: 1 / 1;
-            border-radius: 10%;
-            cursor: pointer;
-            transition: filter 0.2s ease-in-out;
-            border: 1px solid #F2F2F2;
-            height: clamp(90px, 8vw, 140px);
-        }
-        
-        .the-small-image:hover {
-            filter: brightness(0.8);
-        }
-        
-        .product-title {
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
-            font-weight: 500;
-            line-height: 1.2;
-        }
-        
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 0.5rem 0;
-            box-shadow: 0 0 20px rgba(31, 47, 84, 0.08);
-            padding: 0.2rem 1rem;
-            border-radius: 7px;
-            width: fit-content;
-        }
-        
-        .product-rating img {
-            width: 20px;
-        }
-        
-        .price-and-types {
-            border-top: 1px solid #c5c5c5;
-            border-bottom: 1px solid #c5c5c5;
-            padding: 1rem 0;
-        }
-        
-        .price-container {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .price {
-            font-size: clamp(1.5rem, 2.5vw, 2.5rem);
-            font-weight: 600;
-        }
-        
-        .old-price {
-            text-decoration: line-through;
-            color: rgb(142, 142, 142);
-        }
-        
-        .types-container {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-            overflow-x: auto;
-        }
-        
-        .type img {
-            height: 60px;
-            border-radius: 50%;
-            border: 0.5px solid #F2F2F2;
-        }
-        
-        .add-to-cart {
-            margin: 2rem 0 1rem;
-            background-color: var(--coral);
-            color: white;
-            height: 55px;
-            width: 200px;
-            font-size: 1.5rem;
-            font-weight: 500;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            border: none;
-        }
-        
-        .add-to-cart:active {
-            transform: scale(0.95);
-        }
-        
-        @media (max-width: 768px) {
-            .add-to-cart {
-                width: 100%;
-            }
-        }
-        
-        .description {
-            border: 1px solid var(--gray);
-            padding: 1rem;
-            margin: 2rem 0;
-            border-radius: 20px;
-        }
-        
-        .description-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
-        
-        </style>
+
 </head>
 
 <body class="flex flex-col max-w-screen ">
@@ -421,54 +273,14 @@
     </section>
     
     <!-- Product -->
-    <section class="product-section">
-        <div class="images-container">
-            <img src="" alt="Product Image" class="main-image">
-            <div class="small-images">
-                <img src="../media/images/1.jpeg" alt="" class="the-small-image">
-                <img src="../media/images/2.jpeg" alt="" class="the-small-image">
-                <img src="../media/images/3.jpeg" alt="" class="the-small-image">
-                <img src="../media/images/3.jpeg" alt="" class="the-small-image">
-            </div>
-        </div>
-        <div class="content-container">
-            <h1 class="product-title">Type-C Adapter TF CF SD Memory Card Reader O</h1>
-            <div class="product-rating">
-                <p>4.5/5</p>
-                <img src="../media/icons/star.svg" alt="Star Rating">
-            </div>
-            <div class="price-and-types">
-                <div class="price-container">
-                    <p class="price current-price">132.23 MDL</p>
-                    <p class="price old-price">152.24 MDL</p>
-                </div>
-                <p class="types-title">Tipuri</p>
-                <div class="types-container">
-                    <button class="type">
-                        <img src="../media/images/1.jpeg" alt="">
-                        <p>Tip1</p>
-                    </button>
-                    <button class="type">
-                        <img src="../media/images/1.jpeg" alt="">
-                        <p>Tip1</p>
-                    </button>
-                    <button class="type">
-                        <img src="../media/images/1.jpeg" alt="">
-                        <p>Tip1</p>
-                    </button>
-                </div>
-            </div>
-            <button class="add-to-cart">Adaugă în coș</button>
-            <p class="delivery">Livrare gratuită în 2-3 zile</p>
-            <div class="description">
-                <h2 class="description-title">Descriere</h2>
-                <p class="description-text">Step into elegance with our stunning Lace Maxi Dress, perfect for any
-                    special occasion. This dress features intricate lace detailing that adds a touch of
-                    sophistication and femininity. The floor-length design elongates your silhouette, while the
-                    fitted bodice and flowing skirt create a beautiful and flattering shape.</p>
-            </div>
-        </div>
-    </section>
+    <product-page 
+        title="Smartphone X1 Xiaomi Smasubisd sdvafsfd vasdvvjs"
+        currentPrice="999"
+        oldPrice="1199"
+        rating="4.7"
+        description="Un smartphone performant cu ecran OLED și cameră de 50 MP."
+    >
+    </product-page>
 
     <!-- Products -->
     <section id="popular-products"

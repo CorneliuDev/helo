@@ -1,29 +1,10 @@
-import { LitElement, html, css } from 'https://esm.sh/lit';
-
-class ProductPage extends LitElement {
-  static properties = {
-    images: { type: Array },
-    title: { type: String },
-    currentPrice: { type: String },
-    oldPrice: { type: String },
-    rating: { type: String },
-    starIcon:{type: String},
-    description: { type: String },
-
-  };
-
-  static styles = css`
-  * {
-    margin: 0;
-  }
-     .product-section {
+    <style>
+        .product-section {
             display: grid;
             grid-template-columns: 2fr 2.4fr;
             gap: 6rem;
             margin: 50px 0;
-    
-            width: 100%;
-            
+            padding-inline: 1.5rem;
         }
         
     
@@ -34,12 +15,6 @@ class ProductPage extends LitElement {
             }
         }
         
-        .images-container {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #F2F2F2;
-        }
-
         .main-image {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -71,32 +46,17 @@ class ProductPage extends LitElement {
             cursor: pointer;
             transition: filter 0.2s ease-in-out;
             border: 1px solid #F2F2F2;
-            height: clamp(90px, 8vw, 100px);
+            height: clamp(90px, 8vw, 140px);
         }
         
         .the-small-image:hover {
             filter: brightness(0.8);
         }
         
-        .content-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        @media (max-width: 768px) { 
-        .content-container {
-            padding: 0 1rem;
-            box-sizing: border-box;
-        }
-        }
-        
         .product-title {
             font-size: clamp(1.5rem, 2.5vw, 2rem);
             font-weight: 500;
             line-height: 1.2;
-            width: 100%;
-            margin: 0;
         }
         
         .product-rating {
@@ -113,9 +73,6 @@ class ProductPage extends LitElement {
         .product-rating img {
             width: 20px;
         }
-            .product-rating p {
-                margin: 0;
-            }
         
         .price-and-types {
             border-top: 1px solid #c5c5c5;
@@ -132,7 +89,6 @@ class ProductPage extends LitElement {
         .price {
             font-size: clamp(1.5rem, 2.5vw, 2.5rem);
             font-weight: 600;
-            margin: 0;
         }
         
         .old-price {
@@ -140,10 +96,20 @@ class ProductPage extends LitElement {
             color: rgb(142, 142, 142);
         }
         
-        .delivery {
-        margin:0;
+        .types-container {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+            overflow-x: auto;
         }
-
+        
+        .type img {
+            height: 60px;
+            border-radius: 50%;
+            border: 0.5px solid #F2F2F2;
+        }
+        
         .add-to-cart {
             margin: 2rem 0 1rem;
             background-color: var(--coral);
@@ -178,61 +144,41 @@ class ProductPage extends LitElement {
         .description-title {
             font-size: 1.5rem;
             font-weight: 600;
-            margin: 0;
         }
-  `;
+        
+        
+        </style>
 
-  constructor() {
-    super();
-    this.images=[
-        "../media/images/3.jpeg",
-        "../media/images/3.jpeg",
-        "../media/images/3.jpeg"];
-    this.title = '';
-    this.currentPrice = '';
-    this.oldPrice = '';
-    this.rating = '';
-    this.starIcon = new URL("../media/icons/star.svg", import.meta.url).href;
-    this.description = '';
-  }
-
-
-  render() {
-    return html`
-       <section class="product-section">
+        <section class="product-section">
         <div class="images-container">
-            <img src="${this.images[0]}" alt="Product Image" class="main-image">
+            <img src="" alt="Product Image" class="main-image">
             <div class="small-images">
-            ${this.images.map(image => html`<img src="${image}" alt="" class="the-small-image">`)}
+                <img src="../media/images/1.jpeg" alt="" class="the-small-image">
+                <img src="../media/images/2.jpeg" alt="" class="the-small-image">
+                <img src="../media/images/3.jpeg" alt="" class="the-small-image">
+                <img src="../media/images/3.jpeg" alt="" class="the-small-image">
             </div>
         </div>
         <div class="content-container">
-            <h1 class="product-title">${this.title}</h1>
+            <h1 class="product-title">Type-C Adapter TF CF SD Memory Card Reader O</h1>
             <div class="product-rating">
-                <p>${this.rating}</p>
-                <img src="${this.starIcon}" alt="Star Rating">
+                <p>4.5/5</p>
+                <img src="../media/icons/star.svg" alt="Star Rating">
             </div>
             <div class="price-and-types">
                 <div class="price-container">
-                ${this.oldPrice ?
-                    html`<p class="price current-price" style="color:#FF4363">${this.currentPrice} MDL</p>
-                    <p class="price old-price">${this.oldPrice} MDL</p>` : 
-                    html`
-                    <p class="price current-price">${this.currentPrice} MDL</p>`} 
+                    <p class="price current-price">132.23 MDL</p>
+                    <p class="price old-price">152.24 MDL</p>
                 </div>
             </div>
             <button class="add-to-cart">Adaugă în coș</button>
             <p class="delivery">Livrare gratuită în 2-3 zile</p>
             <div class="description">
                 <h2 class="description-title">Descriere</h2>
-                <p class="description-text">${this.description}</p>
+                <p class="description-text">Step into elegance with our stunning Lace Maxi Dress, perfect for any
+                    special occasion. This dress features intricate lace detailing that adds a touch of
+                    sophistication and femininity. The floor-length design elongates your silhouette, while the
+                    fitted bodice and flowing skirt create a beautiful and flattering shape.</p>
             </div>
         </div>
     </section>
-    `;
-  }
-}
-
-customElements.define('product-page', ProductPage);
-
-export default ProductPage;
