@@ -9,21 +9,172 @@
     <script type="module" src="../components/product-card.js"></script>
     <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
+
+    <style>
+        .product-section {
+            display: grid;
+            grid-template-columns: 2fr 2.4fr;
+            gap: 6rem;
+            margin: 50px 0;
+            padding-inline: 1.5rem;
+        }
+        
+    
+        @media (max-width: 1024px) {
+            .product-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        
+        .main-image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 4%;
+            box-shadow: 0 0 20px rgba(31, 47, 84, 0.08);
+            border: 1px solid #F2F2F2;
+        }
+        
+        .small-images {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            overflow-x: auto;
+        }
+        
+    
+        .small-images::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .small-images::-webkit-scrollbar-thumb {
+            background: #c0c0c0;
+            border-radius: 10px;
+        }
+        
+        .the-small-image {
+            aspect-ratio: 1 / 1;
+            border-radius: 10%;
+            cursor: pointer;
+            transition: filter 0.2s ease-in-out;
+            border: 1px solid #F2F2F2;
+            height: clamp(90px, 8vw, 140px);
+        }
+        
+        .the-small-image:hover {
+            filter: brightness(0.8);
+        }
+        
+        .product-title {
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            box-shadow: 0 0 20px rgba(31, 47, 84, 0.08);
+            padding: 0.2rem 1rem;
+            border-radius: 7px;
+            width: fit-content;
+        }
+        
+        .product-rating img {
+            width: 20px;
+        }
+        
+        .price-and-types {
+            border-top: 1px solid #c5c5c5;
+            border-bottom: 1px solid #c5c5c5;
+            padding: 1rem 0;
+        }
+        
+        .price-container {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .price {
+            font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+            font-weight: 600;
+        }
+        
+        .old-price {
+            text-decoration: line-through;
+            color: rgb(142, 142, 142);
+        }
+        
+        .types-container {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+            overflow-x: auto;
+        }
+        
+        .type img {
+            height: 60px;
+            border-radius: 50%;
+            border: 0.5px solid #F2F2F2;
+        }
+        
+        .add-to-cart {
+            margin: 2rem 0 1rem;
+            background-color: var(--coral);
+            color: white;
+            height: 55px;
+            width: 200px;
+            font-size: 1.5rem;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            border: none;
+        }
+        
+        .add-to-cart:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .add-to-cart {
+                width: 100%;
+            }
+        }
+        
+        .description {
+            border: 1px solid var(--gray);
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 20px;
+        }
+        
+        .description-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        
+        </style>
 </head>
 
-<body class="flex flex-col min-w-screen ">
+<body class="flex flex-col max-w-screen ">
     <!-- Navbar -->
     <nav class="xl:px-44 lg:px-32 md:px-18 px-3">
         <section id="pre-nav" class="flex justify-end h-7">
-            <a href="./conectare-parteneri/"><button
+            <a href="../conectare-parteneri/"><button
                     class="bg-black text-white text-sm w-34 py-1.5 cursor-pointer hover:pt-3 duration-300  rounded-b-xl">Devino
                     partener</button></a>
         </section>
         <div class="flex flex-row justify-between pt-4">
 
-            <a href="./"><img src="../media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
+            <a href="../"><img src="../media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
 
-            <form action="./cautare" id="search-bar"
+            <form action="../cautare" id="search-bar"
                 class="hidden lg:flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 mt-2 mx-5">
                 <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
                     class="w-full focus:outline-none pl-3">
@@ -33,30 +184,30 @@
 
             <div id="nav-controls" class="flex flex-row gap-1 md:gap-4">
                 <div>
-                <a href="./conectare/" id="account"
-                    class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
-                    <div
-                        class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="../media/user-icon.svg" alt="" id="account-icon" class="w-6">
-                    </div>
-                    <p>Cont</p>
-                </a>
-                <div id="drop-down-categories"
-                    class="z-10 hidden peer-hover:flex hover:flex absolute ">
-                    <div id="catergories-wrapper" class="flex-col gap-2 p-4 border-accent bg-white shadow-implicit rounded-xl mt-2 ">
-                    <a href="./conectare"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Conectează-te</p>
+                    <a href="../conectare/" id="account"
+                        class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
+                        <div
+                            class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+                            <img src="../media/user-icon.svg" alt="" id="account-icon" class="w-6">
+                        </div>
+                        <p>Cont</p>
                     </a>
+                    <div id="drop-down-categories" class="z-10 hidden peer-hover:flex hover:flex absolute ">
+                        <div id="catergories-wrapper"
+                            class="flex-col gap-2 p-4 border-accent bg-white shadow-implicit rounded-xl mt-2 ">
+                            <a href="../conectare"
+                                class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                                <p class="font-medium">Conectează-te</p>
+                            </a>
 
-                    <a href="./creare-cont"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Creează cont</p>
-                    </a>
+                            <a href="../creare-cont"
+                                class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                                <p class="font-medium">Creează cont</p>
+                            </a>
+                        </div>
                     </div>
+
                 </div>
-                
-            </div>
 
                 <!-- <a href="" id="orders"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
@@ -78,7 +229,7 @@
             </div>
         </div>
         <section id="mobile-search" class="lg:hidden flex justify-center">
-            <form action="./cautare" id="search-bar"
+            <form action="../cautare" id="search-bar"
                 class=" flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 my-2">
                 <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
                     class="w-full focus:outline-none pl-3">
@@ -88,216 +239,334 @@
         </section>
     </nav>
 
- <style>
-    .product-section {
-    display: grid;
-    grid-template-columns: 2fr 2.4fr;
-    gap: 6rem;
-    margin-block: 50px;
-    }
+    
 
-    .main-image {
-    width: 100%;
-    aspect-ratio: 1/1;
-    border-radius: 4%;
-    }
+<main class="flex flex-col max-w-screen w-full xl:px-44 lg:px-30 md:px-12 px-1 items-center overflow-hidden">
+    <!-- Categories -->
+    <section id="categories" class="flex flex-wrap md:justify-center items-center gap-10 sm:gap-2 my-2">
 
-    .small-images {
-        display: flex;
-        overflow-x:hidden;
-        gap: 0.5rem;
-        margin-block:0.5rem;
-    }
-    .the-small-image {
-        aspect-ratio: 1/1;
-        border-radius: 10%;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-    }
-.the-small-image:hover {
-    filter:brightness(0.8);
-}
-
-    .product-title {
-        font-size:2.5rem;
-        line-height: 1.2;
-    }
-
-    .product-rating {
-        display: flex;
-        gap: 0.5rem;
-        margin-block: 0.5rem;
-        box-shadow: 0 0 20px #1f2f5415;
-        width: fit-content;
-        padding: 0.2rem 1rem;
-        border-radius: 7px;
-    }
-
-    .product-rating img {
-        width: 20px;
-    }
-
-    .product-rating p {
-        font-weight: 600;
-    }
-
-    .price-and-types {
-        border: solid #c5c5c5;
-        border-width: 1px 0px 1px 0px;
-        display: flex;
-        gap: 1rem;
-    }
-
-    .price {
-        font-size: 3rem;
-        font-weight: 600;
-    }
-
-    .old-price {
-        text-decoration: line-through;
-        color:rgb(142, 142, 142);
-    }
- </style>
-
-    <main class="flex flex-col xl:px-44 lg:px-30 md:px-12 px-1">
-        <!-- Product -->
-         <section class="product-section">
-            <div class="images-container">
-                <img src="" alt="" class="main-image">
-
-                <div class="small-images">
-                    <div class="small-image">
-                        <img src="../media/images/1.jpeg" alt="" class="the-small-image">
-                    </div>
-
-                    <div class="small-image">
-                        <img src="../media/images/2.jpeg" alt="" class="the-small-image">
-                    </div>
-
-                    <div class="small-image">
-                        <img src="../media/images/3.jpeg" alt="" class="the-small-image">
-                    </div>
-
-                    <div class="small-image">
-                        <img src="../media/images/3.jpeg" alt="" class="the-small-image">
-                    </div>
-
-                </div>
-            </div>
-            <div class="content-container">
-                <h1 class="product-title">Type-C Adapter TF CF SD Memory Card Reader O</h1>
-                <div class="product-rating">
-                    <p>4.5/5
-                    </p>
-                    <img src="../media/icons/star.svg" alt="">
-                </div>
-
-                <div class="price-and-types">
-                    <div class="price-container">
-                        <p class="price current-price">132.23 MDL</p>
-                        <p class="price old-price">152.24 MDL</p>
-                    </div>
-
-                    <div class="types-container">
-                </div>
-            </div>
-         </section>
-
-        <!-- Products -->
-        <section id="popular-products" class="flex flex-col items-center justify-center w-full md:my-10 mb-12">
-            <h1 class="font-medium text-4xl w-full">Produse similare</h1>
-
-            <div id="products" class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr)] gap-1 sm:gap-3 mt-5 w-full justify-center">
-
-                <product-card link="./product-page" image="../media/images/3.jpeg"
-                    title="Smartphone XYZ 128GB  sdfsdfsf s d fsgdsgf gsdfg" currentPrice="132.23" oldPrice="152.24"
-                    rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg" title="Wireless Headphones ABC"
-                    currentPrice="99.99" rating="4.8">
-                </product-card>
-
-                <product-card link="./product-page" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
-                    currentPrice="132.23" oldPrice="152.24" rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg" title="Wireless Headphones ABC"
-                    currentPrice="99.99" rating="4.8">
-                </product-card>
-
-                <product-card link="./produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
-                    currentPrice="132.23" oldPrice="152.24" rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg" title="Wireless Headphones ABC"
-                    currentPrice="99.99" rating="4.8">
-                </product-card>
-
-                <product-card link="./produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
-                    currentPrice="132.23" oldPrice="152.24" rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg" title="Wireless Headphones ABC"
-                    currentPrice="99.99" rating="4.8">
-                </product-card>
-
-                <product-card link="./produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
-                    currentPrice="132.23" oldPrice="152.24" rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg" title="Wireless Headphones ABC"
-                    currentPrice="99.99" rating="5">
-                </product-card>
+        <!-- Toate -->
+        <div id="all-categories-container">
+            <div
+                class="flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent peer bg-[var(--blue)]">
+                <img src="../media/icons/categories/all-categories.svg" class="w-5 aspect-square invert">
+                <p class="font-medium text-white">Toate categoriile</p>
             </div>
 
-            <button
-                class="h-15 w-40 rounded-2xl bg-black text-xl text-white mt-7 duration-300 hover:scale-105 active:scale-95">Mai
-                multe</button>
-        </section>
-    </main>
+            <div id="drop-down-categories"
+                class="z-10 hidden peer-hover:flex hover:flex absolute ">
+                <div id="catergories-wrapper" class="flex-col gap-2 p-4 border-accent bg-white shadow-implicit rounded-xl mt-2 ">
+                <!-- 1. Electrocasnice -->
+                <a href="../electrocasnice"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Electrocasnice</p>
+                </a>
 
-    <!-- Footer -->
-    <footer
-        class="w-full ">
-        <!-- Logo -->
-         <div class="main-footer w-full bg-accent flex flex-col lg:flex-row items-center justify-center lg:justify-evenly p-16 lg:px-40">
-        <img src="../media/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 lg:self-start">
+                <!-- 2. Îmbrăcăminte pentru femei -->
+                <a href="../imbrăcăminte-femei"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Îmbrăcăminte pentru femei</p>
+                </a>
 
-        <!-- Links Columns -->
-        <div class="flex flex-col md:flex-row w-full lg:w-auto justify-between items-center md:items-start">
-            <!-- Meniu principal -->
-            <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
-                <p class="font-medium text-[1.3rem]">Meniu principal</p>
-                <a href="" class="text-xl text-gray-600">Acasă</a>
-                <a href="" class="text-xl text-gray-600">Produse</a>
-                <a href="" class="text-xl text-gray-600">Cont</a>
-                <a href="" class="text-xl text-gray-600">Coș</a>
-                <a href="" class="text-xl text-gray-600">Comenzi</a>
+                <!-- 3. Îmbrăcăminte pentru bărbați -->
+                <a href="../imbrăcăminte-barbați"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Îmbrăcăminte pentru bărbați</p>
+                </a>
+
+                <!-- 4. Încălțăminte -->
+                <a href="../incaltaminte"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Încălțăminte</p>
+                </a>
+
+                <!-- 5. Produse pentru casă și grădină -->
+                <a href="../casa-gradina"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Casă & Grădină</p>
+                </a>
+
+                <!-- 6. Mobilier -->
+                <a href="../mobilier"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Mobilier</p>
+                </a>
+
+                <!-- 7. Accesorii pentru telefoane mobile -->
+                <a href="../accesorii-telefoane"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Accesorii pentru telefoane mobile</p>
+                </a>
+
+                <!-- 8. Bijuterii și ceasuri -->
+                <a href="../bijuterii-ceasuri"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Bijuterii & Ceasuri</p>
+                </a>
+
+                <!-- 9. Produse de beauty și îngrijire personală -->
+                <a href="../beauty-ingrijire"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Beauty & Îngrijire Personală</p>
+                </a>
+
+                <!-- 10. Produse pentru copii și bebeluși -->
+                <a href="../produse-copii-bebelusi"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Produse pentru copii și bebeluși</p>
+                </a>
+
+                <!-- 11. Jucării -->
+                <a href="../jucarii"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Jucării</p>
+                </a>
+
+                <!-- 12. Sport și activități în aer liber -->
+                <a href="../sport-aer-liber"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Sport & Activități în aer liber</p>
+                </a>
+
+                <!-- 13. Produse de sănătate și wellness -->
+                <a href="../sanatate-wellness"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Produse de sănătate și wellness</p>
+                </a>
+
+                <!-- 14. Produse electronice (telefoane, laptopuri, tablete) -->
+                <a href="../electronice"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Produse electronice</p>
+                </a>
+
+                <!-- 15. Componente pentru computer și accesorii -->
+                <a href="../componente-pc"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Componente pentru PC</p>
+                </a>
+
+                <!-- 16. Produse pentru auto și motociclete -->
+                <a href="../auto-motociclete"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Produse auto & motociclete</p>
+                </a>
+
+                <!-- 17. Articole pentru petrecere și evenimente -->
+                <a href="../petrecere-evenimente"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Articole pentru petrecere</p>
+                </a>
+
+                <!-- 18. Produse pentru animale de companie -->
+                <a href="../pentru-animale"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Pentru animale de companie</p>
+                </a>
+
+                <!-- 19. Produse de papetărie și birou -->
+                <a href="../papetarie-birou"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Produse de papetărie</p>
+                </a>
+
+                <!-- 20. Artizanat și hobby -->
+                <a href="../artizanat-hobby"
+                    class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                    <p class="font-medium">Artizanat și hobby</p>
+                </a>
+            </div>
             </div>
 
-            <!-- Partneri -->
-            <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
-                <p class="font-medium text-[1.3rem]">Partneri</p>
-                <a href="./conectare-parteneri/" class="text-xl text-gray-600">Hub</a>
-                <a href="" class="text-xl text-gray-600">Devino partener</a>
-                <a href="" class="text-xl text-gray-600">Termeni și condiții</a>
-            </div>
+        </div>
 
-            <!-- Linkuri utile -->
-            <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
-                <p class="font-medium text-[1.3rem]">Linkuri utile</p>
-                <a href="" class="text-xl text-gray-600">FAQ</a>
-                <a href="" class="text-xl text-gray-600">Termeni și condiții</a>
-                <a href="" class="text-xl text-gray-600 text-center">Politica de confidențialitate</a>
-                <a href="" class="text-xl text-gray-600">Politica de retur</a>
+        <!-- Electrocasnice -->
+        <a href="../electrocasnice"
+            class="category-label hidden md:flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent">
+            <img src="../media/icons/categories/appliances.svg" class="w-5 aspect-square">
+            <p class="font-medium">Electrocasnice</p>
+        </a>
+
+        <!-- Modă & Accesorii -->
+        <a href="../moda-accesorii"
+            class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
+            <img src="../media/icons/categories/clothing.svg" class="w-5 aspect-square">
+            <p class="font-medium">Modă & Accesorii</p>
+        </a>
+
+        <!-- Frumusețe & Sănătate -->
+        <a href="../frumusete-sanatate"
+            class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
+            <img src="../media/icons/categories/health.svg" class="w-5 aspect-square">
+            <p class="font-medium">Frumusețe & Sănătate</p>
+        </a>
+
+        <!-- Casă & Grădină -->
+        <a href="../casa-gradina"
+            class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
+            <img src="../media/icons/categories/home-garden.svg" class="w-5 aspect-square">
+            <p class="font-medium">Casă & Grădină</p>
+        </a>
+
+        <!-- Jucării & Copii -->
+        <a href="../jucarii-copii"
+            class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
+            <img src="../media/icons/categories/toys-kids.svg" class="w-5 aspect-square">
+            <p class="font-medium">Jucării & Copii</p>
+        </a>
+
+
+
+
+    </section>
+    
+    <!-- Product -->
+    <section class="product-section">
+        <div class="images-container">
+            <img src="" alt="Product Image" class="main-image">
+            <div class="small-images">
+                <img src="../media/images/1.jpeg" alt="" class="the-small-image">
+                <img src="../media/images/2.jpeg" alt="" class="the-small-image">
+                <img src="../media/images/3.jpeg" alt="" class="the-small-image">
+                <img src="../media/images/3.jpeg" alt="" class="the-small-image">
             </div>
         </div>
-    </div>
-    <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
+        <div class="content-container">
+            <h1 class="product-title">Type-C Adapter TF CF SD Memory Card Reader O</h1>
+            <div class="product-rating">
+                <p>4.5/5</p>
+                <img src="../media/icons/star.svg" alt="Star Rating">
+            </div>
+            <div class="price-and-types">
+                <div class="price-container">
+                    <p class="price current-price">132.23 MDL</p>
+                    <p class="price old-price">152.24 MDL</p>
+                </div>
+                <p class="types-title">Tipuri</p>
+                <div class="types-container">
+                    <button class="type">
+                        <img src="../media/images/1.jpeg" alt="">
+                        <p>Tip1</p>
+                    </button>
+                    <button class="type">
+                        <img src="../media/images/1.jpeg" alt="">
+                        <p>Tip1</p>
+                    </button>
+                    <button class="type">
+                        <img src="../media/images/1.jpeg" alt="">
+                        <p>Tip1</p>
+                    </button>
+                </div>
+            </div>
+            <button class="add-to-cart">Adaugă în coș</button>
+            <p class="delivery">Livrare gratuită în 2-3 zile</p>
+            <div class="description">
+                <h2 class="description-title">Descriere</h2>
+                <p class="description-text">Step into elegance with our stunning Lace Maxi Dress, perfect for any
+                    special occasion. This dress features intricate lace detailing that adds a touch of
+                    sophistication and femininity. The floor-length design elongates your silhouette, while the
+                    fitted bodice and flowing skirt create a beautiful and flattering shape.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="popular-products"
+        class="flex flex-col border-t border-[#F2F2F2] pt-10 items-center justify-center w-full md:my-10 mb-12">
+        <h1 class="font-medium text-4xl w-full">Produse similare</h1>
+
+        <div id="products"
+            class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr)] gap-1 sm:gap-3 mt-5 w-full justify-center">
+
+            <product-card link="../product-page" image="../media/images/3.jpeg"
+                title="Smartphone XYZ 128GB  sdfsdfsf s d fsgdsgf gsdfg" currentPrice="132.23" oldPrice="152.24"
+                rating="4.5">
+            </product-card>
+
+            <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
+                title="Wireless Headphones ABC" currentPrice="99.99" rating="4.8">
+            </product-card>
+
+            <product-card link="../product-page" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
+                currentPrice="132.23" oldPrice="152.24" rating="4.5">
+            </product-card>
+
+            <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
+                title="Wireless Headphones ABC" currentPrice="99.99" rating="4.8">
+            </product-card>
+
+            <product-card link="../produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
+                currentPrice="132.23" oldPrice="152.24" rating="4.5">
+            </product-card>
+
+            <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
+                title="Wireless Headphones ABC" currentPrice="99.99" rating="4.8">
+            </product-card>
+
+            <product-card link="../produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
+                currentPrice="132.23" oldPrice="152.24" rating="4.5">
+            </product-card>
+
+            <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
+                title="Wireless Headphones ABC" currentPrice="99.99" rating="4.8">
+            </product-card>
+
+            <product-card link="../produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
+                currentPrice="132.23" oldPrice="152.24" rating="4.5">
+            </product-card>
+
+            <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
+                title="Wireless Headphones ABC" currentPrice="99.99" rating="5">
+            </product-card>
+        </div>
+
+        <button
+            class="h-15 w-40 rounded-2xl bg-black text-xl text-white mt-7 duration-300 hover:scale-105 active:scale-95">Mai
+            multe</button>
+    </section>
+</main>
+
+    <!-- Footer -->
+    <footer class="w-full overflow-hidden">
+        <!-- Logo -->
+        <div
+            class="main-footer w-full bg-accent flex flex-col xl:flex-row items-center justify-center xl:justify-evenly p-16 lg:px-40">
+            <img src="../media/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 xl:self-start">
+
+            <!-- Links Columns -->
+            <div class="flex flex-col md:flex-row w-full lg:w-auto justify-between items-center md:items-start">
+                <!-- Meniu principal -->
+                <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
+                    <p class="font-medium text-[1.3rem]">Meniu principal</p>
+                    <a href="" class="text-xl text-gray-600">Acasă</a>
+                    <a href="" class="text-xl text-gray-600">Produse</a>
+                    <a href="" class="text-xl text-gray-600">Cont</a>
+                    <a href="" class="text-xl text-gray-600">Coș</a>
+                    <a href="" class="text-xl text-gray-600">Comenzi</a>
+                </div>
+
+                <!-- Partneri -->
+                <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
+                    <p class="font-medium text-[1.3rem]">Partneri</p>
+                    <a href="../conectare-parteneri/" class="text-xl text-gray-600">Hub</a>
+                    <a href="" class="text-xl text-gray-600">Devino partener</a>
+                    <a href="" class="text-xl text-gray-600">Termeni și condiții</a>
+                </div>
+
+                <!-- Linkuri utile -->
+                <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
+                    <p class="font-medium text-[1.3rem]">Linkuri utile</p>
+                    <a href="" class="text-xl text-gray-600">FAQ</a>
+                    <a href="" class="text-xl text-gray-600">Termeni și condiții</a>
+                    <a href="" class="text-xl text-gray-600 text-center sm:text-left">Politica de confidențialitate</a>
+                    <a href="" class="text-xl text-gray-600">Politica de retur</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
     </footer>
 
-    
+
     <script src="./script.js"></script>
 
 </body>
