@@ -50,7 +50,7 @@
     color: white;
 }
 
-.category-radio:checked + .category-label img {
+.category-radio {
     filter: brightness(0) invert(1);
 }
 

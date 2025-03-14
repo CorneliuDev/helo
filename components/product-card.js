@@ -7,7 +7,8 @@ class ProductCard extends LitElement {
     title: { type: String },
     currentPrice: { type: String },
     oldPrice: { type: String },
-    rating: { type: String }
+    rating: { type: String },
+    starIcon:{type: String}
   };
 
   static styles = css`
@@ -58,7 +59,7 @@ class ProductCard extends LitElement {
 
     .current-price {
       font-weight: 600;
-      font-size: clamp(1rem, 4vw, 1.6em);
+      font-size: clamp(1rem, 5vw, 1.6em);
       color: #ff4363;
     }
 
@@ -80,7 +81,7 @@ class ProductCard extends LitElement {
     }
 
     .product-title {
-      font-size: clamp(0.9em, vw, 1.2em);
+      font-size: clamp(0.9em, 4vw, 1.2em);
       line-height: 1.2;
       margin: 0;
       white-space: nowrap;
@@ -116,7 +117,7 @@ class ProductCard extends LitElement {
       height: clamp(12px, 1.2vw, 16px);
     }
 
-    button {
+    .add-to-cart {
       font-size: clamp(0.8em, 3vw, 1.2em);
       aspect-ratio: 3 / 1.2;
       width: 42%;
@@ -126,6 +127,7 @@ class ProductCard extends LitElement {
       transition: transform 0.15s;
       border: solid 0.5px #f2f2f2;
       z-index: 1;
+      cursor: pointer;
     }
 
     button:active {
@@ -141,7 +143,10 @@ class ProductCard extends LitElement {
     this.currentPrice = '';
     this.oldPrice = '';
     this.rating = '';
+    this.starIcon = new URL("../media/icons/star.svg", import.meta.url).href;
+
   }
+
 
   render() {
     return html`
@@ -164,9 +169,9 @@ class ProductCard extends LitElement {
               ${this.rating == 5
                 ? html`<p style="color: #ff4363 !important; font-weight: 500">${this.rating}</p>`
                 : html`<p>${this.rating}</p>`}
-              <img src="media/icons/star.svg" alt="Star" />
+              <img src="${this.starIcon}" alt="Star" />
             </div>
-            <button>În coș</button>
+            <!-- <button class="add-to-cart">În coș</button> -->
           </div>
         </div>
       </a>
