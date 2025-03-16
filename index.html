@@ -368,7 +368,7 @@
                         fetch('/fetch-data', {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({offset: 12*count++})
+                            body: JSON.stringify({offset: 20*count++})
                         }).then(response => response.json())
                         .then(data => data['message'].forEach(fillData))
                         .catch(error => console.log(`Error:${error}`));

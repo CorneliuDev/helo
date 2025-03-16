@@ -61,7 +61,7 @@ app.post('/conectare', function(req, res) {
 
 app.post('/fetch-data', function(req, res) {
     const {offset} = req.body;
-    con.query(`SELECT * FROM products LIMIT 12 OFFSET ${offset}`, function(err, result) {
+    con.query(`SELECT * FROM products LIMIT 20 OFFSET ${offset}`, function(err, result) {
         if(err) {
             console.log(err);
             res.json({ message: "error"});
@@ -75,6 +75,11 @@ app.post('/search-data', function(req, res) {
     client.index('products').search(query).then((data) => {
         res.json(data['hits']);
     });
+});
+
+app.get('/categories/', function(req, res) {
+    console.log('hello');
+    res.json({message: "success"});
 });
 
 app.listen(8080);
