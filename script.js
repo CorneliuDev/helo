@@ -27,6 +27,18 @@ let slideIndex = 1;
             let translateValue = -(slideIndex - 1)*(100/slides.length);
             wrapper.style.transform = `translateX(${translateValue}%)`;
         }
+
+        
+        let wrapper = document.querySelector("#slides-wrapper");
+        wrapper.addEventListener("mouseover", () =>  {
+           
+        })
+
+        function autoSlides() {
+            changeSlides(1);
+        }
+        setTimeout(setInterval(autoSlides, 3000),2000);
+        
 //_____________________________________________________________________________________________________________________________________________________________
 //_____________________________________________________________________________________________________________________________________________________________
 
