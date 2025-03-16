@@ -270,31 +270,25 @@
 
 
     </section>
-    
-    <style>
-        #cart-section {
-            background-color: #F9F9F9;
-            min-height: 300px;
-            width: 100%;
-            border-radius: clamp(6px, 10vw,30px);
-            margin-inline: 100px;
-        }
-    </style>
 
-    <section id="cart-section">
-        dsfsdf
+
+<style></style>
+
+    <section id="cart-section" class="bg-[#F9F9F9] w-full p-8 mt-10 rounded-3xl min-h-[300px] border border-[#F2F2F2]">
+        <h1 id="cart-title" class="font-semibold text-2xl sm:text-3xl leading-none">Coș de cumpărături</h1>
+        <div id="cart-box" class="mt-10 grid grid-cols-auto-1fr">
+            <div class="cart-items-wrapper">
+                <div id="select-and-delete" class="flex justify-between p-4 w-full h-14 bg-white rounded-xl">
+                    <div class="flex gap-2 items-center">
+                        <input type="checkbox" class="w-5 h-5 border-2">
+                    <label for="select-all" class="flex gap-2 items-center cursor-pointer font-medium">Selectează toate</label></div>
+
+                </div>
+                <div class="cart-items"></div>
+            </div>
+            <div class="cart-summary"></div>
+        </div>
     </section>
-
-
-    <!-- Product -->
-    <product-page 
-        title="Smartphone X1 Xiaomi Smasubisd sdvafsfd vasdvvjs"
-        currentPrice="999"
-        oldPrice="1199"
-        rating="4.7"
-        description="Un smartphone performant cu ecran OLED și cameră de 50 MP."
-    >
-    </product-page>
 
     <!-- Products -->
     <section id="popular-products"
