@@ -37,7 +37,7 @@ class ProductPage extends LitElement {
         .images-container {
             display: flex;
             flex-direction: column;
-            border: 1px solid #F2F2F2;
+            
         }
 
         .main-image {
@@ -185,8 +185,8 @@ class ProductPage extends LitElement {
   constructor() {
     super();
     this.images=[
-        "../media/images/3.jpeg",
-        "../media/images/3.jpeg",
+        "../media/images/1.jpeg",
+        "../media/images/2.jpeg",
         "../media/images/3.jpeg"];
     this.title = '';
     this.currentPrice = '';
@@ -195,6 +195,21 @@ class ProductPage extends LitElement {
     this.starIcon = new URL("../media/icons/star.svg", import.meta.url).href;
     this.description = '';
   }
+
+  firstUpdated() {
+    const smallImages = this.shadowRoot.querySelectorAll(".the-small-image");
+    const mainImage = this.shadowRoot.querySelector(".main-image");
+
+    if (smallImages.length > 0) {
+        mainImage.src = smallImages[0].src;
+    }
+
+    smallImages.forEach(image => {
+        image.addEventListener("click", () => {
+            mainImage.src = image.src;
+        });
+    });
+}
 
 
   render() {
@@ -225,7 +240,7 @@ class ProductPage extends LitElement {
             <p class="delivery">Livrare gratuită în 2-3 zile</p>
             <div class="description">
                 <h2 class="description-title">Descriere</h2>
-                ${this.description ? html`<p class="description-text">${this.description}</p>`}
+                ${this.description ? html`<p class="description-text">${this.description}</p>` : html``}
             </div>
         </div>
     </section>
