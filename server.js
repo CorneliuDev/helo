@@ -3,6 +3,7 @@ const express = require('express');
 const { createHash } = require('crypto');
 const mysql = require('mysql');
 const path = require('path');
+const meili = require('meilisearch');
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
@@ -16,15 +17,16 @@ const con = mysql.createConnection({
     database: db
 });
 
+const client = new meili.MeiliSearch({
+    host: "http://localhost:7700",
+    apiKey: "yHx0xwwnFxoGEDs5jMAt"
+});
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/')));
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
 
 app.post('/creare-cont', function(req, res) {
     const nume = req.body.nume;
@@ -65,6 +67,13 @@ app.post('/fetch-data', function(req, res) {
             res.json({ message: "error"});
         }
         res.json({ message: result});
+    });
+});
+
+app.post('/search-data', function(req, res) {
+    const {query} = req.body;
+    client.index('products').search(query).then((data) => {
+        res.json(data['hits']);
     });
 });
 
