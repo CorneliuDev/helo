@@ -82,4 +82,10 @@ app.get('/categories/', function(req, res) {
     res.json({message: "success"});
 });
 
+app.get('/product-page/:id', function(req, res) {
+    const productID = req.params.id;
+    console.log(productID);
+    res.sendFile(path.join(__dirname, '/product-page/index.html'));
+});
+
 app.listen(8080);
