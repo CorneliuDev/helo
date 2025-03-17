@@ -80,11 +80,6 @@ app.post('/search-data', function(req, res) {
     });
 });
 
-app.get('/categories/', function(req, res) {
-    console.log('hello');
-    res.json({message: "success"});
-});
-
 app.get('/product/:id', function(req, res) {
     const productID = req.params.id;
     con.query(`SELECT * FROM products WHERE id_product=${productID}`, function(err, result) {
