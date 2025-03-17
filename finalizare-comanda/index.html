@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../style.css">
+    <script type="module" src="../components/checkout-item.js"></script>
+    <script type="module" src="../components/product-card.js"></script>
+    <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
+    <title>Helo - Orice produs la un click distanță</title>
+</head>
+
+<body class="flex flex-col max-w-screen ">
+
+    <!-- Navbar -->
+    <nav class="xl:px-44 lg:px-32 md:px-18 px-3">
+        <section id="pre-nav" class="flex justify-end h-7">
+            <a href="../conectare-parteneri/"><button
+                    class="bg-black text-white text-sm w-34 py-1.5 cursor-pointer hover:pt-3 duration-300  rounded-b-xl">Devino
+                    partener</button></a>
+        </section>
+        <div class="flex flex-row justify-between pt-4">
+
+            <a href="../"><img src="../media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
+
+            <form action="../cautare" id="search-bar"
+                class="hidden lg:flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 mt-2 mx-5">
+                <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
+                    class="w-full focus:outline-none pl-3">
+                <input type="submit" value="Caută" id="submit"
+                    class="bg-[var(--coral)] text-white w-32 rounded-full active:scale-95 ">
+            </form>
+
+            <div id="nav-controls" class="flex flex-row gap-1 md:gap-4">
+                <div>
+                    <a href="../conectare/" id="account"
+                        class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
+                        <div
+                            class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+                            <img src="../media/user-icon.svg" alt="" id="account-icon" class="w-6">
+                        </div>
+                        <p>Cont</p>
+                    </a>
+                    <div id="drop-down-categories" class="z-10 hidden peer-hover:flex hover:flex absolute ">
+                        <div id="catergories-wrapper"
+                            class="flex-col gap-2 p-4 border-accent bg-white shadow-implicit rounded-xl mt-2 ">
+                            <a href="../conectare"
+                                class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                                <p class="font-medium">Conectează-te</p>
+                            </a>
+
+                            <a href="../creare-cont"
+                                class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
+                                <p class="font-medium">Creează cont</p>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <a href="" id="orders"
+                    class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
+                    <div
+                        class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+                        <img src="../media/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
+                    </div>
+                    <p>Comenzi</p>
+                </a> -->
+
+                <a href="" id="cart"
+                    class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
+                    <div
+                        class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+                        <img src="../media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
+                    </div>
+                    <p>Coș</p>
+                </a>
+            </div>
+        </div>
+        <section id="mobile-search" class="lg:hidden flex justify-center">
+            <form action="../cautare" id="search-bar"
+                class=" flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 my-2">
+                <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
+                    class="w-full focus:outline-none pl-3">
+                <input type="submit" value="Caută" id="submit"
+                    class="bg-[var(--coral)] text-white w-32 rounded-full active:scale-95 ">
+            </form>
+        </section>
+    </nav>
+
+    <main class="flex flex-col max-w-screen w-full xl:px-44 lg:px-30 md:px-12 px-1 items-center overflow-hidden mb-10">
+        <div id="error-modal" class="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] p-4 top-0 left-0 z-10 hidden">
+            <div class="w-96 bg-white rounded-xl p-6 text-center">
+                <h2 class="text-xl font-semibold mb-4">Adresa și metoda de plată sunt obligatorii!</h2>
+                <button onclick="getElementById('error-modal').classList.add('hidden')" id="close-error-modal" class="bg-[var(--coral)] text-white rounded-xl px-6 py-2">OK</button>
+            </div>
+        </div>
+        
+
+        <section id="cart-section"
+            class="bg-[#F9F9F9] w-full p-8 mt-10 rounded-3xl min-h-[300px] border border-[#F2F2F2]">
+            <h1 id="cart-title" class="font-semibold text-2xl sm:text-3xl leading-none">Spre plată</h1>
+            <div id="cart-box" class="mt-10 grid grid-cols-1 lg:grid-cols-[1fr_minmax(250px,400px)] w-full gap-4">
+                <div class="flex flex-col gap-4">
+
+                    <!-- Add address -->
+                    <div>
+                        <div id="delivery-address"
+                            class="w-full min-h-56 bg-white rounded-xl flex flex-col justify-between p-5">
+                            <h1 class="text-2xl font-semibold">Adresa de livrare</h1>
+                            <div id="addresses-container"></div>
+                            <button id="add-address"
+                                class="p-3 w-36 rounded-xl bg-[var(--coral)] text-lg text-white mt-7 duration-300 active:scale-95">Adaugă
+                                adresă</button>
+                        </div>
+
+                        <div id="add-address-modal"
+                            class="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.1)] p-4 top-0 left-0 z-10 hidden">
+                            <div
+                                class="w-lg flex justify-center items-center bg-white rounded-3xl border-accent flex-col p-4">
+                                <div class="w-full flex justify-between">
+                                    <p class="text-xl font-semibold">Adaugă adresa nouă</p>
+                                    <button id="close-address-modal"
+                                        class="rotate-45 h-6 w-6 cursor-pointer bg-[url('../media/icons/plus.svg')] bg-cover bg-center"></button>
+                                </div>
+                                <form action="" id="address-form" class="w-full flex flex-col items-center gap-4 mt-4">
+                                    <input id="city" type="text" name="address" placeholder="Localitate"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4"
+                                        required>
+                                    <input id="street" type="text" name="address" placeholder="Stradă"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4"
+                                        required>
+                                    <input id="block" type="text" name="address" placeholder="Bloc"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4"
+                                        required>
+                                    <input id="apartment" type="text" name="address" placeholder="Apartament"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4"
+                                        required>
+                                    <input id="postal" type="text" name="address" placeholder="Cod poștal"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4"
+                                        required>
+                                    <input id="submit" value="Adaugă" type="submit" name="address" id="save-address"
+                                        class="h-12 w-36  rounded-xl bg-[var(--coral)] text-lg text-white mt-7 duration-300 active:scale-95">
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Payment method -->
+                    <div>
+                        <!-- Payment Method Section -->
+                        <div id="payment-method"
+                            class="w-full min-h-56 bg-white rounded-xl flex flex-col justify-between p-5">
+                            <h1 class="text-2xl font-semibold">Metoda de plată</h1>
+                            <div id="payment-options-container"></div>
+                            <button id="add-payment-method"
+                                class=" p-3 max-w-72 rounded-xl bg-[var(--coral)] text-lg text-white mt-7 duration-300 active:scale-95">Adaugă
+                                metodă de plată</button>
+                        </div>
+                    
+                        <!-- Add Payment Method Modal -->
+                        <div id="add-payment-method-modal"
+                            class="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.1)] p-4 top-0 left-0 z-10 hidden">
+                            <div
+                                class="w-lg flex justify-center items-center bg-white rounded-3xl border-accent flex-col p-4">
+                                <div class="w-full flex justify-between">
+                                    <p class="text-xl font-semibold">Adaugă metodă de plată nouă</p>
+                                    <button id="close-payment-method-modal"
+                                        class="rotate-45 h-6 w-6 cursor-pointer bg-[url('../media/icons/plus.svg')] bg-cover bg-center"></button>
+                                </div>
+                                <form action="" id="payment-method-form" class="w-full flex flex-col items-center gap-4 mt-4">
+                                    <input id="card-holder" type="text" name="card-holder" placeholder="Nume titular card"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4" required>
+                                    <input id="card-number" type="text" name="card-number" placeholder="Număr card"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4" required>
+                                    <input id="expiration-date" type="text" name="expiration-date" placeholder="Data expirării"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4" required>
+                                    <input id="cvv" type="text" name="cvv" placeholder="CVV"
+                                        class="border border-gray-200 w-full rounded-xl focus:outline-none p-3 px-4" required>
+                                    <input id="submit-payment" value="Adaugă" type="submit" name="payment-method" id="save-payment-method"
+                                        class="h-12 w-36  rounded-xl bg-[var(--coral)] text-lg text-white mt-7 duration-300 active:scale-95">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+
+                <!-- Cart Summary Section -->
+                <div id="cart-summary" class="w-full min-h-96 bg-white rounded-xl flex flex-col justify-between p-5">
+                    <h1 class=" text-2xl font-semibold">Rezumat comandă</h1>
+                    <div>
+                        <checkout-item image="../media/images/3.jpeg"
+                            title="Smartphone XYZ 128GB 16GB RAM Snaprdagon Smartphone XYZ 128GB 16GB RAM Snaprdagon"
+                            currentPrice="132.23" oldPrice="152.24" rating="4.5" quantity="1">
+                        </checkout-item>
+                    </div>
+
+                    <div class="w-full ">
+                        <div class="flex justify-between">
+                            <p>Subtotal</p>
+                            <p>132.23 MDL</p>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <p class="font-semibold text-xl">Total</p>
+                            <div class="font-semibold text-xl flex">
+                                <p id="total-price">132.23</p> <span id="currency" class="ml-1">MDL</span>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-[1px] bg-[#F2F2F2]"></div>
+                        <button id="finish-order"
+                            class="h-14 cursor-pointer w-full p-0 rounded-2xl bg-[var(--coral)] text-xl text-white mt-7 duration-300 active:scale-99">
+                            Finalizează comanda
+                        </button>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full overflow-hidden">
+        <!-- Logo -->
+        <div
+            class="main-footer w-full bg-accent flex flex-col xl:flex-row items-center justify-center xl:justify-evenly p-16 lg:px-40">
+            <img src="../media/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 xl:self-start">
+
+            <!-- Links Columns -->
+            <div class="flex flex-col md:flex-row w-full lg:w-auto justify-between items-center md:items-start">
+                <!-- Meniu principal -->
+                <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
+                    <p class="font-medium text-[1.3rem]">Meniu principal</p>
+                    <a href="" class="text-xl text-gray-600">Acasă</a>
+                    <a href="" class="text-xl text-gray-600">Produse</a>
+                    <a href="" class="text-xl text-gray-600">Cont</a>
+                    <a href="" class="text-xl text-gray-600">Coș</a>
+                    <a href="" class="text-xl text-gray-600">Comenzi</a>
+                </div>
+
+                <!-- Partneri -->
+                <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
+                    <p class="font-medium text-[1.3rem]">Partneri</p>
+                    <a href="../conectare-parteneri/" class="text-xl text-gray-600">Hub</a>
+                    <a href="" class="text-xl text-gray-600">Devino partener</a>
+                    <a href="" class="text-xl text-gray-600">Termeni și condiții</a>
+                </div>
+
+                <!-- Linkuri utile -->
+                <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
+                    <p class="font-medium text-[1.3rem]">Linkuri utile</p>
+                    <a href="" class="text-xl text-gray-600">FAQ</a>
+                    <a href="" class="text-xl text-gray-600">Termeni și condiții</a>
+                    <a href="" class="text-xl text-gray-600 text-center sm:text-left">Politica de confidențialitate</a>
+                    <a href="" class="text-xl text-gray-600">Politica de retur</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
+    </footer>
+
+    <script src="./script.js"></script>
+
+
+</body>
+
+</html>
