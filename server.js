@@ -14,7 +14,8 @@ const con = mysql.createConnection({
     host: host,
     user: user,
     password: pass,
-    database: db
+    database: db,
+    multipleStatements: true
 });
 
 const client = new meili.MeiliSearch({
@@ -79,27 +80,49 @@ app.post('/search-data', function(req, res) {
     });
 });
 
-app.get('/product/:id', function(req, res) {
+app.get('/product/:id', async function(req, res) {
     const productID = req.params.id;
-    con.query(`SELECT * FROM products WHERE id_product=${productID}`, function(err, result) {
+    con.query(`SELECT * FROM products WHERE id_product=${productID}; select * from products where id_category=(SELECT id_category FROM products where id_product=${productID}) and id_product != ${productID} limit 12`, (err, results, fields) => {
         if(err) {
             console.log(err);
             throw err;
         }
-        result = result[0];
-        images = result['image'].split(';');
+        const product = results[0][0];
+        const similar = results[1];
+        images = product['image'].split(';');
         images.forEach((element, index) => {
             images[index] = `../media/images/${element}`;
         });
         res.render('product', {
-            title: result['title'],
-            currentPrice: result['currentPrice'],
-            oldPrice: result['oldPrice'],
-            rating: result['rating'],
-            description: result['description'],
-            images: images
+            title: product['title'],
+            currentPrice: product['currentPrice'],
+            oldPrice: product['oldPrice'],
+            rating: product['rating'],
+            description: product['description'],
+            images: images,
+            similarProducts: similar
         });
     });
+    // con.query(`SELECT * FROM products WHERE id_product=${productID}`, function(err, result) {
+    //     if(err) {
+    //         console.log(err);
+    //         throw err;
+    //     }
+    //     result = result[0];
+    //     images = result['image'].split(';');
+    //     images.forEach((element, index) => {
+    //         images[index] = `../media/images/${element}`;
+    //     });
+    //     res.render('product', {
+    //         title: result['title'],
+    //         currentPrice: result['currentPrice'],
+    //         oldPrice: result['oldPrice'],
+    //         rating: result['rating'],
+    //         description: result['description'],
+    //         images: images,
+    //         similarProducts: []
+    //     });
+    // });
 });
 
 app.listen(8080);
