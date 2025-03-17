@@ -103,26 +103,6 @@ app.get('/product/:id', async function(req, res) {
             similarProducts: similar
         });
     });
-    // con.query(`SELECT * FROM products WHERE id_product=${productID}`, function(err, result) {
-    //     if(err) {
-    //         console.log(err);
-    //         throw err;
-    //     }
-    //     result = result[0];
-    //     images = result['image'].split(';');
-    //     images.forEach((element, index) => {
-    //         images[index] = `../media/images/${element}`;
-    //     });
-    //     res.render('product', {
-    //         title: result['title'],
-    //         currentPrice: result['currentPrice'],
-    //         oldPrice: result['oldPrice'],
-    //         rating: result['rating'],
-    //         description: result['description'],
-    //         images: images,
-    //         similarProducts: []
-    //     });
-    // });
 });
 
 app.listen(8080);
