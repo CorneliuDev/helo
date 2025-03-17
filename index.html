@@ -354,7 +354,7 @@
                     {
                         const product = document.createElement('product-card');
                         product.setAttribute('title', item['title']);
-                        product.setAttribute('link', item['link']);
+                        product.setAttribute('link', `/product/${item['id_product']}`);
                         product.setAttribute('image', item['image']);
                         product.setAttribute('rating', item['rating']);
                         product.setAttribute('currentPrice', item['currentPrice']);
