@@ -8,3 +8,4 @@ services:
       - './meili_data:/meili_data'
     environment:
       - MEILI_MASTER_KEY=yHx0xwwnFxoGEDs5jMAt
+    restart: unless-stopped
