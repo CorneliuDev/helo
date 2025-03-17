@@ -61,7 +61,7 @@
 
                 </div>
 
-                <a href="" id="cart"
+                <a href="../cart/" id="cart"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
@@ -269,7 +269,8 @@
         currentPrice="<%= currentPrice %>"
         oldPrice="<%= oldPrice %>"
         rating="<%= rating %>"
-        description="<%= description %>">
+        description="<%= description %>"
+        images="<%= JSON.stringify(images) %>">
     </product-page>
 
     <!-- Products -->
@@ -367,17 +368,6 @@
         </div>
         <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
     </footer>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const product = document.querySelector("product-page");
-            product.images=[
-        "../media/images/1.jpeg",
-        "../media/images/2.jpeg",
-        "../media/images/3.jpeg"];
-        });
-    </script>
 
 </body>
 

@@ -87,12 +87,17 @@ app.get('/product/:id', function(req, res) {
             throw err;
         }
         result = result[0];
+        images = result['image'].split(';');
+        images.forEach((element, index) => {
+            images[index] = `../media/images/${element}`;
+        });
         res.render('product', {
             title: result['title'],
             currentPrice: result['currentPrice'],
             oldPrice: result['oldPrice'],
             rating: result['rating'],
-            description: result['description']
+            description: result['description'],
+            images: images
         });
     });
 });

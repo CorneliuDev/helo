@@ -184,10 +184,6 @@ class ProductPage extends LitElement {
 
   constructor() {
     super();
-    this.images=[
-        "../media/images/1.jpeg",
-        "../media/images/2.jpeg",
-        "../media/images/3.jpeg"];
     this.title = '';
     this.currentPrice = '';
     this.oldPrice = '';
