@@ -4,7 +4,6 @@ const { createHash } = require('crypto');
 const mysql = require('mysql');
 const path = require('path');
 const meili = require('meilisearch');
-const { title } = require('process');
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
