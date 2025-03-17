@@ -4,6 +4,7 @@ const { createHash } = require('crypto');
 const mysql = require('mysql');
 const path = require('path');
 const meili = require('meilisearch');
+const { title } = require('process');
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
@@ -27,6 +28,8 @@ const app = express();
 app.use(express.static(path.join(__dirname, '/')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.post('/creare-cont', function(req, res) {
     const nume = req.body.nume;
@@ -82,10 +85,22 @@ app.get('/categories/', function(req, res) {
     res.json({message: "success"});
 });
 
-app.get('/product-page/:id', function(req, res) {
+app.get('/product/:id', function(req, res) {
     const productID = req.params.id;
-    console.log(productID);
-    res.sendFile(path.join(__dirname, '/product-page/index.html'));
+    con.query(`SELECT * FROM products WHERE id_product=${productID}`, function(err, result) {
+        if(err) {
+            console.log(err);
+            throw err;
+        }
+        result = result[0];
+        res.render('product', {
+            title: result['title'],
+            currentPrice: result['currentPrice'],
+            oldPrice: result['oldPrice'],
+            rating: result['rating'],
+            description: result['description']
+        });
+    });
 });
 
 app.listen(8080);
