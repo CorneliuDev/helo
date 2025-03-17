@@ -454,15 +454,7 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const product = document.querySelector("product-page");
-            product.images = [
-                "../media/images/1.jpeg",
-                "../media/images/2.jpeg",
-                "../media/images/3.jpeg"];
-        });
-
-        const cuponButton = document.querySelector("#apply-cupon");
+    const cuponButton = document.querySelector("#apply-cupon");
 
         cuponButton.addEventListener("click", () => {
             const cupon = document.querySelector("#coupon").value.trim();
