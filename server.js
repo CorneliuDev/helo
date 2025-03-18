@@ -105,4 +105,15 @@ app.get('/product/:id', async function(req, res) {
     });
 });
 
+app.get('*', function(req, res) {
+    const location = req.path.toLowerCase().substring(1);
+    con.query(`select * from products where id_category=(SELECT id_category from categories where category='${location}');`, function(err, result) {
+        if(err) {
+            console.log(err);
+            throw err;
+        }
+        res.render('category', {products: result});
+    });
+});
+
 app.listen(8080);
