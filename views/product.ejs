@@ -281,7 +281,7 @@
         <div id="products"
             class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr)] gap-1 sm:gap-3 mt-5 w-full justify-center">
             <% similarProducts.forEach(item => { %>
-                <product-card title="<%= item.title %>" currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice %>"
+                <product-card title="<%= item.title %>" currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice != null ? item.oldPrice : '' %>"
                     rating="<%= item.rating %>" link="/product/<%= item.id_product %>" image="../media/images/<%= item.image.split(';')[0] %>">
 
                 </product-card>

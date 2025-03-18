@@ -358,7 +358,8 @@
                         product.setAttribute('image', `/media/images/${item['image'].split(';')[0]}`);
                         product.setAttribute('rating', item['rating']);
                         product.setAttribute('currentPrice', item['currentPrice']);
-                        product.setAttribute('oldPrice', item['oldPrice']);
+                        if(item['oldPrice'] != null)
+                            product.setAttribute('oldPrice', item['oldPrice']);
                         div.appendChild(product);
                     }
 
