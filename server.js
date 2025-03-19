@@ -31,6 +31,16 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.get('/', function(req, res) {
+    con.query('SELECT * FROM categories', function(err, result) {
+        if(err) {
+            console.log(err);
+            throw err;
+        }
+        res.render('main', {categories: result});
+    });
+});
+
 app.post('/creare-cont', function(req, res) {
     const nume = req.body.nume;
     const user = req.body.email;
@@ -58,7 +68,7 @@ app.post('/conectare', function(req, res) {
     con.query(`SELECT id_user FROM users WHERE email='${email}' and password='${hash}'`, function(err, result) {
         if(err) throw err;
         if(Object.keys(result).length === 0) res.redirect(`/conectare?failed`);
-        else res.redirect(`/index.html?connected`);
+        else res.redirect('/?connected');
     });
 });
 
@@ -102,6 +112,17 @@ app.get('/product/:id', async function(req, res) {
             images: images,
             similarProducts: similar
         });
+    });
+});
+
+app.get('*', function(req, res) {
+    const location = req.path.toLowerCase().substring(1);
+    con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}');`, function(err, result) {
+        if(err) {
+            console.log(err);
+            throw err;
+        }
+        res.render('category', {products: result});
     });
 });
 
