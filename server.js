@@ -31,6 +31,16 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.get('/', function(req, res) {
+    con.query('SELECT * FROM categories', function(err, result) {
+        if(err) {
+            console.log(err);
+            throw err;
+        }
+        res.render('main', {categories: result});
+    });
+});
+
 app.post('/creare-cont', function(req, res) {
     const nume = req.body.nume;
     const user = req.body.email;
@@ -107,7 +117,7 @@ app.get('/product/:id', async function(req, res) {
 
 app.get('*', function(req, res) {
     const location = req.path.toLowerCase().substring(1);
-    con.query(`select * from products where id_category=(SELECT id_category from categories where category='${location}');`, function(err, result) {
+    con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}');`, function(err, result) {
         if(err) {
             console.log(err);
             throw err;
