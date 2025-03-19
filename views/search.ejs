@@ -98,125 +98,12 @@
                 <div id="drop-down-categories"
                     class="z-10 hidden peer-hover:flex hover:flex absolute ">
                     <div id="catergories-wrapper" class="flex-col gap-2 p-4 border-accent bg-white shadow-implicit rounded-xl mt-2 ">
-                    <!-- 1. Electrocasnice -->
-                    <a href="../electrocasnice"
+                    <% categories.forEach(item => { %>
+                        <a href="/<%= item.route %>"
                         class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Electrocasnice</p>
-                    </a>
-
-                    <!-- 2. Îmbrăcăminte pentru femei -->
-                    <a href="../imbrăcăminte-femei"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Îmbrăcăminte pentru femei</p>
-                    </a>
-
-                    <!-- 3. Îmbrăcăminte pentru bărbați -->
-                    <a href="../imbrăcăminte-barbați"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Îmbrăcăminte pentru bărbați</p>
-                    </a>
-
-                    <!-- 4. Încălțăminte -->
-                    <a href="../incaltaminte"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Încălțăminte</p>
-                    </a>
-
-                    <!-- 5. Produse pentru casă și grădină -->
-                    <a href="../casa-gradina"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Casă & Grădină</p>
-                    </a>
-
-                    <!-- 6. Mobilier -->
-                    <a href="../mobilier"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Mobilier</p>
-                    </a>
-
-                    <!-- 7. Accesorii pentru telefoane mobile -->
-                    <a href="../accesorii-telefoane"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Accesorii pentru telefoane mobile</p>
-                    </a>
-
-                    <!-- 8. Bijuterii și ceasuri -->
-                    <a href="../bijuterii-ceasuri"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Bijuterii & Ceasuri</p>
-                    </a>
-
-                    <!-- 9. Produse de beauty și îngrijire personală -->
-                    <a href="../beauty-ingrijire"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Beauty & Îngrijire Personală</p>
-                    </a>
-
-                    <!-- 10. Produse pentru copii și bebeluși -->
-                    <a href="../produse-copii-bebelusi"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Produse pentru copii și bebeluși</p>
-                    </a>
-
-                    <!-- 11. Jucării -->
-                    <a href="../jucarii"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Jucării</p>
-                    </a>
-
-                    <!-- 12. Sport și activități în aer liber -->
-                    <a href="../sport-aer-liber"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Sport & Activități în aer liber</p>
-                    </a>
-
-                    <!-- 13. Produse de sănătate și wellness -->
-                    <a href="../sanatate-wellness"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Produse de sănătate și wellness</p>
-                    </a>
-
-                    <!-- 14. Produse electronice (telefoane, laptopuri, tablete) -->
-                    <a href="../electronice"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Produse electronice</p>
-                    </a>
-
-                    <!-- 15. Componente pentru computer și accesorii -->
-                    <a href="../componente-pc"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Componente pentru PC</p>
-                    </a>
-
-                    <!-- 16. Produse pentru auto și motociclete -->
-                    <a href="../auto-motociclete"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Produse auto & motociclete</p>
-                    </a>
-
-                    <!-- 17. Articole pentru petrecere și evenimente -->
-                    <a href="../petrecere-evenimente"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Articole pentru petrecere</p>
-                    </a>
-
-                    <!-- 18. Produse pentru animale de companie -->
-                    <a href="../pentru-animale"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Pentru animale de companie</p>
-                    </a>
-
-                    <!-- 19. Produse de papetărie și birou -->
-                    <a href="../papetarie-birou"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Produse de papetărie</p>
-                    </a>
-
-                    <!-- 20. Artizanat și hobby -->
-                    <a href="../artizanat-hobby"
-                        class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
-                        <p class="font-medium">Artizanat și hobby</p>
-                    </a>
+                            <p class="font-medium"><%= item.display_name %></p>
+                        </a>
+                    <% }); %>
                 </div>
                 </div>
 
@@ -245,35 +132,11 @@
 
             <div id="products"
                 class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr))] gap-1 sm:gap-3 mt-5 w-full justify-center">
-                <script>
-                    let search_param = window.location.search.substr(1).split('=')[1];
-                    search_param = (search_param.replace(/\+/g, ' '));
-                    const div = document.getElementById("products");
-                    document.getElementById('search').value = search_param;
-
-                    function fillData(item)
-                    {
-                        const product = document.createElement('product-card');
-                        product.setAttribute('title', item['title']);
-                        product.setAttribute('link', `/product/${item['id']}`);
-                        product.setAttribute('image', `../${item['image']}`);
-                        product.setAttribute('rating', item['rating']);
-                        product.setAttribute('currentPrice', item['currentPrice']);
-                        product.setAttribute('oldPrice', item['oldPrice']);
-                        div.appendChild(product);
-                    }
-
-                    function searchProducts()
-                    {
-                        fetch('/search-data', {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({query: search_param})
-                        }).then(res => res.json())
-                        .then(data => data.forEach(fillData));
-                    }
-                    searchProducts();
-                </script>
+                <% products.forEach(item => { %>
+                    <product-card title="<%= item.title %>" rating="<%= item.rating %>" currentPrice="<%= item.currentPrice %>"
+                        oldPrice="<%= item.oldPrice %>" image="/media/images/<%= item.image.split(';')[0] %>" link="/product/<%= item.id %>">
+                    </product-card>
+                <% }); %>
             </div>
         </section>
     </main>

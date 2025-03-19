@@ -83,13 +83,6 @@ app.post('/fetch-data', function(req, res) {
     });
 });
 
-app.post('/search-data', function(req, res) {
-    const {query} = req.body;
-    client.index('products').search(query).then((data) => {
-        res.json(data['hits']);
-    });
-});
-
 app.get('/product/:id', async function(req, res) {
     const productID = req.params.id;
     con.query(`SELECT * FROM products WHERE id_product=${productID}; select * from products where id_category=(SELECT id_category FROM products where id_product=${productID}) and id_product != ${productID} limit 12`, (err, results) => {
@@ -122,6 +115,22 @@ app.get('/cart', function(req, res) {
             categories: result[1]
         });
     });
+});
+
+app.get('/cautare', function(req, res) {
+    const query = req.query.search;
+    if(query) {
+        con.query('SELECT * FROM categories', function(err, result) {
+            if(err) {
+                console.log(err);
+                throw err;
+            }
+            client.index('products').search(query).then((data) => res.render('search', {
+                products: data['hits'],
+                categories: result
+            }));
+        });
+    }
 });
 
 app.get('*', function(req, res) {
