@@ -92,7 +92,7 @@ app.post('/search-data', function(req, res) {
 
 app.get('/product/:id', async function(req, res) {
     const productID = req.params.id;
-    con.query(`SELECT * FROM products WHERE id_product=${productID}; select * from products where id_category=(SELECT id_category FROM products where id_product=${productID}) and id_product != ${productID} limit 12`, (err, results, fields) => {
+    con.query(`SELECT * FROM products WHERE id_product=${productID}; select * from products where id_category=(SELECT id_category FROM products where id_product=${productID}) and id_product != ${productID} limit 12`, (err, results) => {
         if(err) {
             console.log(err);
             throw err;
@@ -116,7 +116,12 @@ app.get('/product/:id', async function(req, res) {
 });
 
 app.get('/cart', function(req, res) {
-    res.render('cart');
+    con.query('SELECT * FROM products ORDER BY rand() limit 20; select * from categories', function(err, result) {
+        res.render('cart', {
+            products: result[0],
+            categories: result[1]
+        });
+    });
 });
 
 app.get('*', function(req, res) {
