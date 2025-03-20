@@ -5,6 +5,7 @@ const mysql = require('mysql');
 const path = require('path');
 const meili = require('meilisearch');
 const jwt = require('jsonwebtoken');
+const cookieParser = require("cookie-parser");
 const signKey = 'pSLH30RAM4fUKKkKyYzL';
 
 const host = process.env.DB_HOST;
@@ -30,6 +31,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, '/')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -144,6 +146,16 @@ app.get('/cautare', function(req, res) {
             }));
         });
     }
+});
+
+app.post('/addtocart', function(req, res) {
+    const query = req.body;
+    const token = req.cookies.token;
+    jwt.verify(token, signKey, (err, decoded) => {
+        if(err) console.log('invalid');
+        else con.query(`INSERT INTO cart (id_product, id_user) VALUES (${query['product_id']}, ${decoded['id_user']})`);
+    });
+    res.end();
 });
 
 app.get('*', function(req, res) {

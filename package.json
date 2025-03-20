@@ -30,6 +30,7 @@
     "content-disposition": "^0.5.4",
     "content-type": "^1.0.5",
     "cookie": "^0.7.1",
+    "cookie-parser": "^1.4.7",
     "cookie-signature": "^1.0.6",
     "core-util-is": "^1.0.3",
     "cps": "^1.0.2",
