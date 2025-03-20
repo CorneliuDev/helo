@@ -124,11 +124,27 @@ app.get('/product/:id', async function(req, res) {
 });
 
 app.get('/cart', function(req, res) {
-    con.query('SELECT * FROM products ORDER BY rand() limit 20; select * from categories', function(err, result) {
-        res.render('cart', {
-            products: result[0],
-            categories: result[1]
-        });
+    const token = req.cookies.token;
+    if(token == null) {
+        res.redirect('/conectare');
+        return;
+    }
+    jwt.verify(token, signKey, (err, decoded) => {
+        if(err) console.log('invalid');
+        else {
+            con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
+                if(err) {
+                    console.log(err);
+                    throw err;
+                }
+                
+                res.render('cart', {
+                    products: result[0],
+                    categories: result[1],
+                    cart_products: result[2]
+                });
+            });
+        }
     });
 });
 
@@ -151,6 +167,10 @@ app.get('/cautare', function(req, res) {
 app.post('/addtocart', function(req, res) {
     const query = req.body;
     const token = req.cookies.token;
+    if(token == null) {
+        res.redirect('/conectare');
+        return;
+    }
     jwt.verify(token, signKey, (err, decoded) => {
         if(err) console.log('invalid');
         else con.query(`INSERT INTO cart (id_product, id_user) VALUES (${query['product_id']}, ${decoded['id_user']})`);

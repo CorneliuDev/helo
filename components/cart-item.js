@@ -159,12 +159,6 @@ class CartItem extends LitElement {
 
   constructor() {
     super();
-    this.link = "";
-    this.image = "../media/images/3.jpeg";
-    this.title = "Licensed Concrete Chips";
-    this.price = "132.23";
-    this.quantity = 1;
-    this.isChecked = false;
   }
 
   checkItem() {
