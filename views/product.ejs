@@ -229,6 +229,8 @@
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({product_id: window.location.pathname.split('/')[2]})
+                }).then((response) => response.json()).then((data) => {
+                    if(data['reason'] == 'noauth') window.location = '/conectare';
                 });
             }
         }

@@ -168,14 +168,13 @@ app.post('/addtocart', function(req, res) {
     const query = req.body;
     const token = req.cookies.token;
     if(token == null) {
-        res.redirect('/conectare');
+        res.json({status: 'failed', reason: 'noauth'});
         return;
     }
     jwt.verify(token, signKey, (err, decoded) => {
         if(err) console.log('invalid');
         else con.query(`INSERT INTO cart (id_product, id_user) VALUES (${query['product_id']}, ${decoded['id_user']})`);
     });
-    res.end();
 });
 
 app.get('*', function(req, res) {
