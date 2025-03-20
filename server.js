@@ -85,7 +85,7 @@ app.post('/fetch-data', function(req, res) {
 
 app.get('/product/:id', async function(req, res) {
     const productID = req.params.id;
-    con.query(`SELECT * FROM products WHERE id_product=${productID}; select * from products where id_category=(SELECT id_category FROM products where id_product=${productID}) and id_product != ${productID} limit 12`, (err, results) => {
+    con.query(`SELECT * FROM products WHERE id_product=${productID}; select * from products where id_category=(SELECT id_category FROM products where id_product=${productID}) and id_product != ${productID} limit 12; SELECT * FROM categories`, (err, results) => {
         if(err) {
             console.log(err);
             throw err;
@@ -103,7 +103,8 @@ app.get('/product/:id', async function(req, res) {
             rating: product['rating'],
             description: product['description'],
             images: images,
-            similarProducts: similar
+            similarProducts: similar,
+            categories: results[2]
         });
     });
 });
