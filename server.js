@@ -4,6 +4,8 @@ const { createHash } = require('crypto');
 const mysql = require('mysql');
 const path = require('path');
 const meili = require('meilisearch');
+const jwt = require('jsonwebtoken');
+const signKey = 'pSLH30RAM4fUKKkKyYzL';
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
@@ -68,7 +70,17 @@ app.post('/conectare', function(req, res) {
     con.query(`SELECT id_user FROM users WHERE email='${email}' and password='${hash}'`, function(err, result) {
         if(err) throw err;
         if(Object.keys(result).length === 0) res.redirect(`/conectare?failed`);
-        else res.redirect('/?connected');
+        else {
+            const token = jwt.sign({
+                id_user: result[0]['id_user'],
+                username: email,
+            }, signKey, {expiresIn: "1h"});
+            res.cookie("token", token, {
+                httpOnly: true,
+                sameSite: "strict"
+            });
+            res.redirect('/');
+        }
     });
 });
 
