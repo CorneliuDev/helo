@@ -60,7 +60,7 @@
 
                 </div>
 
-                <a href="./" id="orders"
+                <a href="" id="orders"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
@@ -69,7 +69,7 @@
                     <p>Comenzi</p>
                 </a>
 
-                <a href="" id="cart"
+                <a href="/cart" id="cart"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
@@ -195,7 +195,6 @@
                     <product-card title="<%= item.title %>" rating="<%= item.rating %>" link="/product/<%= item.id_product %>"
                         currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice %>"
                         image="/media/images/<%= item.image.split(';')[0] %>">
-
                     </product-card>
                 <% }) %>
             </div>

@@ -148,11 +148,13 @@
             <img src="../media/icons/categories/toys-kids.svg" class="w-5 aspect-square">
             <p class="font-medium">Jucării & Copii</p>
         </a>
-
-
-
-
     </section>
+    <div id="success-modal" class="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] p-4 top-0 left-0 z-10 hidden">
+        <div class="w-96 bg-white rounded-xl p-6 text-center">
+            <h2 class="text-xl font-semibold mb-4">Produs adaugat cu succes</h2>
+            <button onclick="getElementById('success-modal').classList.add('hidden')" id="close-error-modal" class="bg-[var(--coral)] text-white rounded-xl px-6 py-2">OK</button>
+        </div>
+    </div>
     
     <!-- Product -->
     <product-page id="product-page"
@@ -230,7 +232,6 @@
                 const loginPanel = document.getElementById("login");
                 loginPanel.classList.add('hidden');
             }
-
             const myElement = document.querySelector("product-page");
             const button = myElement.shadowRoot.querySelector("#cart_add");
             button.onclick = function() {
@@ -241,6 +242,7 @@
                 }).then((response) => response.json()).then((data) => {
                     if(data['reason'] == 'noauth') window.location = '/conectare';
                 });
+                document.getElementById("success-modal").classList.remove("hidden");
             }
         }
     </script>
