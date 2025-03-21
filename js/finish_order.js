@@ -119,6 +119,6 @@ document.getElementById("finish-order").addEventListener("click", function (even
         event.preventDefault(); 
         document.getElementById("error-modal").classList.remove("hidden");
     } else {
-        window.location.href = "../comanda-finalizata";
+        window.location = "/comanda-finalizata";
     }
 });

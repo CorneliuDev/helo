@@ -4,38 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="../style.css">
-    <script type="module" src="../components/cart-item.js"></script>
+    <script type="module" src="../components/ordered-item.js"></script>
     <script type="module" src="../components/product-card.js"></script>
     <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
-    <script>
-        window.onload = function() {
-            const cookies = document.cookie;
-            if(cookies == 'auth=true') {
-                const loginPanel = document.getElementById("login");
-                loginPanel.classList.add('hidden');
-            }
-            document.addEventListener('update-cart', function(event) {
-                const {id, change} = event.detail;
-                fetch('/updateAmount', {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({id: id, change: change})
-                });
-            });
-            document.addEventListener('delete-cart', function(event) {
-                const {id} = event.detail;
-                fetch('/deleteItemCart', {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({id: id})
-                });
-                window.location.reload();
-            });
-        }
-    </script>
+    <script src="/functions.js"></script>
 </head>
 
 <body class="flex flex-col max-w-screen ">
@@ -82,8 +57,10 @@
                             </a>
                         </div>
                     </div>
+
                 </div>
-                <a href="/comenzi" id="orders"
+
+                <a href="" id="orders"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
@@ -92,7 +69,7 @@
                     <p>Comenzi</p>
                 </a>
 
-                <a id="cart"
+                <a href="/cart" id="cart"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
@@ -135,7 +112,7 @@
                             class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                                 <p class="font-medium"><%= item.display_name %></p>
                             </a>
-                        <% }) %>
+                        <% }); %>
                     </div>
                 </div>
 
@@ -175,106 +152,35 @@
                 <img src="../media/icons/categories/toys-kids.svg" class="w-5 aspect-square">
                 <p class="font-medium">Jucării & Copii</p>
             </a>
-
-
-
-
         </section>
         <section id="cart-section"
-            class="bg-[#F9F9F9] w-full p-8 mt-10 rounded-3xl min-h-[300px] border border-[#F2F2F2]">
+            class="bg-[#F9F9F9] w-full p-8 mt-10 rounded-3xl min-h-[300px] border border-[#F2F2F2] max-w-5xl">
             <h1 id="cart-title" class="font-semibold text-2xl sm:text-3xl leading-none">Coș de cumpărături</h1>
-            <div id="cart-box" class="mt-10 grid grid-cols-1  lg:grid-cols-[1fr_minmax(250px,400px)] w-full gap-4">
-                <div class="cart-items-wrapper w-full">
-                    <div id="select-and-delete" class="flex justify-between p-4 w-full h-14 bg-white rounded-xl mb-8">
-                        <div class="flex gap-2 items-center">
-                            <input type="checkbox" name="select-all" id="select-all"
-                                class="w-5 h-5 cursor-pointer accent-[var(--coral) ]">
-                            <label for="select-all"
-                                class="flex gap-2 items-center cursor-pointer font-medium">Selectează toate</label>
-                        </div>
-                        <div id="delete-selected" class="flex gap-2 items-center cursor-pointer">
-                            <img src="../media/icons/bin.svg" class="w-4">
-                            <p id="delte-text" class="text-red-600">Șterge selectate</p>
-                        </div>
-                    </div>
+            <div id="cart-box" class="mt-10 grid flex flex-col w-full gap-4 ">
 
                     <div id="cart-items" class="flex flex-col gap-2">
-                        <% cart_products.forEach(item => { %>
-                            <cart-item title="<%= item.title %>" price="<%= item.currentPrice %>" productId="<%= item.id %>"
-                                quantity="<%= item.amount %>" image="/media/images/<%= item.image.split(';')[0] %>">
-                            </cart-item>
-                        <% }) %>
+
+                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
+                            oldPrice="152.24" rating="4.5" quantity="1">
+                        </ordered-item>
+
+                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
+                            oldPrice="152.24" rating="4.5" quantity="1">
+                        </ordered-item>
+
+                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
+                            oldPrice="152.24" rating="4.5" quantity="1">
+                        </ordered-item>
+
+                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
+                            oldPrice="152.24" rating="4.5" quantity="1">
+                        </ordered-item>
+
+                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
+                            oldPrice="152.24" rating="4.5" quantity="1">
+                        </ordered-item>
                     </div>
-                </div>
 
-                <div id="cart-summary" class="w-full h-96 bg-white rounded-xl flex flex-col justify-between p-5">
-                    <h1 class=" text-2xl font-semibold">Rezumat comandă</h1>
-                    <div>
-                        <div class="flex gap-4 p-1 rounded-full border border-[#F2F2F2]">
-                            <input type="text" id="coupon" name="coupon" placeholder="Introduceți cuponul"
-                                class="p-2 outline-none w-full">
-                            <button id="apply-cupon" onclick="applycoupon()"
-                                class="bg-[var(--coral)] text-white w-32 rounded-full active:scale-95 duration-300">Aplică</button>
-                        </div>
-                        <p id="cupon-applied" class="text-md mt-2 font-semibold text-[var(--coral)] hidden">Cupon
-                            aplicat:
-                            <span id="cupon-value"></span>
-                        </p>
-                    </div>
-
-                    <div class="w-full ">
-                        <div class="flex justify-between">
-                            <p>Subtotal</p>
-                            <p id="subtotal-price"><%= Math.round(cart_products.reduce((sum, item) => sum + item.currentPrice*item.amount, 0)*100)/100 %></p>
-                        </div>
-
-                        <div class="flex justify-between">
-                            <p class="f ont-semibold text-xl">Total</p>
-                            <div class="font-semibold text-xl flex">
-                                <p id="total-price"><%= Math.round(cart_products.reduce((sum, item) => sum + item.currentPrice*item.amount, 0)*100)/100 %></p> <span id="currency" class="ml-1">MDL</span>
-                            </div>
-                        </div>
-
-                        <div class="w-full h-[1px] bg-[#F2F2F2]"></div>
-                        <form action="/checkout" method="post" id="submitOrder">
-                            <input id="selectedProducts" name="items" hidden>
-                            <input id="couponValidation" name="coupon" hidden>
-                            <button type="button" onclick="finalise()"
-                                class="h-14 cursor-pointer w-full p-0 rounded-2xl bg-[var(--coral)] text-xl text-white mt-7 duration-300 active:scale-99">
-                                <p class="h-full w-full flex items-center justify-center">Finalizează comanda</p>
-                            </button>
-                        </form>
-                    </div>
-                    <script>
-                        function finalise()
-                        {
-                            document.getElementById("couponValidation").value = document.getElementById("coupon").value;
-                            document.getElementById("submitOrder").submit();
-                        }
-                        function applycoupon()
-                        {
-                            const totalPriceItem = document.getElementById("total-price");
-                            const inputCouponValue = document.getElementById("coupon").value;                            
-                            const couponValue = document.getElementById("cupon-value");
-                            const cuponApplied = document.getElementById("cupon-applied");
-                            const subTotalPrice = document.getElementById("subtotal-price").innerText;
-                            fetch('/check-coupon', {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({coupon: inputCouponValue})
-                            }).then((response) => response.json())
-                            .then((data) => {
-                                const rate = data['result']['rate'];
-                                cuponApplied.classList.remove("hidden");
-                                document.getElementById("currency").classList.add("text-[var(--coral)]");
-                                totalPriceItem.classList.add("text-[var(--coral)]");
-                                couponValue.innerText = `-${rate}%`;
-                                totalPriceItem.innerText = Math.round((subTotalPrice - rate / 100 * subTotalPrice) * 100) / 100;
-                            })
-                            .catch(error => console.log(`Error:${error}`));
-                        }
-                    </script>
-                </div>
             </div>
         </section>
 
@@ -285,13 +191,17 @@
 
             <div id="products"
                 class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr)] gap-1 sm:gap-3 mt-5 w-full justify-center">
-                <% products.forEach(item => { %>
-                    <product-card title="<%= item.title %>" rating="<%= item.rating %>"
+                <% similarProducts.forEach(item => { %>
+                    <product-card title="<%= item.title %>" rating="<%= item.rating %>" link="/product/<%= item.id_product %>"
                         currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice %>"
-                        link="/product/<%= item.id_product %>" image="/media/images/<%= item.image.split(';')[0] %>">
+                        image="/media/images/<%= item.image.split(';')[0] %>">
                     </product-card>
-                <% }); %>
+                <% }) %>
             </div>
+
+            <button
+                class="h-15 w-40 rounded-2xl bg-black text-xl text-white mt-7 duration-300 hover:scale-105 active:scale-95">Mai
+                multe</button>
         </section>
     </main>
 
@@ -334,5 +244,26 @@
         </div>
         <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
     </footer>
+
+
+    <script>
+        const cuponButton = document.querySelector("#apply-cupon");
+        cuponButton.addEventListener("click", () => {
+            const cupon = document.querySelector("#coupon").value.trim();
+            if (cupon === "NEW20") {
+                const cuponApplied = document.querySelector("#cupon-applied");
+                const cuponValue = document.querySelector("#cupon-value");
+
+                cuponValue.innerText = "-20%";
+                cuponApplied.classList.remove("hidden"); 
+                const totalPriceElement = document.querySelector("#total-price");
+                let totalPrice = parseFloat(totalPriceElement.innerText.trim());
+                totalPrice = totalPrice - (totalPrice * 0.2);
+                totalPriceElement.innerText = totalPrice.toFixed(2);
+                totalPriceElement.classList.add("text-[var(--coral)]");
+                document.getElementById("currency").classList.add("text-[var(--coral)]");
+            }
+        });
+    </script>
 </body>
 </html>

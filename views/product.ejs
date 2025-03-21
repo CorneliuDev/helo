@@ -10,8 +10,6 @@
     <script type="module" src="../components/product-page.js"></script>
     <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
-
-
 </head>
 
 <body class="flex flex-col max-w-screen ">
@@ -35,7 +33,7 @@
             </form>
 
             <div id="nav-controls" class="flex flex-row gap-1 md:gap-4">
-                <div>
+                <div id="login">
                     <a href="/conectare" id="account"
                         class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
                         <div
@@ -58,10 +56,16 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
-
-                <a href="../cart/" id="cart"
+                <a href="/comenzi/" id="orders"
+                    class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
+                    <div
+                        class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
+                        <img src="/media/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
+                    </div>
+                    <p>Comenzi</p>
+                </a>
+                <a href="/cart/" id="cart"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
@@ -144,11 +148,13 @@
             <img src="../media/icons/categories/toys-kids.svg" class="w-5 aspect-square">
             <p class="font-medium">Jucării & Copii</p>
         </a>
-
-
-
-
     </section>
+    <div id="success-modal" class="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] p-4 top-0 left-0 z-10 hidden">
+        <div class="w-96 bg-white rounded-xl p-6 text-center">
+            <h2 class="text-xl font-semibold mb-4">Produs adaugat cu succes</h2>
+            <button onclick="getElementById('success-modal').classList.add('hidden')" id="close-error-modal" class="bg-[var(--coral)] text-white rounded-xl px-6 py-2">OK</button>
+        </div>
+    </div>
     
     <!-- Product -->
     <product-page id="product-page"
@@ -168,9 +174,8 @@
         <div id="products"
             class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr)] gap-1 sm:gap-3 mt-5 w-full justify-center">
             <% similarProducts.forEach(item => { %>
-                <product-card title="<%= item.title %>" currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice != null ? item.oldPrice : '' %>"
+                <product-card title="<%= item.title %>" currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice %>"
                     rating="<%= item.rating %>" link="/product/<%= item.id_product %>" image="../media/images/<%= item.image.split(';')[0] %>">
-
                 </product-card>
             <% }); %>
         </div>
@@ -222,6 +227,11 @@
     </footer>
     <script>
         window.onload = function() {
+            const cookies = document.cookie;
+            if(cookies == 'auth=true') {
+                const loginPanel = document.getElementById("login");
+                loginPanel.classList.add('hidden');
+            }
             const myElement = document.querySelector("product-page");
             const button = myElement.shadowRoot.querySelector("#cart_add");
             button.onclick = function() {
@@ -232,6 +242,7 @@
                 }).then((response) => response.json()).then((data) => {
                     if(data['reason'] == 'noauth') window.location = '/conectare';
                 });
+                document.getElementById("success-modal").classList.remove("hidden");
             }
         }
     </script>

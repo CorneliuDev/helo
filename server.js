@@ -111,7 +111,7 @@ app.get('/product/:id', async function(req, res) {
         const similar = results[1];
         images = product['image'].split(';');
         images.forEach((element, index) => {
-            images[index] = `../media/images/${element}`;
+            images[index] = `/media/images/${element}`;
         });
         res.render('product', {
             title: product['title'],
@@ -133,14 +133,16 @@ app.get('/cart', function(req, res) {
         return;
     }
     jwt.verify(token, signKey, (err, decoded) => {
-        if(err) res.redirect('/conectare');
+        if(err) {
+            res.redirect('/conectare');
+            return;
+        }
         else {
-            con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
+            con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select id, image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
                 if(err) {
                     console.log(err);
                     throw err;
                 }
-                
                 res.render('cart', {
                     products: result[0],
                     categories: result[1],
@@ -167,6 +169,24 @@ app.get('/cautare', function(req, res) {
     }
 });
 
+app.get('/comenzi', function(req, res) {
+    const token = req.cookies.token;
+    if(token == null) {
+        res.redirect('/conectare');
+        return;
+    }
+    con.query('SELECT * FROM categories; SELECT * FROM products ORDER BY rand() limit 20', function(err, result) {
+        if(err) {
+            console.log(err);
+            throw err;
+        }
+        res.render('orders', {
+            categories: result[0],
+            similarProducts: result[1]
+        });
+    });
+});
+
 app.post('/addtocart', function(req, res) {
     const query = req.body;
     const token = req.cookies.token;
@@ -175,8 +195,11 @@ app.post('/addtocart', function(req, res) {
         return;
     }
     jwt.verify(token, signKey, (err, decoded) => {
-        if(err) console.log('invalid');
-        else con.query(`INSERT INTO cart (id_product, id_user) VALUES (${query['product_id']}, ${decoded['id_user']})`);
+        if(err) {
+            res.redirect('/conectare');
+            return;
+        }
+        else con.query(`INSERT INTO cart (id_product, id_user) SELECT ${query['product_id']}, ${decoded['id_user']} WHERE NOT EXISTS (SELECT 1 FROM cart WHERE id_product = ${query['product_id']} AND id_user = ${decoded['id_user']})`);
     });
 });
 
@@ -191,14 +214,54 @@ app.post('/check-coupon', function(req, res) {
     });
 });
 
+app.post('/updateAmount', function(req, res) {
+    const {id, change} = req.body;
+    con.query(`UPDATE cart SET amount=amount+${change} where id=${id}`);
+    res.end();
+});
+
+app.post('/deleteItemCart', function(req, res) {
+    const {id} = req.body;
+    con.query(`DELETE FROM cart WHERE id=${id}`);
+    res.end();
+});
+
+app.post('/checkout', function(req, res) {
+    const token = req.cookies.token;
+    if(token == null) {
+        res.redirect('/conectare');
+        return;
+    }
+    jwt.verify(token, signKey, (err, decoded) => {
+        if(err) res.redirect('/conectare');
+        const {coupon} = req.body;
+        con.query(`select round(sum(currentPrice),2) as total from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}; select rate from coupons where value='${coupon}'`, function(err, result) {
+            if(err) {
+                console.log(err);
+                throw err;
+            }
+            const subtotal = result[0][0]['total'];
+            const rate = result[1].length != 0 ? result[1][0]['rate'] : 0;
+            res.render('finish_order', {
+                subtotal: subtotal,
+                total: subtotal - subtotal * rate / 100,
+                rate: rate
+            });
+        });
+    });
+});
+
 app.get('*', function(req, res) {
     const location = req.path.toLowerCase().substring(1);
-    con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}');`, function(err, result) {
+    con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}'); select * from categories`, function(err, result) {
         if(err) {
             console.log(err);
             throw err;
         }
-        res.render('category', {products: result});
+        res.render('category', {
+            products: result[0],
+            categories: result[1]
+        });
     });
 });
 
