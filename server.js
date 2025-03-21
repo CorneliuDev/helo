@@ -167,6 +167,14 @@ app.get('/cautare', function(req, res) {
     }
 });
 
+app.get('/comenzi', function(req, res) {
+    con.query('SELECT * FROM categories', function(err, result) {
+        res.render('orders', {
+            categories: result
+        });
+    });
+});
+
 app.post('/addtocart', function(req, res) {
     const query = req.body;
     const token = req.cookies.token;
