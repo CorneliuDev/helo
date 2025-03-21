@@ -14,6 +14,15 @@
             overflow-x: hidden;
         }
     </style>
+    <script>
+        window.onload = function() {
+            const cookies = document.cookie;
+            if(cookies == 'auth=true') {
+                const loginPanel = document.getElementById("login");
+                loginPanel.classList.add('hidden');
+            }
+        }
+    </script>
 </head>
 
 <body class="flex flex-col min-w-screen ">
@@ -37,7 +46,7 @@
             </form>
 
             <div id="nav-controls" class="flex flex-row gap-1 md:gap-4">
-                <div>
+                <div id="login">
                 <a href="./conectare/" id="account"
                     class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
                     <div
