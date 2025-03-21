@@ -190,6 +190,11 @@ class CartItem extends LitElement {
         composed: true
       }));
     }
+    else this.dispatchEvent(new CustomEvent('delete-cart', {
+      detail: { id: this.productId },
+      bubbles: true,
+      composed: true
+    }));
   }
 
   render() {

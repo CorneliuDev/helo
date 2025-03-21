@@ -214,6 +214,12 @@ app.post('/updateAmount', function(req, res) {
     res.end();
 });
 
+app.post('/deleteItemCart', function(req, res) {
+    const {id} = req.body;
+    con.query(`DELETE FROM cart WHERE id=${id}`);
+    res.end();
+});
+
 app.get('*', function(req, res) {
     const location = req.path.toLowerCase().substring(1);
     con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}');`, function(err, result) {

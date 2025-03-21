@@ -13,17 +13,24 @@
     <script>
         window.onload = function() {
             document.addEventListener('update-cart', function(event) {
-                const {id, change} = event.detail;
                 console.log(`${id} ${change}`);
                 fetch('/updateAmount', {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({id: id, change: change})
-                })
+                });
+            });
+            document.addEventListener('delete-cart', function(event) {
+                const {id} = event.detail;
+                fetch('/deleteItemCart', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({id: id})
+                });
+                window.location.reload();
             });
         }
     </script>
-    <!-- <script src="/functions.js"></script> -->
 </head>
 
 <body class="flex flex-col max-w-screen ">
