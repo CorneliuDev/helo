@@ -64,6 +64,10 @@ app.post('/creare-cont', function(req, res) {
     });
 });
 
+app.get('/conectare', function(req, res) {
+    res.render('connect');
+});
+
 app.post('/conectare', function(req, res) {
     const email = req.body.email;
     const pass = req.body.password;
