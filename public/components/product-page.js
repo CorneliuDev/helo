@@ -188,7 +188,7 @@ class ProductPage extends LitElement {
     this.currentPrice = '';
     this.oldPrice = '';
     this.rating = '';
-    this.starIcon = new URL("../media/icons/star.svg", import.meta.url).href;
+    this.starIcon = new URL("/assets/icons/star.svg", import.meta.url).href;
     this.description = '';
   }
 

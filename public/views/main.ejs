@@ -7,14 +7,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="./style.css">
     <script type="module" src="./components/product-card.js"></script>
-    <link rel="shortcut icon" href="./media/favicons/logo-yellow-short.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
     <style>
         body {
             overflow-x: hidden;
         }
     </style>
-    <script src="/functions.js"></script>
+    <script src="/js/category.js"></script>
+    <script src="/js/functions.js"></script>
 </head>
 
 <body class="flex flex-col min-w-screen ">
@@ -27,7 +28,7 @@
         </section>
         <div class="flex flex-row justify-between pt-4">
 
-            <a href="./"><img src="./media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
+            <a href="./"><img src="/assets/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
 
             <form action="/cautare" id="search-bar" method="get"
                 class="hidden lg:flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 mt-2 mx-5">
@@ -39,23 +40,23 @@
 
             <div id="nav-controls" class="flex flex-row gap-1 md:gap-4">
                 <div id="login">
-                <a href="./conectare/" id="account"
+                <a href="/conectare/" id="account"
                     class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="./media/user-icon.svg" alt="" id="account-icon" class="w-6">
+                        <img src="/assets/user-icon.svg" alt="" id="account-icon" class="w-6">
                     </div>
                     <p>Cont</p>
                 </a>
                 <div id="drop-down-categories"
                     class="z-10 hidden peer-hover:flex hover:flex absolute ">
                     <div id="catergories-wrapper" class="flex-col gap-2 p-4 border-accent bg-white shadow-implicit rounded-xl mt-2 ">
-                    <a href="./conectare"
+                    <a href="/conectare"
                         class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                         <p class="font-medium">Conectează-te</p>
                     </a>
 
-                    <a href="./creare-cont"
+                    <a href="/creare-cont"
                         class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                         <p class="font-medium">Creează cont</p>
                     </a>
@@ -67,7 +68,7 @@
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="../media/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
+                        <img src="/assets/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
                     </div>
                     <p>Comenzi</p>
                 </a>
@@ -75,7 +76,7 @@
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="./media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
+                        <img src="./assets/cart-icon.svg" alt="" id="orders-icon" class="w-6">
                     </div>
                     <p>Coș</p>
                 </a>
@@ -112,7 +113,7 @@
                                 <p class="slideTextChild mt-2 text-xl hidden lg:flex">Găsește gadgeturile de care ai
                                     nevoie!</p>
                             </div>
-                            <img src="./media/images/slide-headphones.png" alt="O pereche de căști"
+                            <img src="./assets/images/slide-headphones.png" alt="O pereche de căști"
                                 class="slideImage lg:h-[350px] h-[250px] w-auto">
                         </a>
                     </div>
@@ -128,7 +129,7 @@
                                 <p class="slideTextChild  mt-2 text-xl hidden lg:flex">Găsește gadgeturile de care
                                     ai nevoie!</p>
                             </div>
-                            <img src="./media/images/slide-headphones.png" alt="O pereche de căști"
+                            <img src="./assets/images/slide-headphones.png" alt="O pereche de căști"
                                 class="slideImage lg:h-[350px] h-[250px] w-auto">
                         </a>
                     </div>
@@ -144,7 +145,7 @@
                                 <p class="slideTextChild mt-2 text-xl hidden lg:flex">Găsește gadgeturile de care ai
                                     nevoie!</p>
                             </div>
-                            <img src="./media/images/slide-headphones.png" alt="O pereche de căști"
+                            <img src="./assets/images/slide-headphones.png" alt="O pereche de căști"
                                 class="slideImage lg:h-[350px] h-[250px] w-auto">
                         </a>
                     </div>
@@ -162,7 +163,7 @@
                                 <p class="slideTextChild mt-2 text-xl hidden lg:flex">Găsește gadgeturile de care ai
                                     nevoie!</p>
                             </div>
-                            <img src="./media/images/slide-headphones.png" alt="O pereche de căști"
+                            <img src="./assets/images/slide-headphones.png" alt="O pereche de căști"
                                 class="slideImage lg:h-[350px] h-[250px] w-auto">
                         </a>
                     </div>
@@ -170,11 +171,11 @@
                 </div>
 
                 <!-- Navigation Buttons -->
-                <button style="background-image: url(./media/icons/prev.svg);"
+                <button style="background-image: url(./assets/icons/prev.svg);"
                     class="prev absolute top-1/2 left-6 -translate-y-1/2 w-12 h-12 bg-center bg-no-repeat bg-contain rounded-full bg-black bg-opacity-20 transition-all duration-150 transform active:scale-95"
                     onclick="changeSlides(-1)">
                 </button>
-                <button style="background-image: url(./media/icons/next.svg);"
+                <button style="background-image: url(./assets/icons/next.svg);"
                     class="next absolute top-1/2 right-6 -translate-y-1/2 w-12 h-12 bg-center bg-no-repeat bg-contain rounded-full bg-black bg-opacity-20 transition-all duration-150 transform active:scale-95"
                     onclick="changeSlides(1)">
                 </button>
@@ -189,7 +190,7 @@
             <div id="all-categories-container">
                 <div
                     class="flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent peer bg-[var(--blue)]">
-                    <img src="../media/icons/categories/all-categories.svg" class="w-5 aspect-square invert">
+                    <img src="/assets/icons/categories/all-categories.svg" class="w-5 aspect-square invert">
                     <p class="font-medium text-white">Toate categoriile</p>
                 </div>
 
@@ -210,35 +211,35 @@
             <!-- Electrocasnice -->
             <a href="./electrocasnice"
                 class="category-label hidden md:flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="./media/icons/categories/appliances.svg" class="w-5 aspect-square">
+                <img src="./assets/icons/categories/appliances.svg" class="w-5 aspect-square">
                 <p class="font-medium">Electrocasnice</p>
             </a>
 
             <!-- Modă & Accesorii -->
             <a href="./moda-accesorii"
                 class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="./media/icons/categories/clothing.svg" class="w-5 aspect-square">
+                <img src="./assets/icons/categories/clothing.svg" class="w-5 aspect-square">
                 <p class="font-medium">Modă & Accesorii</p>
             </a>
 
             <!-- Frumusețe & Sănătate -->
             <a href="./frumusete-sanatate"
                 class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="./media/icons/categories/health.svg" class="w-5 aspect-square">
+                <img src="./assets/icons/categories/health.svg" class="w-5 aspect-square">
                 <p class="font-medium">Frumusețe & Sănătate</p>
             </a>
 
             <!-- Casă & Grădină -->
             <a href="./casa-gradina"
                 class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="./media/icons/categories/home-garden.svg" class="w-5 aspect-square">
+                <img src="./assets/icons/categories/home-garden.svg" class="w-5 aspect-square">
                 <p class="font-medium">Casă & Grădină</p>
             </a>
 
             <!-- Jucării & Copii -->
             <a href="./jucarii-copii"
                 class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="./media/icons/categories/toys-kids.svg" class="w-5 aspect-square">
+                <img src="./assets/icons/categories/toys-kids.svg" class="w-5 aspect-square">
                 <p class="font-medium">Jucării & Copii</p>
             </a>
         </section>
@@ -247,35 +248,6 @@
         <section id="popular-products" class="flex flex-col items-center justify-center w-full md:my-10 mb-12">
             <h1 class="font-medium text-4xl w-full">Produse populare</h1>
             <div id="products" class="grid grid-cols-[repeat(auto-fit,250px)] gap-3 mt-5 w-full justify-center">
-                <script>
-                    let count = 0;
-                    const div = document.getElementById("products");
-
-                    function fillData(item)
-                    {
-                        const product = document.createElement('product-card');
-                        product.setAttribute('title', item['title']);
-                        product.setAttribute('link', `/product/${item['id_product']}`);
-                        product.setAttribute('image', `/media/images/${item['image'].split(';')[0]}`);
-                        product.setAttribute('rating', item['rating']);
-                        product.setAttribute('currentPrice', item['currentPrice']);
-                        if(item['oldPrice'] != null)
-                            product.setAttribute('oldPrice', item['oldPrice']);
-                        div.appendChild(product);
-                    }
-
-                    function getProducts()
-                    {
-                        fetch('/fetch-data', {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({offset: 20*count++})
-                        }).then(response => response.json())
-                        .then(data => data['message'].forEach(fillData))
-                        .catch(error => console.log(`Error:${error}`));
-                    }
-                    getProducts();
-                </script>
             </div>
 
             <button onclick="getProducts()"
@@ -289,7 +261,7 @@
         class="w-full ">
         <!-- Logo -->
          <div class="main-footer w-full bg-accent flex flex-col xl:flex-row items-center justify-center xl:justify-evenly p-16 lg:px-40">
-        <img src="./media/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 lg:self-start">
+        <img src="./assets/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 lg:self-start">
 
         <!-- Links Columns -->
         <div class="flex flex-col md:flex-row w-full lg:w-auto justify-between items-center md:items-start">
@@ -323,9 +295,6 @@
     </div>
     <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
     </footer>
-
-    
-    <script src="script.js"></script>
-
+    <script src="/js/main.js"></script>
 </body>
 </html>

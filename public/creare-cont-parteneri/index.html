@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/style.css">
+    <title>Creare cont parteneri</title>
+</head>
+
+<body>
+ <a href="#"><img src="/assets/logo-black.svg" alt="" id="logo" class="absolute top-8 left-8 h-15"></a>
+<section class="flex justify-center items-center h-screen w-screen bg-accent p-4">
+    <div class="w-200 flex justify-center items-center bg-white rounded-3xl border-accent flex-col p-4 py-10 mt-18 shadow-implicit">
+        <h1 class="text-4xl font-bold text-center mb-8">Creare cont parteneri</h1>
+        <form class="flex flex-col w-11/12 max-w-96 gap-3 justify-center items-center" action="#" method="POST" id="form">
+
+            <div id="idno-input" class="accent-container rounded-2xl w-full flex">
+                <img src="/assets/icons/name.svg" alt="" class="w-7 mx-3.5">
+                <input placeholder="IDNO" type="text" name="idno" id="idno"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+            </div>
+
+            <div id="email-input" class="accent-container rounded-2xl w-full flex">
+                <img src="/assets/icons/email.svg" alt="" class="w-7 mx-3.5">
+                <input placeholder="Email" type="email" name="email" id="email"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+            </div>
+
+            <div id="confirmation-input" class="accent-container rounded-2xl w-full flex">
+                <img src="/assets/icons/password.svg" alt="" class="w-6 mx-3.5">
+                <input placeholder="Codul de confirmare" type="text" name="confirmation" id="confirmation"  class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+            </div>
+
+            <div id="pass-input" class="accent-container rounded-2xl w-full flex">
+                <img src="/assets/icons/password.svg" alt="" class="w-7-5 mx-3.5">
+                <input placeholder="Parolă" type="password" name="password" oninput="checkPasswordStrength()" id="pass" class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+                <img src="/assets/icons/hide.svg" alt="" class="w-12 mx-3.5" id="show-password">
+            </div>
+
+            <div id="confirm-input" class="accent-container rounded-2xl w-full flex">
+                <img src="/assets/icons/password.svg" alt="" class="w-6 mx-3.5">
+                <input placeholder="Confirmare parolă" type="password" name="confirm-pass" id="confirm-pass" class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
+            </div>
+
+            <div id="strength-bar" class="w-full rounded-full justify-center h-10">
+                <div id="strength-levels" class="flex w-full h-3 gap-2.5">
+                    <div id="weak" class="w-1/3 bg-accent border-accent rounded-full"></div>
+                    <div id="medium" class="w-1/3 bg-accent border-accent rounded-full"></div>
+                    <div id="strong" class="w-1/3 bg-accent border-accent rounded-full"></div>
+                </div>
+                <p id="strength-text" class="text-lg font-medium text-center leading-10"></p>
+            </div>
+
+            <input type="submit" value="CREEAZĂ CONT" id="submit" class="bg-black text-white font-medium w-36 py-4 rounded-2xl shadow-2xl mt-4 transition-all duration-300 transform active:scale-95">
+        </form>
+        <p class="text-md mt-4 text-gray-700">Ai un cont? <a href="./conectare.html" class="underline">Conectează-te!</a></p>
+    </div>
+</section>
+    <script src="/js/create_account_partners.js"></script>
+</body>
+
+</html>

@@ -28,12 +28,12 @@ const client = new meili.MeiliSearch({
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/')));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/public/views'));
 
 app.get('/', function(req, res) {
     con.query('SELECT * FROM categories', function(err, result) {
@@ -62,6 +62,10 @@ app.post('/creare-cont', function(req, res) {
         }
         res.redirect(`/creare-cont?${result[0][0]['stat']}`);
     });
+});
+
+app.get('/conectare', function(req, res) {
+    res.render('connect');
 });
 
 app.post('/conectare', function(req, res) {
@@ -111,7 +115,7 @@ app.get('/product/:id', async function(req, res) {
         const similar = results[1];
         images = product['image'].split(';');
         images.forEach((element, index) => {
-            images[index] = `/media/images/${element}`;
+            images[index] = `/assets/images/${element}`;
         });
         res.render('product', {
             title: product['title'],

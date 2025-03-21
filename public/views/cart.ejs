@@ -4,28 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="../style.css">
-    <script type="module" src="../components/ordered-item.js"></script>
-    <script type="module" src="../components/product-card.js"></script>
-    <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module" src="/components/cart-item.js"></script>
+    <script type="module" src="/components/product-card.js"></script>
+    <link rel="shortcut icon" href="/assets/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
-    <script src="/functions.js"></script>
+    <script src="/js/cart.js"></script>
 </head>
 
 <body class="flex flex-col max-w-screen ">
     <!-- Navbar -->
     <nav class="xl:px-44 lg:px-32 md:px-18 px-3">
         <section id="pre-nav" class="flex justify-end h-7">
-            <a href="../conectare-parteneri/"><button
+            <a href="/conectare-parteneri/"><button
                     class="bg-black text-white text-sm w-34 py-1.5 cursor-pointer hover:pt-3 duration-300  rounded-b-xl">Devino
                     partener</button></a>
         </section>
         <div class="flex flex-row justify-between pt-4">
 
-            <a href="../"><img src="../media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
+            <a href="/"><img src="/assets/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
 
-            <form action="../cautare" id="search-bar"
+            <form action="/cautare" id="search-bar"
                 class="hidden lg:flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 mt-2 mx-5">
                 <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
                     class="w-full focus:outline-none pl-3">
@@ -35,52 +35,50 @@
 
             <div id="nav-controls" class="flex flex-row gap-1 md:gap-4">
                 <div id="login">
-                    <a href="../conectare/" id="account"
+                    <a href="/conectare/" id="account"
                         class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
                         <div
                             class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                            <img src="../media/user-icon.svg" alt="" id="account-icon" class="w-6">
+                            <img src="/assets/user-icon.svg" alt="" id="account-icon" class="w-6">
                         </div>
                         <p>Cont</p>
                     </a>
                     <div id="drop-down-categories" class="z-10 hidden peer-hover:flex hover:flex absolute ">
                         <div id="catergories-wrapper"
                             class="flex-col gap-2 p-4 border-accent bg-white shadow-implicit rounded-xl mt-2 ">
-                            <a href="../conectare"
+                            <a href="/conectare"
                                 class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                                 <p class="font-medium">Conectează-te</p>
                             </a>
 
-                            <a href="../creare-cont"
+                            <a href="/creare-cont"
                                 class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                                 <p class="font-medium">Creează cont</p>
                             </a>
                         </div>
                     </div>
-
                 </div>
-
-                <a href="" id="orders"
+                <a href="/comenzi" id="orders"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="../media/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
+                        <img src="/assets/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
                     </div>
                     <p>Comenzi</p>
                 </a>
 
-                <a href="/cart" id="cart"
+                <a id="cart"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="../media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
+                        <img src="/assets/cart-icon.svg" alt="" id="orders-icon" class="w-6">
                     </div>
                     <p>Coș</p>
                 </a>
             </div>
         </div>
         <section id="mobile-search" class="lg:hidden flex justify-center">
-            <form action="../cautare" id="search-bar"
+            <form action="/cautare" id="search-bar"
                 class=" flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 my-2">
                 <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
                     class="w-full focus:outline-none pl-3">
@@ -100,7 +98,7 @@
             <div id="all-categories-container">
                 <div
                     class="flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent peer bg-[var(--blue)]">
-                    <img src="../media/icons/categories/all-categories.svg" class="w-5 aspect-square invert">
+                    <img src="/assets/icons/categories/all-categories.svg" class="w-5 aspect-square invert">
                     <p class="font-medium text-white">Toate categoriile</p>
                 </div>
 
@@ -112,75 +110,117 @@
                             class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                                 <p class="font-medium"><%= item.display_name %></p>
                             </a>
-                        <% }); %>
+                        <% }) %>
                     </div>
                 </div>
 
             </div>
 
             <!-- Electrocasnice -->
-            <a href="../electrocasnice"
+            <a href="/electrocasnice"
                 class="category-label hidden md:flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="../media/icons/categories/appliances.svg" class="w-5 aspect-square">
+                <img src="/assets/icons/categories/appliances.svg" class="w-5 aspect-square">
                 <p class="font-medium">Electrocasnice</p>
             </a>
 
             <!-- Modă & Accesorii -->
-            <a href="../moda-accesorii"
+            <a href="/moda-accesorii"
                 class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="../media/icons/categories/clothing.svg" class="w-5 aspect-square">
+                <img src="/assets/icons/categories/clothing.svg" class="w-5 aspect-square">
                 <p class="font-medium">Modă & Accesorii</p>
             </a>
 
             <!-- Frumusețe & Sănătate -->
-            <a href="../frumusete-sanatate"
+            <a href="/frumusete-sanatate"
                 class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="../media/icons/categories/health.svg" class="w-5 aspect-square">
+                <img src="/assets/icons/categories/health.svg" class="w-5 aspect-square">
                 <p class="font-medium">Frumusețe & Sănătate</p>
             </a>
 
             <!-- Casă & Grădină -->
-            <a href="../casa-gradina"
+            <a href="/casa-gradina"
                 class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="../media/icons/categories/home-garden.svg" class="w-5 aspect-square">
+                <img src="/assets/icons/categories/home-garden.svg" class="w-5 aspect-square">
                 <p class="font-medium">Casă & Grădină</p>
             </a>
 
             <!-- Jucării & Copii -->
-            <a href="../jucarii-copii"
+            <a href="/jucarii-copii"
                 class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-                <img src="../media/icons/categories/toys-kids.svg" class="w-5 aspect-square">
+                <img src="/assets/icons/categories/toys-kids.svg" class="w-5 aspect-square">
                 <p class="font-medium">Jucării & Copii</p>
             </a>
+
+
+
+
         </section>
         <section id="cart-section"
-            class="bg-[#F9F9F9] w-full p-8 mt-10 rounded-3xl min-h-[300px] border border-[#F2F2F2] max-w-5xl">
+            class="bg-[#F9F9F9] w-full p-8 mt-10 rounded-3xl min-h-[300px] border border-[#F2F2F2]">
             <h1 id="cart-title" class="font-semibold text-2xl sm:text-3xl leading-none">Coș de cumpărături</h1>
-            <div id="cart-box" class="mt-10 grid flex flex-col w-full gap-4 ">
-
-                    <div id="cart-items" class="flex flex-col gap-2">
-
-                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
-                            oldPrice="152.24" rating="4.5" quantity="1">
-                        </ordered-item>
-
-                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
-                            oldPrice="152.24" rating="4.5" quantity="1">
-                        </ordered-item>
-
-                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
-                            oldPrice="152.24" rating="4.5" quantity="1">
-                        </ordered-item>
-
-                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
-                            oldPrice="152.24" rating="4.5" quantity="1">
-                        </ordered-item>
-
-                        <ordered-item image="../media/images/3.jpeg" title="Smartphone XYZ 128GB" currentPrice="132.23"
-                            oldPrice="152.24" rating="4.5" quantity="1">
-                        </ordered-item>
+            <div id="cart-box" class="mt-10 grid grid-cols-1  lg:grid-cols-[1fr_minmax(250px,400px)] w-full gap-4">
+                <div class="cart-items-wrapper w-full">
+                    <div id="select-and-delete" class="flex justify-between p-4 w-full h-14 bg-white rounded-xl mb-8">
+                        <div class="flex gap-2 items-center">
+                            <input type="checkbox" name="select-all" id="select-all"
+                                class="w-5 h-5 cursor-pointer accent-[var(--coral) ]">
+                            <label for="select-all"
+                                class="flex gap-2 items-center cursor-pointer font-medium">Selectează toate</label>
+                        </div>
+                        <div id="delete-selected" class="flex gap-2 items-center cursor-pointer">
+                            <img src="/assets/icons/bin.svg" class="w-4">
+                            <p id="delte-text" class="text-red-600">Șterge selectate</p>
+                        </div>
                     </div>
 
+                    <div id="cart-items" class="flex flex-col gap-2">
+                        <% cart_products.forEach(item => { %>
+                            <cart-item title="<%= item.title %>" price="<%= item.currentPrice %>" productId="<%= item.id %>"
+                                quantity="<%= item.amount %>" image="/assets/images/<%= item.image.split(';')[0] %>">
+                            </cart-item>
+                        <% }) %>
+                    </div>
+                </div>
+
+                <div id="cart-summary" class="w-full h-96 bg-white rounded-xl flex flex-col justify-between p-5">
+                    <h1 class=" text-2xl font-semibold">Rezumat comandă</h1>
+                    <div>
+                        <div class="flex gap-4 p-1 rounded-full border border-[#F2F2F2]">
+                            <input type="text" id="coupon" name="coupon" placeholder="Introduceți cuponul"
+                                class="p-2 outline-none w-full">
+                            <button id="apply-cupon" onclick="applycoupon()"
+                                class="bg-[var(--coral)] text-white w-32 rounded-full active:scale-95 duration-300">Aplică</button>
+                        </div>
+                        <p id="cupon-applied" class="text-md mt-2 font-semibold text-[var(--coral)] hidden">Cupon
+                            aplicat:
+                            <span id="cupon-value"></span>
+                        </p>
+                    </div>
+
+                    <div class="w-full ">
+                        <div class="flex justify-between">
+                            <p>Subtotal</p>
+                            <p id="subtotal-price"><%= Math.round(cart_products.reduce((sum, item) => sum + item.currentPrice*item.amount, 0)*100)/100 %></p>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <p class="f ont-semibold text-xl">Total</p>
+                            <div class="font-semibold text-xl flex">
+                                <p id="total-price"><%= Math.round(cart_products.reduce((sum, item) => sum + item.currentPrice*item.amount, 0)*100)/100 %></p> <span id="currency" class="ml-1">MDL</span>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-[1px] bg-[#F2F2F2]"></div>
+                        <form action="/checkout" method="post" id="submitOrder">
+                            <input id="selectedProducts" name="items" hidden>
+                            <input id="couponValidation" name="coupon" hidden>
+                            <button type="button" onclick="finalise()"
+                                class="h-14 cursor-pointer w-full p-0 rounded-2xl bg-[var(--coral)] text-xl text-white mt-7 duration-300 active:scale-99">
+                                <p class="h-full w-full flex items-center justify-center">Finalizează comanda</p>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -191,17 +231,13 @@
 
             <div id="products"
                 class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr)] gap-1 sm:gap-3 mt-5 w-full justify-center">
-                <% similarProducts.forEach(item => { %>
-                    <product-card title="<%= item.title %>" rating="<%= item.rating %>" link="/product/<%= item.id_product %>"
+                <% products.forEach(item => { %>
+                    <product-card title="<%= item.title %>" rating="<%= item.rating %>"
                         currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice %>"
-                        image="/media/images/<%= item.image.split(';')[0] %>">
+                        link="/product/<%= item.id_product %>" image="/assets/images/<%= item.image.split(';')[0] %>">
                     </product-card>
-                <% }) %>
+                <% }); %>
             </div>
-
-            <button
-                class="h-15 w-40 rounded-2xl bg-black text-xl text-white mt-7 duration-300 hover:scale-105 active:scale-95">Mai
-                multe</button>
         </section>
     </main>
 
@@ -210,7 +246,7 @@
         <!-- Logo -->
         <div
             class="main-footer w-full bg-accent flex flex-col xl:flex-row items-center justify-center xl:justify-evenly p-16 lg:px-40">
-            <img src="../media/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 xl:self-start">
+            <img src="/assets/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 xl:self-start">
 
             <!-- Links Columns -->
             <div class="flex flex-col md:flex-row w-full lg:w-auto justify-between items-center md:items-start">
@@ -227,7 +263,7 @@
                 <!-- Partneri -->
                 <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
                     <p class="font-medium text-[1.3rem]">Partneri</p>
-                    <a href="../conectare-parteneri/" class="text-xl text-gray-600">Hub</a>
+                    <a href="/conectare-parteneri/" class="text-xl text-gray-600">Hub</a>
                     <a href="" class="text-xl text-gray-600">Devino partener</a>
                     <a href="" class="text-xl text-gray-600">Termeni și condiții</a>
                 </div>
@@ -244,26 +280,5 @@
         </div>
         <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
     </footer>
-
-
-    <script>
-        const cuponButton = document.querySelector("#apply-cupon");
-        cuponButton.addEventListener("click", () => {
-            const cupon = document.querySelector("#coupon").value.trim();
-            if (cupon === "NEW20") {
-                const cuponApplied = document.querySelector("#cupon-applied");
-                const cuponValue = document.querySelector("#cupon-value");
-
-                cuponValue.innerText = "-20%";
-                cuponApplied.classList.remove("hidden"); 
-                const totalPriceElement = document.querySelector("#total-price");
-                let totalPrice = parseFloat(totalPriceElement.innerText.trim());
-                totalPrice = totalPrice - (totalPrice * 0.2);
-                totalPriceElement.innerText = totalPrice.toFixed(2);
-                totalPriceElement.classList.add("text-[var(--coral)]");
-                document.getElementById("currency").classList.add("text-[var(--coral)]");
-            }
-        });
-    </script>
 </body>
 </html>
