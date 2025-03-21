@@ -135,12 +135,11 @@ app.get('/cart', function(req, res) {
     jwt.verify(token, signKey, (err, decoded) => {
         if(err) res.redirect('/conectare');
         else {
-            con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
+            con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select id, image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
                 if(err) {
                     console.log(err);
                     throw err;
                 }
-                
                 res.render('cart', {
                     products: result[0],
                     categories: result[1],
@@ -207,6 +206,12 @@ app.post('/check-coupon', function(req, res) {
         }
         res.json({result: result[0]});
     });
+});
+
+app.post('/updateAmount', function(req, res) {
+    const {id, change} = req.body;
+    con.query(`UPDATE cart SET amount=amount+${change} where id=${id}`);
+    res.end();
 });
 
 app.get('*', function(req, res) {

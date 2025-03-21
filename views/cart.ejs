@@ -10,7 +10,20 @@
     <script type="module" src="../components/product-card.js"></script>
     <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
-    <script src="/functions.js"></script>
+    <script>
+        window.onload = function() {
+            document.addEventListener('update-cart', function(event) {
+                const {id, change} = event.detail;
+                console.log(`${id} ${change}`);
+                fetch('/updateAmount', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({id: id, change: change})
+                })
+            });
+        }
+    </script>
+    <!-- <script src="/functions.js"></script> -->
 </head>
 
 <body class="flex flex-col max-w-screen ">
@@ -177,7 +190,7 @@
 
                     <div id="cart-items" class="flex flex-col gap-2">
                         <% cart_products.forEach(item => { %>
-                            <cart-item title="<%= item.title %>" price="<%= item.currentPrice %>"
+                            <cart-item title="<%= item.title %>" price="<%= item.currentPrice %>" productId="<%= item.id %>"
                                 quantity="<%= item.amount %>" image="/media/images/<%= item.image.split(';')[0] %>">
 
                             </cart-item>

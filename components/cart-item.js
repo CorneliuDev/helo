@@ -7,7 +7,8 @@ class CartItem extends LitElement {
     title: { type: String },
     price: { type: Number },
     quantity: { type: Number },
-    isChecked: { type: Boolean }
+    isChecked: { type: Boolean },
+    productId: { type: String }
   };
 
   static styles = css`
@@ -173,11 +174,21 @@ class CartItem extends LitElement {
 
   increaseQuantity() {
     this.quantity++;
+    this.dispatchEvent(new CustomEvent('update-cart', {
+      detail: { id: this.productId, change: 1 },
+      bubbles: true,
+      composed: true
+    }));
   }
 
   decreaseQuantity() {
     if (this.quantity > 1) {
       this.quantity--;
+      this.dispatchEvent(new CustomEvent('update-cart', {
+        detail: { id: this.productId, change: -1 },
+        bubbles: true,
+        composed: true
+      }));
     }
   }
 
@@ -198,7 +209,7 @@ class CartItem extends LitElement {
                 <button @click="${this.decreaseQuantity}">
                   <img src="../media/icons/minus.svg" alt="Minus" />
                 </button>
-                <p class="quantity">${this.quantity}</p>
+                <p class="quantity" id="quantityNumber">${this.quantity}</p>
                 <button @click="${this.increaseQuantity}">
                   <img src="../media/icons/plus.svg" alt="Plus" />
                 </button>
