@@ -18,7 +18,7 @@
     <!-- Navbar -->
     <nav class="xl:px-44 lg:px-32 md:px-18 px-3">
         <section id="pre-nav" class="flex justify-end h-7">
-            <a href="../conectare-parteneri/"><button
+            <a href="/conectare-parteneri/"><button
                     class="bg-black text-white text-sm w-34 py-1.5 cursor-pointer hover:pt-3 duration-300  rounded-b-xl">Devino
                     partener</button></a>
         </section>
@@ -36,7 +36,7 @@
 
             <div id="nav-controls" class="flex flex-row gap-1 md:gap-4">
                 <div>
-                    <a href="../conectare/" id="account"
+                    <a href="/conectare" id="account"
                         class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
                         <div
                             class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
@@ -151,7 +151,7 @@
     </section>
     
     <!-- Product -->
-    <product-page
+    <product-page id="product-page"
         title="<%= title %>"
         currentPrice="<%= currentPrice %>"
         oldPrice="<%= oldPrice %>"
@@ -220,7 +220,20 @@
         </div>
         <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
     </footer>
-
+    <script>
+        window.onload = function() {
+            const myElement = document.querySelector("product-page");
+            const button = myElement.shadowRoot.querySelector("#cart_add");
+            button.onclick = function() {
+                fetch('/addtocart', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({product_id: window.location.pathname.split('/')[2]})
+                }).then((response) => response.json()).then((data) => {
+                    if(data['reason'] == 'noauth') window.location = '/conectare';
+                });
+            }
+        }
+    </script>
 </body>
-
 </html>

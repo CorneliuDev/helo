@@ -4,6 +4,9 @@ const { createHash } = require('crypto');
 const mysql = require('mysql');
 const path = require('path');
 const meili = require('meilisearch');
+const jwt = require('jsonwebtoken');
+const cookieParser = require("cookie-parser");
+const signKey = 'pSLH30RAM4fUKKkKyYzL';
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
@@ -28,6 +31,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, '/')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -68,7 +72,17 @@ app.post('/conectare', function(req, res) {
     con.query(`SELECT id_user FROM users WHERE email='${email}' and password='${hash}'`, function(err, result) {
         if(err) throw err;
         if(Object.keys(result).length === 0) res.redirect(`/conectare?failed`);
-        else res.redirect('/?connected');
+        else {
+            const token = jwt.sign({
+                id_user: result[0]['id_user'],
+                username: email,
+            }, signKey, {expiresIn: "1h"});
+            res.cookie("token", token, {
+                httpOnly: true,
+                sameSite: "strict"
+            });
+            res.redirect('/');
+        }
     });
 });
 
@@ -110,11 +124,27 @@ app.get('/product/:id', async function(req, res) {
 });
 
 app.get('/cart', function(req, res) {
-    con.query('SELECT * FROM products ORDER BY rand() limit 20; select * from categories', function(err, result) {
-        res.render('cart', {
-            products: result[0],
-            categories: result[1]
-        });
+    const token = req.cookies.token;
+    if(token == null) {
+        res.redirect('/conectare');
+        return;
+    }
+    jwt.verify(token, signKey, (err, decoded) => {
+        if(err) console.log('invalid');
+        else {
+            con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
+                if(err) {
+                    console.log(err);
+                    throw err;
+                }
+                
+                res.render('cart', {
+                    products: result[0],
+                    categories: result[1],
+                    cart_products: result[2]
+                });
+            });
+        }
     });
 });
 
@@ -132,6 +162,19 @@ app.get('/cautare', function(req, res) {
             }));
         });
     }
+});
+
+app.post('/addtocart', function(req, res) {
+    const query = req.body;
+    const token = req.cookies.token;
+    if(token == null) {
+        res.json({status: 'failed', reason: 'noauth'});
+        return;
+    }
+    jwt.verify(token, signKey, (err, decoded) => {
+        if(err) console.log('invalid');
+        else con.query(`INSERT INTO cart (id_product, id_user) VALUES (${query['product_id']}, ${decoded['id_user']})`);
+    });
 });
 
 app.get('*', function(req, res) {
