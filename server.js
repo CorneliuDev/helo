@@ -111,7 +111,7 @@ app.get('/product/:id', async function(req, res) {
         const similar = results[1];
         images = product['image'].split(';');
         images.forEach((element, index) => {
-            images[index] = `../media/images/${element}`;
+            images[index] = `/media/images/${element}`;
         });
         res.render('product', {
             title: product['title'],
@@ -168,6 +168,11 @@ app.get('/cautare', function(req, res) {
 });
 
 app.get('/comenzi', function(req, res) {
+    const token = req.cookies.token;
+    if(token == null) {
+        res.redirect('/conectare');
+        return;
+    }
     con.query('SELECT * FROM categories; SELECT * FROM products ORDER BY rand() limit 20', function(err, result) {
         if(err) {
             console.log(err);
