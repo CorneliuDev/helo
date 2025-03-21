@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="../style.css">
-    <script type="module" src="../components/product-card.js"></script>
-    <script type="module" src="../components/product-page.js"></script>
-    <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style.css">
+    <script type="module" src="/components/product-card.js"></script>
+    <script type="module" src="/components/product-page.js"></script>
+    <link rel="shortcut icon" href="/media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
 </head>
 
@@ -22,9 +22,9 @@
         </section>
         <div class="flex flex-row justify-between pt-4">
 
-            <a href="../"><img src="../media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
+            <a href="/"><img src="/media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
 
-            <form action="../cautare" id="search-bar"
+            <form action="/cautare" id="search-bar"
                 class="hidden lg:flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 mt-2 mx-5">
                 <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
                     class="w-full focus:outline-none pl-3">
@@ -38,19 +38,19 @@
                         class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
                         <div
                             class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                            <img src="../media/user-icon.svg" alt="" id="account-icon" class="w-6">
+                            <img src="/media/user-icon.svg" alt="" id="account-icon" class="w-6">
                         </div>
                         <p>Cont</p>
                     </a>
                     <div id="drop-down-categories" class="z-10 hidden peer-hover:flex hover:flex absolute ">
                         <div id="catergories-wrapper"
                             class="flex-col gap-2 p-4 border-accent bg-white shadow-implicit rounded-xl mt-2 ">
-                            <a href="../conectare"
+                            <a href="/conectare"
                                 class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                                 <p class="font-medium">Conectează-te</p>
                             </a>
 
-                            <a href="../creare-cont"
+                            <a href="/creare-cont"
                                 class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                                 <p class="font-medium">Creează cont</p>
                             </a>
@@ -69,14 +69,14 @@
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="../media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
+                        <img src="/media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
                     </div>
                     <p>Coș</p>
                 </a>
             </div>
         </div>
         <section id="mobile-search" class="lg:hidden flex justify-center">
-            <form action="../cautare" id="search-bar"
+            <form action="/cautare" id="search-bar"
                 class=" flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 my-2">
                 <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
                     class="w-full focus:outline-none pl-3">
@@ -96,7 +96,7 @@
         <div id="all-categories-container">
             <div
                 class="flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent peer bg-[var(--blue)]">
-                <img src="../media/icons/categories/all-categories.svg" class="w-5 aspect-square invert">
+                <img src="/media/icons/categories/all-categories.svg" class="w-5 aspect-square invert">
                 <p class="font-medium text-white">Toate categoriile</p>
             </div>
 
@@ -115,37 +115,37 @@
         </div>
 
         <!-- Electrocasnice -->
-        <a href="../electrocasnice"
+        <a href="/electrocasnice"
             class="category-label hidden md:flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-            <img src="../media/icons/categories/appliances.svg" class="w-5 aspect-square">
+            <img src="/media/icons/categories/appliances.svg" class="w-5 aspect-square">
             <p class="font-medium">Electrocasnice</p>
         </a>
 
         <!-- Modă & Accesorii -->
-        <a href="../moda-accesorii"
+        <a href="/moda-accesorii"
             class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-            <img src="../media/icons/categories/clothing.svg" class="w-5 aspect-square">
+            <img src="/media/icons/categories/clothing.svg" class="w-5 aspect-square">
             <p class="font-medium">Modă & Accesorii</p>
         </a>
 
         <!-- Frumusețe & Sănătate -->
-        <a href="../frumusete-sanatate"
+        <a href="/frumusete-sanatate"
             class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-            <img src="../media/icons/categories/health.svg" class="w-5 aspect-square">
+            <img src="/media/icons/categories/health.svg" class="w-5 aspect-square">
             <p class="font-medium">Frumusețe & Sănătate</p>
         </a>
 
         <!-- Casă & Grădină -->
-        <a href="../casa-gradina"
+        <a href="/casa-gradina"
             class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-            <img src="../media/icons/categories/home-garden.svg" class="w-5 aspect-square">
+            <img src="/media/icons/categories/home-garden.svg" class="w-5 aspect-square">
             <p class="font-medium">Casă & Grădină</p>
         </a>
 
         <!-- Jucării & Copii -->
-        <a href="../jucarii-copii"
+        <a href="/jucarii-copii"
             class="category-label hidden md:flex gap-2 items-center justify-center cursor-pointer h-9 px-4 rounded-xl border-accent">
-            <img src="../media/icons/categories/toys-kids.svg" class="w-5 aspect-square">
+            <img src="/media/icons/categories/toys-kids.svg" class="w-5 aspect-square">
             <p class="font-medium">Jucării & Copii</p>
         </a>
     </section>
@@ -175,7 +175,7 @@
             class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr)] gap-1 sm:gap-3 mt-5 w-full justify-center">
             <% similarProducts.forEach(item => { %>
                 <product-card title="<%= item.title %>" currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice %>"
-                    rating="<%= item.rating %>" link="/product/<%= item.id_product %>" image="../media/images/<%= item.image.split(';')[0] %>">
+                    rating="<%= item.rating %>" link="/product/<%= item.id_product %>" image="/media/images/<%= item.image.split(';')[0] %>">
                 </product-card>
             <% }); %>
         </div>
@@ -191,7 +191,7 @@
         <!-- Logo -->
         <div
             class="main-footer w-full bg-accent flex flex-col xl:flex-row items-center justify-center xl:justify-evenly p-16 lg:px-40">
-            <img src="../media/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 xl:self-start">
+            <img src="/media/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 xl:self-start">
 
             <!-- Links Columns -->
             <div class="flex flex-col md:flex-row w-full lg:w-auto justify-between items-center md:items-start">
@@ -208,7 +208,7 @@
                 <!-- Partneri -->
                 <div class="flex flex-col mb-8 lg:mb-0 md:items-start items-center sm:mx-0 md:mx-7 lg:mx-20">
                     <p class="font-medium text-[1.3rem]">Partneri</p>
-                    <a href="../conectare-parteneri/" class="text-xl text-gray-600">Hub</a>
+                    <a href="/conectare-parteneri/" class="text-xl text-gray-600">Hub</a>
                     <a href="" class="text-xl text-gray-600">Devino partener</a>
                     <a href="" class="text-xl text-gray-600">Termeni și condiții</a>
                 </div>

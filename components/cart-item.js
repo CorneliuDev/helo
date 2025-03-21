@@ -212,11 +212,11 @@ class CartItem extends LitElement {
               <p class="delivery">Livrare: 2-3 zile</p>
               <div class="quantity-control">
                 <button @click="${this.decreaseQuantity}">
-                  <img src="../media/icons/minus.svg" alt="Minus" />
+                  <img src="/media/icons/minus.svg" alt="Minus" />
                 </button>
                 <p class="quantity" id="quantityNumber">${this.quantity}</p>
                 <button @click="${this.increaseQuantity}">
-                  <img src="../media/icons/plus.svg" alt="Plus" />
+                  <img src="/media/icons/plus.svg" alt="Plus" />
                 </button>
               </div>
             </div>

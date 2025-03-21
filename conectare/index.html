@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="shortcut icon" href="/media/favicons/logo-yellow-short.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style.css">
     <title>Conectare</title>
 </head>
 
 <body>
-    <a href="../"><img src="../media/logo-yellow-black.svg" alt="" id="logo" class="absolute top-8 left-8 h-15"></a>
+    <a href="/"><img src="/media/logo-yellow-black.svg" alt="" id="logo" class="absolute top-8 left-8 h-15"></a>
    <section class="flex justify-center items-center h-screen w-screen bg-accent p-4">
        <div class="w-200 flex justify-center items-center bg-white rounded-3xl border-accent flex-col p-4 py-10 shadow-implicit">
         <h1 class="text-4xl font-bold mb-8">Conectare</h1>
@@ -19,26 +19,26 @@
             id="form">
 
             <div id="email-input" class="accent-container rounded-2xl w-full flex">
-                <img src="../media/icons/email.svg" alt="" class="w-7 mx-3.5">
+                <img src="/media/icons/email.svg" alt="" class="w-7 mx-3.5">
                 <input placeholder="Email" type="email" name="email" id="" required
                     class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
             </div>
 
             <div id="pass-input" class="accent-container rounded-2xl w-full flex">
-                <img src="../media/icons/password.svg" alt="" class="w-7-5 mx-3.5">
+                <img src="/media/icons/password.svg" alt="" class="w-7-5 mx-3.5">
                 <input placeholder="Parolă" type="password" name="password" oninput="checkPasswordStrength()" id="pass"
                     required
                     class="py-3.5 w-full focus:outline-none rounded-lg placeholder:font-medium font-medium placeholder:text-gray-400 placeholder:text-lg text-lg">
-                <img src="../media/icons/hide.svg" alt="" class="w-12 mx-3.5" id="show-password">
+                <img src="/media/icons/hide.svg" alt="" class="w-12 mx-3.5" id="show-password">
             </div>
 
-            <!-- <p class="text-md mb-4 text-gray-700"> <a href="../creare-cont"
+            <!-- <p class="text-md mb-4 text-gray-700"> <a href="/creare-cont"
                 class="underline">Ai uitat parola?</a></p> -->
 
             <input type="submit" value="CONECTEAZĂ-TE" id="submit"
                 class="bg-[var(--coral)] text-white font-medium w-36 py-4 rounded-2xl shadow-2xl mt-4 transition-all duration-300 transform active:scale-95">
         </form>
-        <p class="text-md mt-4 text-gray-700 text-center">Nu ai un cont? <a href="../creare-cont"
+        <p class="text-md mt-4 text-gray-700 text-center">Nu ai un cont? <a href="/creare-cont"
                 class="underline">Creează un cont nou</a></p>
                 </div>
     </section>
@@ -54,11 +54,11 @@
             if (pass.type === "password") {
                 pass.setAttribute("type", "text");
                 confirmPass.setAttribute("type", "text");
-                showPassword.src = "../media/icons/show.svg";
+                showPassword.src = "/media/icons/show.svg";
             } else {
                 pass.setAttribute("type", "password");
                 confirmPass.setAttribute("type", "password");
-                showPassword.src = "../media/icons/hide.svg";
+                showPassword.src = "/media/icons/hide.svg";
             }
         }
 
