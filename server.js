@@ -133,7 +133,10 @@ app.get('/cart', function(req, res) {
         return;
     }
     jwt.verify(token, signKey, (err, decoded) => {
-        if(err) res.redirect('/conectare');
+        if(err) {
+            res.redirect('/conectare');
+            return;
+        }
         else {
             con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select id, image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
                 if(err) {
@@ -192,7 +195,10 @@ app.post('/addtocart', function(req, res) {
         return;
     }
     jwt.verify(token, signKey, (err, decoded) => {
-        if(err) console.log('invalid');
+        if(err) {
+            res.redirect('/conectare');
+            return;
+        }
         else con.query(`INSERT INTO cart (id_product, id_user) VALUES (${query['product_id']}, ${decoded['id_user']})`);
     });
 });
