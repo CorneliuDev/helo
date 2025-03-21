@@ -226,13 +226,13 @@
                     <div class="w-full ">
                         <div class="flex justify-between">
                             <p>Subtotal</p>
-                            <p id="subtotal-price"><%= cart_products.reduce((sum, item) => sum + item.currentPrice, 0) %></p>
+                            <p id="subtotal-price"><%= Math.round(cart_products.reduce((sum, item) => sum + item.currentPrice*item.amount, 0)*100)/100 %></p>
                         </div>
 
                         <div class="flex justify-between">
                             <p class="f ont-semibold text-xl">Total</p>
                             <div class="font-semibold text-xl flex">
-                                <p id="total-price"><%= cart_products.reduce((sum, item) => sum + item.currentPrice, 0) %></p> <span id="currency" class="ml-1">MDL</span>
+                                <p id="total-price"><%= Math.round(cart_products.reduce((sum, item) => sum + item.currentPrice*item.amount, 0)*100)/100 %></p> <span id="currency" class="ml-1">MDL</span>
                             </div>
                         </div>
 
