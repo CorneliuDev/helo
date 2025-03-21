@@ -210,6 +210,7 @@ app.post('/check-coupon', function(req, res) {
 
 app.post('/updateAmount', function(req, res) {
     const {id, change} = req.body;
+    console.log(`${id} ${change}`);
     con.query(`UPDATE cart SET amount=amount+${change} where id=${id}`);
     res.end();
 });
