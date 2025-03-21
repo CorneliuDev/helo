@@ -202,7 +202,6 @@
                         <% cart_products.forEach(item => { %>
                             <cart-item title="<%= item.title %>" price="<%= item.currentPrice %>" productId="<%= item.id %>"
                                 quantity="<%= item.amount %>" image="/media/images/<%= item.image.split(';')[0] %>">
-
                             </cart-item>
                         <% }) %>
                     </div>
@@ -237,16 +236,25 @@
                         </div>
 
                         <div class="w-full h-[1px] bg-[#F2F2F2]"></div>
-                        <button
-                            class="h-14 cursor-pointer w-full p-0 rounded-2xl bg-[var(--coral)] text-xl text-white mt-7 duration-300 active:scale-99">
-                            <a href="/finalizare-comanda/" class="h-full w-full flex items-center justify-center">Finalizează comanda</a>
-                        </button>
+                        <form action="/checkout" method="post" id="submitOrder">
+                            <input id="selectedProducts" name="items" hidden>
+                            <input id="couponValidation" name="coupon" hidden>
+                            <button type="button" onclick="finalise()"
+                                class="h-14 cursor-pointer w-full p-0 rounded-2xl bg-[var(--coral)] text-xl text-white mt-7 duration-300 active:scale-99">
+                                <p class="h-full w-full flex items-center justify-center">Finalizează comanda</p>
+                            </button>
+                        </form>
                     </div>
                     <script>
+                        function finalise()
+                        {
+                            document.getElementById("couponValidation").value = document.getElementById("coupon").value;
+                            document.getElementById("submitOrder").submit();
+                        }
                         function applycoupon()
                         {
                             const totalPriceItem = document.getElementById("total-price");
-                            const inputCouponValue = document.getElementById("coupon").value;
+                            const inputCouponValue = document.getElementById("coupon").value;                            
                             const couponValue = document.getElementById("cupon-value");
                             const cuponApplied = document.getElementById("cupon-applied");
                             const subTotalPrice = document.getElementById("subtotal-price").innerText;

@@ -10,6 +10,16 @@
     <script type="module" src="../components/product-card.js"></script>
     <link rel="shortcut icon" href="../media/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
+    <script>
+        window.onload = function()
+        {
+            const cookies = document.cookie;
+            if(cookies == 'auth=true') {
+                const loginPanel = document.getElementById("login");
+                loginPanel.classList.add('hidden');
+            }
+        }
+    </script>
 </head>
 
 <body class="flex flex-col max-w-screen ">
@@ -23,9 +33,9 @@
         </section>
         <div class="flex flex-row justify-between pt-4">
 
-            <a href="../"><img src="../media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
+            <a href="/"><img src="/media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
 
-            <form action="../cautare" id="search-bar"
+            <form action="/cautare" id="search-bar"
                 class="hidden lg:flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 mt-2 mx-5">
                 <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
                     class="w-full focus:outline-none pl-3">
@@ -34,12 +44,12 @@
             </form>
 
             <div id="nav-controls" class="flex flex-row gap-1 md:gap-4">
-                <div>
-                    <a href="../conectare/" id="account"
+                <div id="login">
+                    <a href="/conectare/" id="account"
                         class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
                         <div
                             class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                            <img src="../media/user-icon.svg" alt="" id="account-icon" class="w-6">
+                            <img src="/media/user-icon.svg" alt="" id="account-icon" class="w-6">
                         </div>
                         <p>Cont</p>
                     </a>
@@ -51,36 +61,33 @@
                                 <p class="font-medium">Conectează-te</p>
                             </a>
 
-                            <a href="../creare-cont"
+                            <a href="/creare-cont"
                                 class="category-label flex gap-2 items-center cursor-pointer h-9 px-4 border-b-accent w-full">
                                 <p class="font-medium">Creează cont</p>
                             </a>
                         </div>
                     </div>
-
                 </div>
-
-                <!-- <a href="" id="orders"
+                <a href="/comenzi/" id="orders"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
                         <img src="../media/orders-icon.svg" alt="" id="orders-icon" class="w-6 ">
                     </div>
                     <p>Comenzi</p>
-                </a> -->
-
-                <a href="" id="cart"
+                </a>
+                <a href="/cart" id="cart"
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="../media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
+                        <img src="/media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
                     </div>
                     <p>Coș</p>
                 </a>
             </div>
         </div>
         <section id="mobile-search" class="lg:hidden flex justify-center">
-            <form action="../cautare" id="search-bar"
+            <form action="/cautare" id="search-bar"
                 class=" flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 my-2">
                 <input type="text" placeholder="Ce produs vrei să găsești?" name="search" id="search"
                     class="w-full focus:outline-none pl-3">
@@ -194,25 +201,20 @@
 
 
                 <!-- Cart Summary Section -->
-                <div id="cart-summary" class="w-full min-h-96 bg-white rounded-xl flex flex-col justify-between p-5">
+                <div id="cart-summary" class="w-full min-h-96 bg-white rounded-xl flex flex-col justify-between p-15">
                     <h1 class=" text-2xl font-semibold">Rezumat comandă</h1>
-                    <div>
-                        <checkout-item image="../media/images/3.jpeg"
-                            title="Smartphone XYZ 128GB 16GB RAM Snaprdagon Smartphone XYZ 128GB 16GB RAM Snaprdagon"
-                            currentPrice="132.23" oldPrice="152.24" rating="4.5" quantity="1">
-                        </checkout-item>
-                    </div>
+                    <p class="font-semibold text-xl">Cupon: <%= rate %> %</p>
 
                     <div class="w-full ">
                         <div class="flex justify-between">
                             <p>Subtotal</p>
-                            <p>132.23 MDL</p>
+                            <p><%= subtotal %></p>
                         </div>
 
                         <div class="flex justify-between">
                             <p class="font-semibold text-xl">Total</p>
                             <div class="font-semibold text-xl flex">
-                                <p id="total-price">132.23</p> <span id="currency" class="ml-1">MDL</span>
+                                <p id="total-price"><%= total %></p> <span id="currency" class="ml-1">MDL</span>
                             </div>
                         </div>
 
@@ -269,7 +271,7 @@
         <div class="copyright bg-gray-100 text-center py-3">© 2025 Cybersit | Toate drepturile rezervate</div>
     </footer>
 
-    <script src="./script.js"></script>
+    <script src="/js/finish_order.js"></script>
 
 
 </body>

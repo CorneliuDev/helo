@@ -226,6 +226,31 @@ app.post('/deleteItemCart', function(req, res) {
     res.end();
 });
 
+app.post('/checkout', function(req, res) {
+    const token = req.cookies.token;
+    if(token == null) {
+        res.redirect('/conectare');
+        return;
+    }
+    jwt.verify(token, signKey, (err, decoded) => {
+        if(err) res.redirect('/conectare');
+        const {coupon} = req.body;
+        con.query(`select round(sum(currentPrice),2) as total from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}; select rate from coupons where value='${coupon}'`, function(err, result) {
+            if(err) {
+                console.log(err);
+                throw err;
+            }
+            const subtotal = result[0][0]['total'];
+            const rate = result[1].length != 0 ? result[1][0]['rate'] : 0;
+            res.render('finish_order', {
+                subtotal: subtotal,
+                total: subtotal - subtotal * rate / 100,
+                rate: rate
+            });
+        });
+    });
+});
+
 app.get('*', function(req, res) {
     const location = req.path.toLowerCase().substring(1);
     con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}'); select * from categories`, function(err, result) {
