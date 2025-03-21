@@ -130,7 +130,7 @@ app.get('/cart', function(req, res) {
         return;
     }
     jwt.verify(token, signKey, (err, decoded) => {
-        if(err) console.log('invalid');
+        if(err) res.redirect('/conectare');
         else {
             con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
                 if(err) {
@@ -174,6 +174,17 @@ app.post('/addtocart', function(req, res) {
     jwt.verify(token, signKey, (err, decoded) => {
         if(err) console.log('invalid');
         else con.query(`INSERT INTO cart (id_product, id_user) VALUES (${query['product_id']}, ${decoded['id_user']})`);
+    });
+});
+
+app.post('/check-coupon', function(req, res) {
+    const request = req.body;
+    con.query(`SELECT rate FROM coupons WHERE value='${request['coupon']}'`, function(err, result) {
+        if(err) {
+            console.log(err);
+            throw err;
+        }
+        res.json({result: result[0]});
     });
 });
 
