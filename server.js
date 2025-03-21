@@ -222,12 +222,15 @@ app.post('/deleteItemCart', function(req, res) {
 
 app.get('*', function(req, res) {
     const location = req.path.toLowerCase().substring(1);
-    con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}');`, function(err, result) {
+    con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}'); select * from categories`, function(err, result) {
         if(err) {
             console.log(err);
             throw err;
         }
-        res.render('category', {products: result});
+        res.render('category', {
+            products: result[0],
+            categories: result[1]
+        });
     });
 });
 
