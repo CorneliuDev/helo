@@ -115,7 +115,7 @@ app.get('/product/:id', async function(req, res) {
         const similar = results[1];
         images = product['image'].split(';');
         images.forEach((element, index) => {
-            images[index] = `/media/images/${element}`;
+            images[index] = `/assets/images/${element}`;
         });
         res.render('product', {
             title: product['title'],

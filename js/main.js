@@ -6,7 +6,7 @@ function fillData(item)
     const product = document.createElement('product-card');
     product.setAttribute('title', item['title']);
     product.setAttribute('link', `/product/${item['id_product']}`);
-    product.setAttribute('image', `/media/images/${item['image'].split(';')[0]}`);
+    product.setAttribute('image', `/assets/images/${item['image'].split(';')[0]}`);
     product.setAttribute('rating', item['rating']);
     product.setAttribute('currentPrice', item['currentPrice']);
     if(item['oldPrice'] != null)

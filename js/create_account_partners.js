@@ -8,11 +8,11 @@ function togglePassword() {
     if (pass.type === "password") {
         pass.setAttribute("type", "text");
         confirmPass.setAttribute("type", "text");
-        showPassword.src = "/media/icons/show.svg";
+        showPassword.src = "/assets/icons/show.svg";
     } else {
         pass.setAttribute("type", "password");
         confirmPass.setAttribute("type", "password");
-        showPassword.src = "/media/icons/hide.svg";
+        showPassword.src = "/assets/icons/hide.svg";
     }
 }
 

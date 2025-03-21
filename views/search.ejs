@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/style.css">
     <script type="module" src="/components/product-card.js"></script>
 
-    <link rel="shortcut icon" href="/media/favicons/logo-yellow-short.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/favicons/logo-yellow-short.ico" type="image/x-icon">
     <title>Helo - Orice produs la un click distanță</title>
     <script src="/js/category.js"></script>
 </head>
@@ -23,7 +23,7 @@
         </section>
         <div class="flex flex-row justify-between pt-4">
 
-            <a href="./"><img src="./media/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
+            <a href="./"><img src="./assets/logo-yellow-black.svg" alt="" id="logo" class="p-0 h-15"></a>
 
             <form action="/cautare" id="search-bar" method="get"
                 class="hidden lg:flex flex-row gap-4 justify-between h-12 w-full max-w-xl accent-container rounded-full p-0.5 mt-2 mx-5">
@@ -39,7 +39,7 @@
                     class="flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95 peer ">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="/media/user-icon.svg" alt="" id="account-icon" class="w-6">
+                        <img src="/assets/user-icon.svg" alt="" id="account-icon" class="w-6">
                     </div>
                     <p>Cont</p>
                 </a>
@@ -63,7 +63,7 @@
                     class="hidden md:flex flex-col justify-center items-center transition-all duration-300 transform active:scale-95">
                     <div
                         class="accent-container rounded-full aspect-square w-14 flex justify-center items-center shadow-implicit">
-                        <img src="/media/cart-icon.svg" alt="" id="orders-icon" class="w-6">
+                        <img src="/assets/cart-icon.svg" alt="" id="orders-icon" class="w-6">
                     </div>
                     <p>Coș</p>
                 </a>
@@ -92,7 +92,7 @@
                     class="category-radio select-none point hidden peer">
                 <div
                     class="flex gap-2 justify-center items-center cursor-pointer h-9 px-4 rounded-xl border-accent peer">
-                    <img src="/media/icons/categories/all-categories.svg" class="w-5 aspect-square">
+                    <img src="/assets/icons/categories/all-categories.svg" class="w-5 aspect-square">
                     <p class="font-medium">Toate categoriile</p>
                 </div>
 
@@ -135,7 +135,7 @@
                 class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr))] gap-1 sm:gap-3 mt-5 w-full justify-center">
                 <% products.forEach(item => { %>
                     <product-card title="<%= item.title %>" rating="<%= item.rating %>" currentPrice="<%= item.currentPrice %>"
-                        oldPrice="<%= item.oldPrice %>" image="/media/images/<%= item.image.split(';')[0] %>" link="/product/<%= item.id %>">
+                        oldPrice="<%= item.oldPrice %>" image="/assets/images/<%= item.image.split(';')[0] %>" link="/product/<%= item.id %>">
                     </product-card>
                 <% }); %>
             </div>
@@ -147,7 +147,7 @@
    class="w-full ">
    <!-- Logo -->
     <div class="main-footer w-full bg-accent flex flex-col xl:flex-row items-center justify-center xl:justify-evenly p-16 lg:px-40">
-   <img src="/media/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 lg:self-start">
+   <img src="/assets/logo-yellow-black.svg" class="h-20 mb-16 lg:mb-0 lg:mr-16 lg:self-start">
 
    <!-- Links Columns -->
    <div class="flex flex-col md:flex-row w-full lg:w-auto justify-between items-center md:items-start">
