@@ -81,6 +81,9 @@ app.post('/conectare', function(req, res) {
                 httpOnly: true,
                 sameSite: "strict"
             });
+            res.cookie("auth", true, {
+                sameSite: "strict"
+            });
             res.redirect('/');
         }
     });
