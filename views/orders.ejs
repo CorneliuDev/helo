@@ -199,47 +199,13 @@
 
             <div id="products"
                 class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr)] gap-1 sm:gap-3 mt-5 w-full justify-center">
+                <% similarProducts.forEach(item => { %>
+                    <product-card title="<%= item.title %>" rating="<%= item.rating %>" link="/product/<%= item.id_product %>"
+                        currentPrice="<%= item.currentPrice %>" oldPrice="<%= item.oldPrice %>"
+                        image="/media/images/<%= item.image.split(';')[0] %>">
 
-                <product-card link="../product-page" image="../media/images/3.jpeg"
-                    title="Smartphone XYZ 128GB  sdfsdfsf s d fsgdsgf gsdfg" currentPrice="132.23" oldPrice="152.24"
-                    rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
-                    title="Wireless Headphones ABC" currentPrice="99.99" rating="4.8">
-                </product-card>
-
-                <product-card link="../product-page" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
-                    currentPrice="132.23" oldPrice="152.24" rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
-                    title="Wireless Headphones ABC" currentPrice="99.99" rating="4.8">
-                </product-card>
-
-                <product-card link="../produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
-                    currentPrice="132.23" oldPrice="152.24" rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
-                    title="Wireless Headphones ABC" currentPrice="99.99" rating="4.8">
-                </product-card>
-
-                <product-card link="../produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
-                    currentPrice="132.23" oldPrice="152.24" rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
-                    title="Wireless Headphones ABC" currentPrice="99.99" rating="4.8">
-                </product-card>
-
-                <product-card link="../produss" image="../media/images/3.jpeg" title="Smartphone XYZ 128GB"
-                    currentPrice="132.23" oldPrice="152.24" rating="4.5">
-                </product-card>
-
-                <product-card link="https://www.amazon.com/" image="../media/images/3.jpeg"
-                    title="Wireless Headphones ABC" currentPrice="99.99" rating="5">
-                </product-card>
+                    </product-card>
+                <% }) %>
             </div>
 
             <button

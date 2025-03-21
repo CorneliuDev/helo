@@ -168,9 +168,14 @@ app.get('/cautare', function(req, res) {
 });
 
 app.get('/comenzi', function(req, res) {
-    con.query('SELECT * FROM categories', function(err, result) {
+    con.query('SELECT * FROM categories; SELECT * FROM products ORDER BY rand() limit 20', function(err, result) {
+        if(err) {
+            console.log(err);
+            throw err;
+        }
         res.render('orders', {
-            categories: result
+            categories: result[0],
+            similarProducts: result[1]
         });
     });
 });

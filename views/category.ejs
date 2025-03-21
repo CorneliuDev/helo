@@ -248,9 +248,8 @@
                 class="grid sm:grid-cols-[repeat(auto-fit,250px)] grid-cols-[repeat(2,minmax(150px,1fr))] gap-1 sm:gap-3 mt-5 w-full justify-center">
                 <% products.forEach(item => { %>
                     <product-card title="<%= item.title %>" rating="<%= item.rating %>" currentPrice="<%= item.currentPrice %>"
-                        image="../media/images/<%= item.image.split(';')[0] %>" link="/product/<%= item.id_product %>"
-                        oldPrice="<%= item.oldPrice != null ? item.oldPrice : '' %>">
-
+                        image="/media/images/<%= item.image.split(';')[0] %>" link="/product/<%= item.id_product %>"
+                        oldPrice="<%= item.oldPrice %>">
                     </product-card>
                 <% }) %>
             </div>
