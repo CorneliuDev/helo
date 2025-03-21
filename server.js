@@ -199,7 +199,7 @@ app.post('/addtocart', function(req, res) {
             res.redirect('/conectare');
             return;
         }
-        else con.query(`INSERT INTO cart (id_product, id_user) VALUES (${query['product_id']}, ${decoded['id_user']})`);
+        else con.query(`INSERT INTO cart (id_product, id_user) SELECT ${query['product_id']}, ${decoded['id_user']} WHERE NOT EXISTS (SELECT 1 FROM cart WHERE id_product = ${query['product_id']} AND id_user = ${decoded['id_user']})`);
     });
 });
 
@@ -216,7 +216,6 @@ app.post('/check-coupon', function(req, res) {
 
 app.post('/updateAmount', function(req, res) {
     const {id, change} = req.body;
-    console.log(`${id} ${change}`);
     con.query(`UPDATE cart SET amount=amount+${change} where id=${id}`);
     res.end();
 });
