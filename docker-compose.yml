@@ -9,3 +9,9 @@ services:
     environment:
       - MEILI_MASTER_KEY=yHx0xwwnFxoGEDs5jMAt
     restart: unless-stopped
+  website:
+    build: .
+    container_name: helo
+    ports:
+      - "80:8080"
+    restart: unless-stopped
