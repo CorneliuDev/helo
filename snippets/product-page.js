@@ -169,7 +169,7 @@ class ProductPage extends LitElement {
         }
         
         .description {
-            border: 1px solid var(--gray);
+            border: 1px solid #c5c5c5;
             padding: 1rem;
             margin: 2rem 0;
             border-radius: 20px;
