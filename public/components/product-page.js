@@ -169,7 +169,7 @@ class ProductPage extends LitElement {
         }
         
         .description {
-            border: 1px solid var(--gray);
+            border: 1px solid #c5c5c5;
             padding: 1rem;
             margin: 2rem 0;
             border-radius: 20px;
@@ -184,6 +184,10 @@ class ProductPage extends LitElement {
 
   constructor() {
     super();
+    this.images=[
+        "/assets/images/1.jpeg",
+        "/assets/images/2.jpeg",
+        "/assets/images/3.jpeg"];
     this.title = '';
     this.currentPrice = '';
     this.oldPrice = '';
@@ -232,7 +236,7 @@ class ProductPage extends LitElement {
                     <p class="price current-price">${this.currentPrice} MDL</p>`} 
                 </div>
             </div>
-            <button class="add-to-cart" id="cart_add">Adaugă în coș</button>
+            <button class="add-to-cart">Adaugă în coș</button>
             <p class="delivery">Livrare gratuită în 2-3 zile</p>
             <div class="description">
                 <h2 class="description-title">Descriere</h2>
