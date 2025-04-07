@@ -1,3 +1,4 @@
 *.env
+*.pem
 meili_data/
 node_modules/
