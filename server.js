@@ -14,6 +14,7 @@ const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
 const pass = process.env.DB_PASS;
 const db = process.env.DB_NAME;
+const http_port = process.env.HTTP_PORT;
 
 const con = mysql.createConnection({
     host: host,
@@ -271,4 +272,4 @@ app.get('*', function(req, res) {
     });
 });
 
-app.listen(8080);
+app.listen(http_port);
