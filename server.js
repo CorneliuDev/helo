@@ -1,4 +1,4 @@
-require('dotenv').config({path: __dirname + '/database.env'});
+const dotenv = require('dotenv');
 const express = require('express');
 const { createHash } = require('crypto');
 const mysql = require('mysql');
@@ -7,6 +7,8 @@ const meili = require('meilisearch');
 const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
 const signKey = 'pSLH30RAM4fUKKkKyYzL';
+
+dotenv.config();
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;

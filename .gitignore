@@ -1,2 +1,3 @@
 *.env
 meili_data/
+node_modules/
