@@ -102,20 +102,21 @@ const getDataByCondition = async (collectionName, condition) => {
 /**
  * Returns data from a collection within a range from start to start+20
  * @param {string} collectionName - The name of the collection.
- * @param {object} condition - Query constraints: { key, operator, value }.
+ * @param {object} conditions - Query constraints: { key, operator, value }.
  * @param {number} start - Index from where to start pagination
  * @param {number} length - Length of the page
  * @param {string} field - Field to order by with
  * @returns {object} - Object with document IDs as keys and data as values.
  */
-const getDataWithPagination = async (collectionName, condition, start, length, field) => {
+const getDataWithPagination = async (collectionName, conditions, start, length, field) => {
 	try {
 		const collectionRef = collection(db, collectionName);
-		let q;
-		if(!Object.keys(condition).length)
-			q = query(collectionRef, orderBy(field), startAt(start+1), limit(length));
-		else
-			q = query(collectionRef, where(condition.key, condition.operator, condition.value), orderBy(field), startAt(start+1), limit(length));
+		let q = query(collectionRef, orderBy(field), startAt(start+1), limit(length));
+		if(Object.keys(conditions).length > 0) {
+			conditions.forEach((condition) => {
+				q = query(q, where(condition.key, condition.operator, condition.value));
+			});
+		}
 
 		const docSnap = await getDocs(q);
 		const finalData = [];
