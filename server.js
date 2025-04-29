@@ -88,10 +88,8 @@ app.post('/fetch-data', async function(req, res) {
 
 app.get('/product/:id', async function(req, res) {
     const productID = req.params.id;
-    // const product = (await getDataByCondition("products", {key: "id_product", operator: "==", value: Number(productID)}))[0];
     const product = (await getDataWithPagination("products", {key: "id_product", operator: "==", value: Number(productID)}, 0, 1, "id_product"))[0];
     const categories = await getDataWithPagination("categories", {}, 0, 200, "id_category");
-    // // const similarProducts = await getDataByCondition("products", {key: "id_category", operator: "==", value: product.id_category});
     const similarProducts = await getDataWithPagination("products", {key: "id_category", operator: "==", value: product.id_category}, 0, 12, "id_product");
     const images = product.image.split(';');
     images.forEach((element, index) => {
@@ -115,7 +113,7 @@ app.get('/cart', function(req, res) {
         else {
             con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select id, image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
                 if(err) {
-                    console.log(err);
+                    // console.log(err);
                     throw err;
                 }
                 res.render('cart', {
@@ -128,19 +126,14 @@ app.get('/cart', function(req, res) {
     });
 });
 
-app.get('/cautare', function(req, res) {
+app.get('/cautare', async function(req, res) {
     const query = req.query.search;
     if(query) {
-        con.query('SELECT * FROM categories', function(err, result) {
-            if(err) {
-                console.log(err);
-                throw err;
-            }
-            client.index('products').search(query).then((data) => res.render('search', {
-                products: data['hits'],
-                categories: result
-            }));
-        });
+        const categories = await getDataWithPagination("categories", {}, 0, 200, "id_category");
+        client.index('products').search(query).then((data) => res.render('search', {
+            products: data['hits'],
+            categories: categories
+        }));
     }
 });
 
@@ -152,7 +145,7 @@ app.get('/comenzi', function(req, res) {
     }
     con.query('SELECT * FROM categories; SELECT * FROM products ORDER BY rand() limit 20', function(err, result) {
         if(err) {
-            console.log(err);
+            // console.log(err);
             throw err;
         }
         res.render('orders', {
@@ -182,7 +175,7 @@ app.post('/check-coupon', function(req, res) {
     const request = req.body;
     con.query(`SELECT rate FROM coupons WHERE value='${request['coupon']}'`, function(err, result) {
         if(err) {
-            console.log(err);
+            // console.log(err);
             throw err;
         }
         res.json({result: result[0]});
@@ -212,7 +205,7 @@ app.post('/checkout', function(req, res) {
         const {coupon} = req.body;
         con.query(`select round(sum(currentPrice),2) as total from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}; select rate from coupons where value='${coupon}'`, function(err, result) {
             if(err) {
-                console.log(err);
+                // console.log(err);
                 throw err;
             }
             const subtotal = result[0][0]['total'];
@@ -226,18 +219,14 @@ app.post('/checkout', function(req, res) {
     });
 });
 
-// app.get('*', function(req, res) {
-//     const location = req.path.toLowerCase().substring(1);
-//     con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}'); select * from categories`, function(err, result) {
-//         if(err) {
-//             console.log(err);
-//             throw err;
-//         }
-//         res.render('category', {
-//             products: result[0],
-//             categories: result[1]
-//         });
-//     });
-// });
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
+app.get('*', async function(req, res) {
+    const location = req.path.split('/').filter(Boolean)[0];
+    const categories = await getDataWithPagination("categories", {}, 0, 20, "id_category");
+    const product_category = (await getDataWithPagination("categories", {key: "route", operator: "==", value: location}, 0, 1, "id_category"))[0];
+    const products = await getDataWithPagination("products", {key: "id_category", operator: "==", value: product_category.id_category}, 0, 10, "id_product");
+    res.render('category', {products: products, categories: categories});
+});
 
 app.listen(http_port);
