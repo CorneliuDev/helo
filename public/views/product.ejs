@@ -13,7 +13,7 @@
     <script src="/js/product.js"></script>
 </head>
 
-<body class="flex flex-col max-w-screen ">
+<body class="flex flex-col max-w-screen">
     <!-- Navbar -->
     <nav class="xl:px-44 lg:px-32 md:px-18 px-3">
         <section id="pre-nav" class="flex justify-end h-7">
@@ -159,12 +159,12 @@
     
     <!-- Product -->
     <product-page id="product-page"
-        title="<%= title %>"
-        currentPrice="<%= currentPrice %>"
-        oldPrice="<%= oldPrice %>"
-        rating="<%= rating %>"
-        description="<%= description %>"
-        images="<%= JSON.stringify(images) %>">
+        title="<%= product.title %>"
+        currentPrice="<%= product.currentPrice %>"
+        oldPrice="<%= product.oldPrice %>"
+        rating="<%= product.rating %>"
+        description="<%= product.description %>"
+        images="<%= product.image %>">
     </product-page>
 
     <!-- Products -->

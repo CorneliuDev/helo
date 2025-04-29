@@ -1,33 +1,36 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const { createHash } = require('crypto');
-const mysql = require('mysql');
+const { initializeFirebaseApp, insertObject, getDataWithPagination } = require('./firebase');
+// const mysql = require('mysql');
 const path = require('path');
-const meili = require('meilisearch');
+// const meili = require('meilisearch');
 const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
 const signKey = 'pSLH30RAM4fUKKkKyYzL';
 
 dotenv.config();
 
-const host = process.env.DB_HOST;
-const user = process.env.DB_USER;
-const pass = process.env.DB_PASS;
-const db = process.env.DB_NAME;
+// const host = process.env.DB_HOST;
+// const user = process.env.DB_USER;
+// const pass = process.env.DB_PASS;
+// const db = process.env.DB_NAME;
 const http_port = process.env.HTTP_PORT;
 
-const con = mysql.createConnection({
-    host: host,
-    user: user,
-    password: pass,
-    database: db,
-    multipleStatements: true
-});
+// const con = mysql.createConnection({
+//     host: host,
+//     user: user,
+//     password: pass,
+//     database: db,
+//     multipleStatements: true
+// });
 
-const client = new meili.MeiliSearch({
-    host: "http://localhost:7700",
-    apiKey: "yHx0xwwnFxoGEDs5jMAt"
-});
+// const client = new meili.MeiliSearch({
+//     host: "http://localhost:7700",
+//     apiKey: "yHx0xwwnFxoGEDs5jMAt"
+// });
+
+initializeFirebaseApp();
 
 const app = express();
 
@@ -38,19 +41,14 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/public/views'));
 
-app.get('/', function(req, res) {
-    con.query('SELECT * FROM categories', function(err, result) {
-        if(err) {
-            console.log(err);
-            throw err;
-        }
-        res.render('main', {categories: result});
-    });
+app.get('/', async function(req, res) {
+    const categories = await getDataWithPagination("categories", {}, 0, 200, "id_category");
+    res.render('main', {categories: categories});
 });
 
-app.post('/creare-cont', function(req, res) {
+app.post('/creare-cont', async function(req, res) {
     const nume = req.body.nume;
-    const user = req.body.email;
+    const email = req.body.email;
     const pass = req.body.password;
     const confirmPass = req.body.confirmpass;
     if(pass != confirmPass) {
@@ -58,13 +56,12 @@ app.post('/creare-cont', function(req, res) {
         return;
     }
     const hash = createHash('sha256').update(pass).digest('base64');
-    con.query(`CALL register('${nume}', '${user}', '${hash}')`, function(err, result) {
-        if(err) {
-            console.log(err);
-            throw err;
-        }
-        res.redirect(`/creare-cont?${result[0][0]['stat']}`);
-    });
+    const data = await getDataWithPagination("users", {key: "email", operator: "==", value: email}, 1, 1, "id_user");
+    if(JSON.stringify(data) == '[]') {
+        await insertObject("users", {name: nume, email: email, pass: hash});
+        res.redirect('/creare-cont?success');
+    }
+    else res.redirect('/creare-cont?failed');
 });
 
 app.get('/conectare', function(req, res) {
@@ -96,41 +93,25 @@ app.post('/conectare', function(req, res) {
     });
 });
 
-app.post('/fetch-data', function(req, res) {
+app.post('/fetch-data', async function(req, res) {
     const {offset} = req.body;
-    con.query(`SELECT * FROM products LIMIT 20 OFFSET ${offset}`, function(err, result) {
-        if(err) {
-            console.log(err);
-            res.json({ message: "error"});
-        }
-        res.json({ message: result});
-    });
+    const results = await getDataWithPagination("products", {}, offset, 20, "id_product");
+    res.json({message: results});
 });
 
 app.get('/product/:id', async function(req, res) {
     const productID = req.params.id;
-    con.query(`SELECT * FROM products WHERE id_product=${productID}; select * from products where id_category=(SELECT id_category FROM products where id_product=${productID}) and id_product != ${productID} limit 12; SELECT * FROM categories`, (err, results) => {
-        if(err) {
-            console.log(err);
-            throw err;
-        }
-        const product = results[0][0];
-        const similar = results[1];
-        images = product['image'].split(';');
-        images.forEach((element, index) => {
-            images[index] = `/assets/images/${element}`;
-        });
-        res.render('product', {
-            title: product['title'],
-            currentPrice: product['currentPrice'],
-            oldPrice: product['oldPrice'],
-            rating: product['rating'],
-            description: product['description'],
-            images: images,
-            similarProducts: similar,
-            categories: results[2]
-        });
+    // const product = (await getDataByCondition("products", {key: "id_product", operator: "==", value: Number(productID)}))[0];
+    const product = (await getDataWithPagination("products", {key: "id_product", operator: "==", value: Number(productID)}, 0, 1, "id_product"))[0];
+    const categories = await getDataWithPagination("categories", {}, 0, 200, "id_category");
+    // // const similarProducts = await getDataByCondition("products", {key: "id_category", operator: "==", value: product.id_category});
+    const similarProducts = await getDataWithPagination("products", {key: "id_category", operator: "==", value: product.id_category}, 0, 12, "id_product");
+    const images = product.image.split(';');
+    images.forEach((element, index) => {
+        images[index] = `/assets/images/${element}`;
     });
+    product.image = JSON.stringify(images);
+    res.render('product', {categories: categories, product: product, similarProducts: similarProducts});
 });
 
 app.get('/cart', function(req, res) {
@@ -258,18 +239,18 @@ app.post('/checkout', function(req, res) {
     });
 });
 
-app.get('*', function(req, res) {
-    const location = req.path.toLowerCase().substring(1);
-    con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}'); select * from categories`, function(err, result) {
-        if(err) {
-            console.log(err);
-            throw err;
-        }
-        res.render('category', {
-            products: result[0],
-            categories: result[1]
-        });
-    });
-});
+// app.get('*', function(req, res) {
+//     const location = req.path.toLowerCase().substring(1);
+//     con.query(`select * from products where id_category=(SELECT id_category from categories where route='${location}'); select * from categories`, function(err, result) {
+//         if(err) {
+//             console.log(err);
+//             throw err;
+//         }
+//         res.render('category', {
+//             products: result[0],
+//             categories: result[1]
+//         });
+//     });
+// });
 
 app.listen(http_port);
