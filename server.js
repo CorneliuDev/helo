@@ -43,8 +43,8 @@ app.post('/creare-cont', async function(req, res) {
         return;
     }
     const hash = createHash('sha256').update(pass).digest('base64');
-    const data = await getDataWithPagination("users", {key: "email", operator: "==", value: email}, 1, 1, "id_user");
-    if(JSON.stringify(data) == '[]') {
+    const user = await getDataWithPagination("users", {key: "email", operator: "==", value: email}, 0, 1, "email");
+    if(JSON.stringify(user) == '[]') {
         await insertObject("users", {name: nume, email: email, pass: hash});
         res.redirect('/creare-cont?success');
     }
@@ -55,29 +55,32 @@ app.get('/conectare', function(req, res) {
     res.render('connect');
 });
 
-app.post('/conectare', function(req, res) {
+app.post('/conectare', async function(req, res) {
     const email = req.body.email;
     const pass = req.body.password;
     const hash = createHash('sha256').update(pass).digest('base64');
 
-    con.query(`SELECT id_user FROM users WHERE email='${email}' and password='${hash}'`, function(err, result) {
-        if(err) throw err;
-        if(Object.keys(result).length === 0) res.redirect(`/conectare?failed`);
-        else {
-            const token = jwt.sign({
-                id_user: result[0]['id_user'],
-                username: email,
-            }, signKey, {expiresIn: "1h"});
-            res.cookie("token", token, {
-                httpOnly: true,
-                sameSite: "strict"
-            });
-            res.cookie("auth", true, {
-                sameSite: "strict"
-            });
-            res.redirect('/');
-        }
-    });
+    // const user = await getDataWithPagination("users",);
+    res.end();
+
+    // con.query(`SELECT id_user FROM users WHERE email='${email}' and password='${hash}'`, function(err, result) {
+    //     if(err) throw err;
+    //     if(Object.keys(result).length === 0) res.redirect(`/conectare?failed`);
+    //     else {
+    //         const token = jwt.sign({
+    //             id_user: result[0]['id_user'],
+    //             username: email,
+    //         }, signKey, {expiresIn: "1h"});
+    //         res.cookie("token", token, {
+    //             httpOnly: true,
+    //             sameSite: "strict"
+    //         });
+    //         res.cookie("auth", true, {
+    //             sameSite: "strict"
+    //         });
+    //         res.redirect('/');
+    //     }
+    // });
 });
 
 app.post('/fetch-data', async function(req, res) {
@@ -113,7 +116,7 @@ app.get('/cart', function(req, res) {
         else {
             con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select id, image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
                 if(err) {
-                    // console.log(err);
+                    console.log(err);
                     throw err;
                 }
                 res.render('cart', {
@@ -145,7 +148,7 @@ app.get('/comenzi', function(req, res) {
     }
     con.query('SELECT * FROM categories; SELECT * FROM products ORDER BY rand() limit 20', function(err, result) {
         if(err) {
-            // console.log(err);
+            console.log(err);
             throw err;
         }
         res.render('orders', {
@@ -175,7 +178,7 @@ app.post('/check-coupon', function(req, res) {
     const request = req.body;
     con.query(`SELECT rate FROM coupons WHERE value='${request['coupon']}'`, function(err, result) {
         if(err) {
-            // console.log(err);
+            console.log(err);
             throw err;
         }
         res.json({result: result[0]});
@@ -205,7 +208,7 @@ app.post('/checkout', function(req, res) {
         const {coupon} = req.body;
         con.query(`select round(sum(currentPrice),2) as total from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}; select rate from coupons where value='${coupon}'`, function(err, result) {
             if(err) {
-                // console.log(err);
+                console.log(err);
                 throw err;
             }
             const subtotal = result[0][0]['total'];
