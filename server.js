@@ -2,33 +2,20 @@ const dotenv = require('dotenv');
 const express = require('express');
 const { createHash } = require('crypto');
 const { initializeFirebaseApp, insertObject, getDataWithPagination } = require('./firebase');
-// const mysql = require('mysql');
 const path = require('path');
-// const meili = require('meilisearch');
+const meili = require('meilisearch');
 const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
-const signKey = 'pSLH30RAM4fUKKkKyYzL';
 
 dotenv.config();
 
-// const host = process.env.DB_HOST;
-// const user = process.env.DB_USER;
-// const pass = process.env.DB_PASS;
-// const db = process.env.DB_NAME;
+const signKey = process.env.JSON_SIGN_KEY;
 const http_port = process.env.HTTP_PORT;
 
-// const con = mysql.createConnection({
-//     host: host,
-//     user: user,
-//     password: pass,
-//     database: db,
-//     multipleStatements: true
-// });
-
-// const client = new meili.MeiliSearch({
-//     host: "http://localhost:7700",
-//     apiKey: "yHx0xwwnFxoGEDs5jMAt"
-// });
+const client = new meili.MeiliSearch({
+    host: process.env.MEILI_API_HOST,
+    apiKey: process.env.MEILI_API_KEY
+});
 
 initializeFirebaseApp();
 
