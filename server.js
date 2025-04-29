@@ -43,7 +43,7 @@ app.post('/creare-cont', async function(req, res) {
         return;
     }
     const hash = createHash('sha256').update(pass).digest('base64');
-    const user = await getDataWithPagination("users", {key: "email", operator: "==", value: email}, 0, 1, "email");
+    const user = await getDataWithPagination("users", [{key: "email", operator: "==", value: email}], 0, 1, "email");
     if(JSON.stringify(user) == '[]') {
         await insertObject("users", {name: nume, email: email, pass: hash});
         res.redirect('/creare-cont?success');
@@ -59,28 +59,21 @@ app.post('/conectare', async function(req, res) {
     const email = req.body.email;
     const pass = req.body.password;
     const hash = createHash('sha256').update(pass).digest('base64');
-
-    // const user = await getDataWithPagination("users",);
-    res.end();
-
-    // con.query(`SELECT id_user FROM users WHERE email='${email}' and password='${hash}'`, function(err, result) {
-    //     if(err) throw err;
-    //     if(Object.keys(result).length === 0) res.redirect(`/conectare?failed`);
-    //     else {
-    //         const token = jwt.sign({
-    //             id_user: result[0]['id_user'],
-    //             username: email,
-    //         }, signKey, {expiresIn: "1h"});
-    //         res.cookie("token", token, {
-    //             httpOnly: true,
-    //             sameSite: "strict"
-    //         });
-    //         res.cookie("auth", true, {
-    //             sameSite: "strict"
-    //         });
-    //         res.redirect('/');
-    //     }
-    // });
+    const user = await getDataWithPagination("users", [{key: "email", operator: "==", value: email}, {key: "pass", operator: "==", value: hash}], 0, 1, "email");
+    if(user.length == 0) res.redirect(`/conectare?failed`);
+    else {
+        const token = jwt.sign({
+            username: email
+        }, signKey, {expiresIn: "1h"});
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "strict"
+        });
+        res.cookie("auth", true, {
+            sameSite: "strict"
+        });
+        res.redirect('/');
+    }
 });
 
 app.post('/fetch-data', async function(req, res) {
@@ -91,9 +84,9 @@ app.post('/fetch-data', async function(req, res) {
 
 app.get('/product/:id', async function(req, res) {
     const productID = req.params.id;
-    const product = (await getDataWithPagination("products", {key: "id_product", operator: "==", value: Number(productID)}, 0, 1, "id_product"))[0];
-    const categories = await getDataWithPagination("categories", {}, 0, 200, "id_category");
-    const similarProducts = await getDataWithPagination("products", {key: "id_category", operator: "==", value: product.id_category}, 0, 12, "id_product");
+    const product = (await getDataWithPagination("products", [{key: "id_product", operator: "==", value: Number(productID)}], 0, 1, "id_product"))[0];
+    const categories = await getDataWithPagination("categories", [], 0, 200, "id_category");
+    const similarProducts = await getDataWithPagination("products", [{key: "id_category", operator: "==", value: product.id_category}], 0, 12, "id_product");
     const images = product.image.split(';');
     images.forEach((element, index) => {
         images[index] = `/assets/images/${element}`;
@@ -227,8 +220,8 @@ app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('*', async function(req, res) {
     const location = req.path.split('/').filter(Boolean)[0];
     const categories = await getDataWithPagination("categories", {}, 0, 20, "id_category");
-    const product_category = (await getDataWithPagination("categories", {key: "route", operator: "==", value: location}, 0, 1, "id_category"))[0];
-    const products = await getDataWithPagination("products", {key: "id_category", operator: "==", value: product_category.id_category}, 0, 10, "id_product");
+    const product_category = (await getDataWithPagination("categories", [{key: "route", operator: "==", value: location}], 0, 1, "id_category"))[0];
+    const products = await getDataWithPagination("products", [{key: "id_category", operator: "==", value: product_category.id_category}], 0, 10, "id_product");
     res.render('category', {products: products, categories: categories});
 });
 
