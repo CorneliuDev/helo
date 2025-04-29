@@ -2,7 +2,8 @@ const { initializeApp } = require("firebase/app");
 const { v4: uuidv4 } = require('uuid');
 const dotenv = require('dotenv');
 dotenv.config();
-const { getFirestore, doc, setDoc, collection, getDocs, query, where, deleteDoc } = require("firebase/firestore");
+const { getFirestore, doc, setDoc, collection, getDocs, query,
+	where, deleteDoc, startAt, limit, orderBy } = require("firebase/firestore");
 
 const {
 	FIREBASE_API_KEY,
@@ -55,7 +56,8 @@ const insertObject = async function(collectionName, object)
  * @param {string} collectionName - The name of the collection.
  * @returns {Array<object>} - Array of documents with their IDs.
  */
-const getDataFromCollection = async (collectionName) => {
+const getDataFromCollection = async function(collectionName)
+{
 	try {
 		const collectionRef = collection(db, collectionName);
 		const q = query(collectionRef);
@@ -82,7 +84,39 @@ const getDataFromCollection = async (collectionName) => {
 const getDataByCondition = async (collectionName, condition) => {
 	try {
 		const collectionRef = collection(db, collectionName);
-		const q = query( collectionRef, where(condition.key, condition.operator, condition.value));
+		const q = query(collectionRef, where(condition.key, condition.operator, condition.value));
+		const docSnap = await getDocs(q);
+		const finalData = [];
+		docSnap.forEach((doc) => {
+			const current = doc.data();
+			current.id = doc.id;
+			finalData.push(current);
+		});
+		return finalData;
+	} catch (error) {
+		console.error(`Get data by condition error: ${error}`);
+		return {};
+	}
+};
+
+/**
+ * Returns data from a collection within a range from start to start+20
+ * @param {string} collectionName - The name of the collection.
+ * @param {object} condition - Query constraints: { key, operator, value }.
+ * @param {number} start - Index from where to start pagination
+ * @param {number} length - Length of the page
+ * @param {string} field - Field to order by with
+ * @returns {object} - Object with document IDs as keys and data as values.
+ */
+const getDataWithPagination = async (collectionName, condition, start, length, field) => {
+	try {
+		const collectionRef = collection(db, collectionName);
+		let q;
+		if(!Object.keys(condition).length)
+			q = query(collectionRef, orderBy(field), startAt(start+1), limit(length));
+		else
+			q = query(collectionRef, where(condition.key, condition.operator, condition.value), orderBy(field), startAt(start+1), limit(length));
+
 		const docSnap = await getDocs(q);
 		const finalData = [];
 		docSnap.forEach((doc) => {
@@ -119,7 +153,6 @@ const deleteDocumentByCondition = async function(collectionName, condition)
 module.exports = {
 	initializeFirebaseApp,
 	insertObject,
-	getDataFromCollection,
-	getDataByCondition,
-	deleteDocumentByCondition
+	deleteDocumentByCondition,
+	getDataWithPagination
 };
