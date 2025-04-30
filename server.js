@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const { createHash } = require('crypto');
-const { initializeFirebaseApp, insertObject, getDataWithPagination } = require('./firebase');
+const { initializeFirebaseApp, insertObject, updateObject, getDataWithPagination, deleteDocumentByConditions } = require('./firebase');
 const path = require('path');
 const meili = require('meilisearch');
 const jwt = require('jsonwebtoken');
@@ -101,23 +101,27 @@ app.get('/cart', function(req, res) {
         res.redirect('/conectare');
         return;
     }
-    jwt.verify(token, signKey, (err, decoded) => {
+    jwt.verify(token, signKey, async (err, decoded) => {
         if(err) {
             res.redirect('/conectare');
             return;
         }
         else {
-            con.query(`SELECT * FROM products ORDER BY rand() limit 20; select * from categories; select id, image, title, currentPrice, oldPrice, rating, description, amount from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}`, function(err, result) {
-                if(err) {
-                    console.log(err);
-                    throw err;
-                }
-                res.render('cart', {
-                    products: result[0],
-                    categories: result[1],
-                    cart_products: result[2]
+            const cartProducts = await getDataWithPagination("cart", [{key: "user_email", operator: "==", value: decoded.username}], 0, 200, "id_product");
+            const categories = await getDataWithPagination("categories", [], 0, 20, "id_category");
+            const products = await getDataWithPagination("products", [], 0, 20, "id_product");
+            let productItems = [];
+            if(cartProducts.length != 0) {
+                //TODO modify getDataWithPagination function to accept null values for limit and order by params
+                const productIds = [];
+                cartProducts.forEach((product) => productIds.push(product.id_product));
+                productItems = await getDataWithPagination("products", [{key: "id_product", operator: "in", value: productIds}], 0, productIds.length, "id_product");
+                productItems.forEach((product, index) => {
+                    product.amount = cartProducts[index].amount;
+                    product.user_email = cartProducts[index].user_email;
                 });
-            });
+            }
+            res.render('cart', {products: products, categories: categories, cart_products: productItems});
         }
     });
 });
@@ -133,22 +137,16 @@ app.get('/cautare', async function(req, res) {
     }
 });
 
-app.get('/comenzi', function(req, res) {
+app.get('/comenzi', async function(req, res) {
     const token = req.cookies.token;
     if(token == null) {
         res.redirect('/conectare');
         return;
     }
-    con.query('SELECT * FROM categories; SELECT * FROM products ORDER BY rand() limit 20', function(err, result) {
-        if(err) {
-            console.log(err);
-            throw err;
-        }
-        res.render('orders', {
-            categories: result[0],
-            similarProducts: result[1]
-        });
-    });
+    const categories = await getDataWithPagination("categories", [], 0, 20, "id_category");
+    const products = await getDataWithPagination("products", [], 0, 20, "id_product");
+    res.render('orders', {categories: categories, similarProducts: products});
+    //TODO query ordered items from database and render them
 });
 
 app.post('/addtocart', function(req, res) {
@@ -163,31 +161,32 @@ app.post('/addtocart', function(req, res) {
             res.redirect('/conectare');
             return;
         }
-        else con.query(`INSERT INTO cart (id_product, id_user) SELECT ${query['product_id']}, ${decoded['id_user']} WHERE NOT EXISTS (SELECT 1 FROM cart WHERE id_product = ${query['product_id']} AND id_user = ${decoded['id_user']})`);
+        //TODO update amount with 1 if product already exists in user's cart
+        else insertObject("cart", {id_product: Number(query.product_id), amount: 1, user_email: decoded.username});
     });
 });
 
-app.post('/check-coupon', function(req, res) {
+app.post('/check-coupon', async function(req, res) {
     const request = req.body;
-    con.query(`SELECT rate FROM coupons WHERE value='${request['coupon']}'`, function(err, result) {
-        if(err) {
-            console.log(err);
-            throw err;
-        }
-        res.json({result: result[0]});
-    });
+    const coupon = await getDataWithPagination("coupons", [{key: "value", operator: "==", value: request.coupon}], 0, 1, "value");
+    res.json({result: coupon[0]});
 });
 
-app.post('/updateAmount', function(req, res) {
-    const {id, change} = req.body;
-    con.query(`UPDATE cart SET amount=amount+${change} where id=${id}`);
-    res.end();
+app.post('/updateAmount', async function(req, res) {
+    const {id, user, change} = req.body;
+    console.log(change);
+    const amount = (await getDataWithPagination("cart", [], 0, 1, "id_product"))[0].amount;
+    const result = await updateObject("cart", [{ key: "id_product", operator: "==", value: id }, { key: "user_email", operator: "==", value: user }], "id_product", { amount: amount + change });
+    console.log(result);
+    // con.query(`UPDATE cart SET amount=amount+${change} where id=${id}`);
+    if(result)
+        res.status(204).end();
 });
 
-app.post('/deleteItemCart', function(req, res) {
-    const {id} = req.body;
-    con.query(`DELETE FROM cart WHERE id=${id}`);
-    res.end();
+app.post('/deleteItemCart', async function(req, res) {
+    const {id, user} = req.body;
+    await deleteDocumentByConditions("cart", [{key: "id_product", operator: "==", value: id}, {key: "user_email", operator: "==", value: user}]);
+    res.status(204).end();
 });
 
 app.post('/checkout', function(req, res) {

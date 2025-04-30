@@ -55,14 +55,14 @@ const insertObject = async function(collectionName, object)
  * @param {string} collectionName - The name of the collection.
  * @param {object} conditions - Query constraints: { key, operator, value }.
  * @param {string} field - Field to order by with
- * * @param {object} newObject - updates to this object
+ * * @param {object} newObject - 
  * @returns {Array<object>} - Array of documents with their IDs.
  */
 const updateObject = async function (collectionName, conditions, field, newObject) {
 	try
 	{
-		const data = await getDataWithPagination(collectionName, conditions, 0, 1, field);
-		const document = doc(db, collectionName, data[0].id);
+		const data = (await getDataWithPagination(collectionName, conditions, 0, 1, field))[0];
+		const document = doc(db, collectionName, data.id);
 		await updateDoc(document, newObject);
 		return true;
 	}	
@@ -70,54 +70,6 @@ const updateObject = async function (collectionName, conditions, field, newObjec
 	{
 		console.log(`Firebase doc update: ${error}`);
 		return false;
-	}
-};
-
-/**
- * Returns all data from a specific collection.
- * @param {string} collectionName - The name of the collection.
- * @returns {Array<object>} - Array of documents with their IDs.
- */
-const getDataFromCollection = async function(collectionName)
-{
-	try {
-		const collectionRef = collection(db, collectionName);
-		const q = query(collectionRef);
-		const docSnap = await getDocs(q);
-		const finalData = [];
-		docSnap.forEach((doc) => {
-			const current = doc.data();
-			current.id = doc.id;
-			finalData.push(current);
-		});
-		return finalData;
-	} catch (error) {
-		console.error(`Get whole data error: ${error}`);
-		return [];
-	}
-};
-
-/**
- * Returns data from a collection based on a specific condition.
- * @param {string} collectionName - The name of the collection.
- * @param {object} condition - Query constraints: { key, operator, value }.
- * @returns {object} - Object with document IDs as keys and data as values.
- */
-const getDataByCondition = async (collectionName, condition) => {
-	try {
-		const collectionRef = collection(db, collectionName);
-		const q = query(collectionRef, where(condition.key, condition.operator, condition.value));
-		const docSnap = await getDocs(q);
-		const finalData = [];
-		docSnap.forEach((doc) => {
-			const current = doc.data();
-			current.id = doc.id;
-			finalData.push(current);
-		});
-		return finalData;
-	} catch (error) {
-		console.error(`Get data by condition error: ${error}`);
-		return {};
 	}
 };
 
@@ -157,14 +109,19 @@ const getDataWithPagination = async (collectionName, conditions, start, length, 
 /**
  * Deletes documents from a collection by email.
  * @param {string} collectionName - The name of the collection.
- * @param {string} condition - Query constraints: { key, value }.
+ * @param {string} condition - Array of Query constraints: { key, value }.
  */
-const deleteDocumentByCondition = async function(collectionName, condition)
+const deleteDocumentByConditions = async function(collectionName, conditions)
 {
 	try
 	{
 		const collectionRef = collection(db, collectionName);
-		const q = query(collectionRef, where(condition["key"], "==", condition["value"]));
+		let q = query(collectionRef);
+		if(Object.keys(conditions).length > 0) {
+			conditions.forEach((condition) => {
+				q = query(q, where(condition.key, condition.operator, condition.value));
+			});
+		}
 		const docSnap = await getDocs(q);
 		for(const document of docSnap.docs)
 			await deleteDoc(document.ref);
@@ -177,6 +134,6 @@ module.exports = {
 	initializeFirebaseApp,
 	insertObject,
 	updateObject,
-	deleteDocumentByCondition,
+	deleteDocumentByConditions,
 	getDataWithPagination
 };
