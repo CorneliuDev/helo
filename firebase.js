@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const dotenv = require('dotenv');
 dotenv.config();
 const { getFirestore, doc, setDoc, collection, getDocs, query,
-	where, deleteDoc, startAt, limit, orderBy } = require("firebase/firestore");
+	where, deleteDoc, startAt, limit, orderBy, updateDoc } = require("firebase/firestore");
 
 const {
 	FIREBASE_API_KEY,
@@ -49,6 +49,28 @@ const insertObject = async function(collectionName, object)
 	}
 	catch(error)
 	{ console.log(`Firebase doc push: ${error}`); }
+};
+/**
+ * Updates just one object with a new one based on some conditions
+ * @param {string} collectionName - The name of the collection.
+ * @param {object} conditions - Query constraints: { key, operator, value }.
+ * @param {string} field - Field to order by with
+ * * @param {object} newObject - updates to this object
+ * @returns {Array<object>} - Array of documents with their IDs.
+ */
+const updateObject = async function (collectionName, conditions, field, newObject) {
+	try
+	{
+		const data = await getDataWithPagination(collectionName, conditions, 0, 1, field);
+		const document = doc(db, collectionName, data[0].id);
+		await updateDoc(document, newObject);
+		return true;
+	}	
+	catch(error)
+	{
+		console.log(`Firebase doc update: ${error}`);
+		return false;
+	}
 };
 
 /**
@@ -154,6 +176,7 @@ const deleteDocumentByCondition = async function(collectionName, condition)
 module.exports = {
 	initializeFirebaseApp,
 	insertObject,
+	updateObject,
 	deleteDocumentByCondition,
 	getDataWithPagination
 };
