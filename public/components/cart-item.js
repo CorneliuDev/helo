@@ -7,7 +7,9 @@ class CartItem extends LitElement {
     title: { type: String },
     price: { type: Number },
     quantity: { type: Number },
-    isChecked: { type: Boolean }
+    isChecked: { type: Boolean },
+    idProduct: { type: Number },
+    userEmail: { type: String }
   };
 
   static styles = css`
@@ -179,12 +181,27 @@ class CartItem extends LitElement {
 
   increaseQuantity() {
     this.quantity++;
+    this.dispatchEvent(new CustomEvent('update-cart', {
+      detail: { id: this.idProduct, user: this.userEmail, change: 1 },
+      bubbles: true,
+      composed: true
+    }));
   }
 
   decreaseQuantity() {
     if (this.quantity > 1) {
       this.quantity--;
+      this.dispatchEvent(new CustomEvent('update-cart', {
+        detail: { id: this.idProduct, user: this.userEmail, change: -1 },
+        bubbles: true,
+        composed: true
+      }));
     }
+    else this.dispatchEvent(new CustomEvent('delete-cart', {
+      detail: { id: this.idProduct, user: this.userEmail },
+      bubbles: true,
+      composed: true
+    }));
   }
 
   render() {
