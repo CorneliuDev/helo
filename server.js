@@ -156,13 +156,14 @@ app.post('/addtocart', function(req, res) {
         res.json({status: 'failed', reason: 'noauth'});
         return;
     }
-    jwt.verify(token, signKey, (err, decoded) => {
+    jwt.verify(token, signKey, async (err, decoded) => {
         if(err) {
             res.redirect('/conectare');
             return;
         }
-        //TODO update amount with 1 if product already exists in user's cart
-        else insertObject("cart", {id_product: Number(query.product_id), amount: 1, user_email: decoded.username});
+        const cartProduct = await getDataWithPagination("cart", [{key: "id_product", operator: "==", value: Number(query.product_id)}, {key: "user_email", operator: "==", value: decoded.username}], 0, 1, "id_product");
+        if(cartProduct.length == 0) insertObject("cart", {id_product: Number(query.product_id), amount: 1, user_email: decoded.username});
+        else res.json({status: 'failed', reason: 'already_exists'});
     });
 });
 

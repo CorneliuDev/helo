@@ -13,6 +13,7 @@ window.onload = function() {
             body: JSON.stringify({product_id: window.location.pathname.split('/')[2]})
         }).then((response) => response.json()).then((data) => {
             if(data['reason'] == 'noauth') window.location = '/conectare';
+            if(data['reason'] == 'already_exists') document.getElementById("success-modal-text").innerHTML="Produsul deja exista";
         });
         document.getElementById("success-modal").classList.remove("hidden");
     }
