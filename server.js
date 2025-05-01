@@ -174,11 +174,8 @@ app.post('/check-coupon', async function(req, res) {
 
 app.post('/updateAmount', async function(req, res) {
     const {id, user, change} = req.body;
-    console.log(change);
     const amount = (await getDataWithPagination("cart", [], 0, 1, "id_product"))[0].amount;
     const result = await updateObject("cart", [{ key: "id_product", operator: "==", value: id }, { key: "user_email", operator: "==", value: user }], "id_product", { amount: amount + change });
-    console.log(result);
-    // con.query(`UPDATE cart SET amount=amount+${change} where id=${id}`);
     if(result)
         res.status(204).end();
 });
@@ -195,22 +192,27 @@ app.post('/checkout', function(req, res) {
         res.redirect('/conectare');
         return;
     }
-    jwt.verify(token, signKey, (err, decoded) => {
+    jwt.verify(token, signKey, async (err, decoded) => {
         if(err) res.redirect('/conectare');
         const {coupon} = req.body;
-        con.query(`select round(sum(currentPrice),2) as total from cart join products on products.id_product = cart.id_product where id_user=${decoded['id_user']}; select rate from coupons where value='${coupon}'`, function(err, result) {
-            if(err) {
-                console.log(err);
-                throw err;
-            }
-            const subtotal = result[0][0]['total'];
-            const rate = result[1].length != 0 ? result[1][0]['rate'] : 0;
-            res.render('finish_order', {
-                subtotal: subtotal,
-                total: subtotal - subtotal * rate / 100,
-                rate: rate
+        const rate = (await getDataWithPagination("coupons", [{key: "value", operator: "==", value: coupon}], 0, 1, "value"))[0];
+        const cartProducts = await getDataWithPagination("cart", [{key: "user_email", operator: "==", value: decoded.username}], 0, 200, "id_product");
+        let productItems = [];
+        let subtotal = 0;
+        if(cartProducts.length != 0) {
+            //TODO modify getDataWithPagination function to accept null values for limit and order by params
+            const productIds = [];
+            cartProducts.forEach((product) => productIds.push(product.id_product));
+            productItems = await getDataWithPagination("products", [{key: "id_product", operator: "in", value: productIds}], 0, productIds.length, "id_product");
+            productItems.forEach((product, index) => {
+                product.amount = cartProducts[index].amount;
+                subtotal += product.amount * product.currentPrice;
             });
-        });
+        }
+        subtotal = Math.round(subtotal * 100) / 100;
+        let total = subtotal;
+        if(rate != undefined) total = subtotal - subtotal * rate.rate / 100;
+        res.render('finish_order', {subtotal: subtotal, rate: rate == undefined ? 0 : rate.rate, total: total});
     });
 });
 
