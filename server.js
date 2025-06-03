@@ -6,13 +6,15 @@ const path = require('path');
 const meili = require('meilisearch');
 const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
+const fs = require('fs');
+const { forEach } = require('underscore');
 
 dotenv.config();
 
 const signKey = process.env.JSON_SIGN_KEY;
 const http_port = process.env.HTTP_PORT;
 
-const client = new meili.MeiliSearch({
+const meiliClient = new meili.MeiliSearch({
     host: process.env.MEILI_API_HOST,
     apiKey: process.env.MEILI_API_KEY
 });
@@ -129,12 +131,24 @@ app.get('/cart', function(req, res) {
 app.get('/cautare', async function(req, res) {
     const query = req.query.search;
     if(query) {
-        const categories = await getDataWithPagination("categories", {}, 0, 200, "id_category");
-        client.index('products').search(query).then((data) => res.render('search', {
+        const categories = await getDataWithPagination("categories", [], 0, 200, "id_category");
+        meiliClient.index('products').search(query).then((data) => res.render('search', {
             products: data['hits'],
             categories: categories
         }));
     }
+});
+
+app.post('/cautare', async function(req, res) {
+    const query = req.body.search;
+    // const products = await getDataWithPagination("products", [], 0, 1000, "id_product");
+    // meiliClient.index('mobileProducts').updateSearchableAttributes(['title', 'description']);
+    // meiliClient.index('mobileProducts').addDocuments(products);
+    const productIDs = [];
+    await meiliClient.index('mobileProducts').search(query).then((data) => {
+        data['hits'].forEach((item) => productIDs.push(item['id_product']));
+    });
+    res.status(200).send({productIDs});
 });
 
 app.get('/comenzi', async function(req, res) {
@@ -217,14 +231,28 @@ app.post('/checkout', function(req, res) {
     });
 });
 
+//allow images from url
+app.get('/image/:image', (req, res) => {
+    const image = req.params.image;
+    fs.readFile(`./public/assets/images/${image}`, (err, image) => {
+        if(err) throw err;
+        res.setHeader('Content-Type', 'image/jpg');
+        res.send(image);
+    });
+});
+
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 app.get('*', async function(req, res) {
-    const location = req.path.split('/').filter(Boolean)[0];
-    const categories = await getDataWithPagination("categories", {}, 0, 20, "id_category");
-    const product_category = (await getDataWithPagination("categories", [{key: "route", operator: "==", value: location}], 0, 1, "id_category"))[0];
-    const products = await getDataWithPagination("products", [{key: "id_category", operator: "==", value: product_category.id_category}], 0, 10, "id_product");
-    res.render('category', {products: products, categories: categories});
+    try
+    {
+        const location = req.path.split('/').filter(Boolean)[0];
+        const categories = await getDataWithPagination("categories", {}, 0, 20, "id_category");
+        const product_category = (await getDataWithPagination("categories", [{key: "route", operator: "==", value: location}], 0, 1, "id_category"))[0];
+        const products = await getDataWithPagination("products", [{key: "id_category", operator: "==", value: product_category.id_category}], 0, 10, "id_product");
+        res.render('category', {products: products, categories: categories});
+    }
+    catch{}
 });
 
 app.listen(http_port);
