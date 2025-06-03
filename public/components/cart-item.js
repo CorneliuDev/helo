@@ -8,7 +8,8 @@ class CartItem extends LitElement {
     price: { type: Number },
     quantity: { type: Number },
     isChecked: { type: Boolean },
-    productId: { type: String }
+    idProduct: { type: Number },
+    userEmail: { type: String }
   };
 
   static styles = css`
@@ -160,6 +161,12 @@ class CartItem extends LitElement {
 
   constructor() {
     super();
+    this.link = "";
+    this.image = "/assets/images/3.jpeg";
+    this.title = "Licensed Concrete Chips";
+    this.price = "132.23";
+    this.quantity = 1;
+    this.isChecked = false;
   }
 
   checkItem() {
@@ -175,7 +182,7 @@ class CartItem extends LitElement {
   increaseQuantity() {
     this.quantity++;
     this.dispatchEvent(new CustomEvent('update-cart', {
-      detail: { id: this.productId, change: 1 },
+      detail: { id: this.idProduct, user: this.userEmail, change: 1 },
       bubbles: true,
       composed: true
     }));
@@ -185,13 +192,13 @@ class CartItem extends LitElement {
     if (this.quantity > 1) {
       this.quantity--;
       this.dispatchEvent(new CustomEvent('update-cart', {
-        detail: { id: this.productId, change: -1 },
+        detail: { id: this.idProduct, user: this.userEmail, change: -1 },
         bubbles: true,
         composed: true
       }));
     }
     else this.dispatchEvent(new CustomEvent('delete-cart', {
-      detail: { id: this.productId },
+      detail: { id: this.idProduct, user: this.userEmail },
       bubbles: true,
       composed: true
     }));
@@ -214,7 +221,7 @@ class CartItem extends LitElement {
                 <button @click="${this.decreaseQuantity}">
                   <img src="/assets/icons/minus.svg" alt="Minus" />
                 </button>
-                <p class="quantity" id="quantityNumber">${this.quantity}</p>
+                <p class="quantity">${this.quantity}</p>
                 <button @click="${this.increaseQuantity}">
                   <img src="/assets/icons/plus.svg" alt="Plus" />
                 </button>

@@ -175,8 +175,8 @@
 
                     <div id="cart-items" class="flex flex-col gap-2">
                         <% cart_products.forEach(item => { %>
-                            <cart-item title="<%= item.title %>" price="<%= item.currentPrice %>" productId="<%= item.id %>"
-                                quantity="<%= item.amount %>" image="/assets/images/<%= item.image.split(';')[0] %>">
+                            <cart-item title="<%= item.title %>" price="<%= item.currentPrice %>" idProduct="<%= item.id_product %>"
+                                quantity="<%= item.amount %>" userEmail="<%= item.user_email %>" image="/assets/images/<%= item.image.split(';')[0] %>">
                             </cart-item>
                         <% }) %>
                     </div>

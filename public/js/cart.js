@@ -5,19 +5,19 @@ window.onload = function() {
         loginPanel.classList.add('hidden');
     }
     document.addEventListener('update-cart', function(event) {
-        const {id, change} = event.detail;
+        const {id, user, change} = event.detail;
         fetch('/updateAmount', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({id: id, change: change})
+            body: JSON.stringify({id: id, user: user, change: change})
         });
     });
     document.addEventListener('delete-cart', function(event) {
-        const {id} = event.detail;
+        const {id, user} = event.detail;
         fetch('/deleteItemCart', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({id: id})
+            body: JSON.stringify({id: id, user: user})
         });
         window.location.reload();
     });
