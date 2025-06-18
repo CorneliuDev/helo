@@ -11,6 +11,11 @@ Ca sa incarci toate produsele din firebase in meilisearch rulezi urmatorul scrip
 
 ## Pornire website
 
+### Instalare dependente
+Proiectul are foarte multe dependente externe care trebuie instalate, folosesti comanda:
+
+`npm install` sau `npm i`
+
 ### Ca sa pornesti website-ul propriu-zis rulezi comanda:
 
 `npm start`
