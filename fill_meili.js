@@ -14,7 +14,7 @@ initializeFirebaseApp();
 async function main()
 {
     const products = await getDataWithPagination("products", {}, 0, 1000, "id_product");
-    meiliClient.index('mobileProducts').addDocuments(products);
+    meiliClient.index('products').addDocuments(products);
     console.log('123');
 }
 

@@ -145,7 +145,7 @@ app.post('/cautare', async function(req, res) {
     // meiliClient.index('mobileProducts').updateSearchableAttributes(['title', 'description']);
     // meiliClient.index('mobileProducts').addDocuments(products);
     const productIDs = [];
-    await meiliClient.index('mobileProducts').search(query).then((data) => {
+    await meiliClient.index('products').search(query).then((data) => {
         data['hits'].forEach((item) => productIDs.push(item['id_product']));
     });
     res.status(200).send({productIDs});
